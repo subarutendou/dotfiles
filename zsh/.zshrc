@@ -12,7 +12,7 @@ setopt prompt_subst
 RPROMPT=\$vcs_info_msg_0_
 # PROMPT=\$vcs_info_msg_0_'%# '
 zstyle ':vcs_info:git:*' formats 'on branch %b'
-PROMPT='%B%F{yellow}%2~ %b%B%F{green}${vcs_info_msg_0_}%(!.#h.>) '
+PROMPT='%B%F{yellow}%2~ %b%B%F{white}${vcs_info_msg_0_}%B%F{gray}%(!.#h.>) '
 
 # Disable ctrl-s to freeze terminal.
 stty stop undef
