@@ -1,0 +1,10 @@
+# Alias
+alias ls='ls -CF --color=auto'
+alias la='ls -A'
+alias ll='ls -alF'
+alias suspend='sudo systemctl suspend'
+alias gs='git status'
+alias grep='grep --color=auto'
+alias rm='rm -i'
+alias mv='mv -i'
+alias tmux='tmux -u'

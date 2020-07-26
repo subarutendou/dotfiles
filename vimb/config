@@ -1,0 +1,2 @@
+set download-path=/home/andou/dw/
+set editor-command=st -e "nvim %s"
