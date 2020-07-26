@@ -1,1 +1,1 @@
-* Congig folder for archlinux
+* Config folder for archlinux
