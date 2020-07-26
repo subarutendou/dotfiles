@@ -1,0 +1,13 @@
+#!bin/sh
+
+# Fixing Java applications on DWM
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+setxkbmap -option caps:escape &
+sysctl hw.snd.default_unit=6 &
+xrandr --output DP-2 --right-of DP-0 &
+# xrandr --output DP-0 --rotate left &
+xrdb ~/.config/Xresources &
+feh --bg-fill /home/andou/pix/nearl.png &
+
+exec spectrwm

@@ -1,0 +1,13 @@
+{
+	"name": "Vimium C",
+	"@time": "7/21/2020, 12:59:31 PM",
+	"time": 1595350771505,
+	"environment": {
+		"extension": "1.84.1",
+		"platform": "linux",
+		"chrome": 84
+	},
+	"grabBackFocus": true,
+	"hideHud": true,
+	"ignoreCapsLock": 2
+}

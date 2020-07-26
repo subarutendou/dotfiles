@@ -1,0 +1,11 @@
+To configure your current shell run source $HOME/.cargo/env
+
+For git, you may want to use the the following configuration:
+
+git config --global core.page "nvim -R"
+
+It can be a good idea to tell git to disable colors as it would conflict with neovim colors:
+
+git config --global color.pager no
+
+This second command fix the bug of your screenshot
