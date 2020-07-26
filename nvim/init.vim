@@ -66,9 +66,9 @@ Plug 'iCyMind/NeoSolarized'
 
 call plug#end()
 
-set background=dark
-colorscheme NeoSolarized
-" colorscheme dracula
+" set background=dark
+" colorscheme NeoSolarized
+colorscheme dracula
 " colorscheme monokai
 " colorscheme gruvbox
 " colorscheme onedark
