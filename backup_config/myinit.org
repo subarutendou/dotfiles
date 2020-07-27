@@ -45,17 +45,24 @@
 #+BEGIN_SRC emacs-lisp
   (setq save-interprogram-paste-before-kill t)
 #+END_SRC
+
+** Start Emacs Server
+#+BEGIN_SRC emacs-lisp
+  (server-start)
+#+END_SRC
+
 * UI
 ** nyan mode
 #+BEGIN_SRC emacs-lisp
-  ;; (require 'nyan-mode)
-  ;; (nyan-mode)
+  (require 'nyan-mode)
+  (nyan-mode)
+  (nyan-start-animation)
+  (nyan-toggle-wavy-trail)
 #+END_SRC
 
 ** Theme
 #+BEGIN_SRC emacs-lisp
-  ;; (load-theme 'gruvbox-dark-hard t)
-  (load-theme 'solarized t)
+  (load-theme 'dracula t)
 #+END_SRC
 
 * IDO
@@ -91,10 +98,10 @@
 
 * EXWM
 #+BEGIN_SRC emacs-lisp
-  ;; (require 'exwm-systemtray)
-  ;; (exwm-systemtray-enable)
-  ;; (require 'exwm)
-  ;; (require 'exwm-config)
-  ;; (exwm-config-default)
+  (require 'exwm-systemtray)
+  (exwm-systemtray-enable)
+  (require 'exwm)
+  (require 'exwm-config)
+  (exwm-config-default)
 #+END_SRC
 
