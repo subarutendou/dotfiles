@@ -1,5 +1,5 @@
 *,div,pre,textarea,body,input,td,tr,p {
-    background-color: #303030 !important;
+    background-color: #586e75 !important;
     color: #b8ddea !important;
 }
 h1,h2,h3,h4 {
@@ -20,7 +20,7 @@ img:hover {
 }
 
 span[vimbhint^='label'] {
-    background-color: #f2f0ec !important;
+    background-color: #586e75 !important;
     border: 1px solid #2d2d2d !important;
     color: #2d2d2d !important;
     font: bold 10pt monospace !important;
