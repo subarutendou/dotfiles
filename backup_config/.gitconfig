@@ -1,0 +1,6 @@
+[user]
+	name = andou-azarashi
+	email = akiyamakazuya_miku@icloud.com
+[core]
+	editor = "emacsclient -c -a emacs"
+	pager = "emacsclient -c -a emacs"
