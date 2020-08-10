@@ -1,6 +1,6 @@
 [Hotkey]
 # 入力メソッドのオンオフ
-TriggerKey=SHIFT_SUPER_SPACE
+#TriggerKey=CTRL_SPACE
 # アクティブでない時だけその他のトリガーキーを使用する
 # Available Value:
 # True False

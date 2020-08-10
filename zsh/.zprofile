@@ -1,7 +1,7 @@
 export PATH=$PATH"$HOME/.local/bin"
 export PATH="$HOME/.cargo/bin:$PATH"
-export VISUAL="emacsclient -c -a emacs" # $VISUAL opens in GUI mode
-# export VISUAL=emacs
+# export VISUAL="emacsclient -c -a emacs" # $VISUAL opens in GUI mode
+export VISUAL=emacs
 export EDITOR="$VISUAL"
 export HISTCONTROL=ignoreboth
 export LESS_TERMCAP_mb=$'\e[1;32m'
