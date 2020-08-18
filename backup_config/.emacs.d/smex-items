@@ -1,0 +1,31 @@
+
+;; ----- smex-history -----
+(
+ package-delete
+ customize-themes
+ package-autoremove
+ package-list-packages
+ package-install
+ customize-group
+ kill-buffer-and-window
+)
+
+;; ----- smex-data -----
+(
+ (package-install . 5)
+ (package-delete . 5)
+ (package-autoremove . 2)
+ (package-refresh-contents . 1)
+ (list-packages . 2)
+ (kill-buffer-and-window . 3)
+ (replace-regexp . 1)
+ (text-mode . 4)
+ (org-mode . 1)
+ (auto-fill-mode . 1)
+ (global-linum-mode . 2)
+ (global-display-line-numbers-mode . 2)
+ (customize-themes . 6)
+ (customize-group . 2)
+ (customize-face . 2)
+ (package-list-packages . 1)
+)
