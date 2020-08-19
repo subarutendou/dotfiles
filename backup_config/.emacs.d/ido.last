@@ -37,23 +37,23 @@
 
 ;; ----- ido-work-file-list -----
 (
+ "init.el"
+ "myinit.el"
  "myinit.org"
  ".zshrc"
  "pacman.conf"
  ".zprofile"
  ".xinitrc"
- "init.el"
  "lfrc"
  ".gitconfig"
  "config.h"
- "evdev.lst"
 )
 
 ;; ----- ido-dir-file-cache -----
 (
- ("/home/andou/" (24379 44905 858662 145000) ".w3m/" ".steampath" ".asoundrc" ".npm/" ".en_QC" ".gitconfig" "pix/" ".steampid" ".mozc/" ".mplayer/" ".thumbnails/" ".pulse-cookie" ".steam/" "unity_test/" ".smex-items" "test_project/" ".saves/" ".emacs.d/" ".newsboat/" ".xinitrc" ".rustup/" "go/" ".lesshst" "dwm" "learnc/" ".tmux/" ".tmux.conf" "dw/" "GPUCache/" ".minecraft/" "doc/" "pCloudDrive/" ".nv/" ".pcloud/" ".gnupg/" ".wakatime.db" ".wakatime.log" ".wakatime.cfg" ".wakatime.data" ".ssh/" ".pki/" ".Xauthority" ".cache/" ".config/" "main/" ".local/" "../" "./")
+ ("/home/andou/.emacs.d/" (24380 26655 72087 144000) "ido.last" "init.el" "init.el.orgorig" "myinit.el" "init.el.bak" "mastodon.plstore" "myinit.org" "tramp" "emacs-color-theme-solarized/" "ac-comphist.dat" "smex-items" "auto-save-list/" "savehist" "backups/" "elpa/" "../" "./")
 
- ("/home/andou/.emacs.d/" (24378 40275 304926 288000) "init.el" "myinit.el" "emacs-color-theme-solarized/" "backups/" "savehist" "tramp" "mastodon.plstore" "init.el.bak" "ido.last" "myinit.org" "auto-save-list/" "ac-comphist.dat" "smex-items" "elpa/" "../" "./")
+ ("/home/andou/" (24380 26654 932088 11000) ".w3m/" ".steampath" ".asoundrc" ".npm/" ".en_QC" ".gitconfig" "pix/" ".steampid" ".mozc/" ".mplayer/" ".thumbnails/" ".pulse-cookie" ".steam/" "unity_test/" ".smex-items" ".emacs.d/" "test_project/" ".saves/" ".newsboat/" "guide/" ".xinitrc" ".rustup/" "go/" ".lesshst" "dwm" "learnc/" ".tmux/" ".tmux.conf" "dw/" "GPUCache/" ".minecraft/" "doc/" "pCloudDrive/" ".nv/" ".pcloud/" ".gnupg/" ".wakatime.db" ".wakatime.log" ".wakatime.cfg" ".wakatime.data" ".ssh/" ".pki/" ".Xauthority" ".cache/" ".config/" "main/" ".local/" "../" "./")
 
  ("/home/andou/.config/zsh/" (24373 50103 918632 871000) ".zprofile" ".zshrc" ".zshrc~" ".zshrc.bak" ".shellConfig/" ".zcompdump" "../" "./")
 
