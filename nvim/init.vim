@@ -47,7 +47,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'vim-utils/vim-man'
 Plug 'lyuts/vim-rtags'
 Plug 'mbbill/undotree'
-Plug 'wakatime/vim-wakatime'
 Plug 'Chiel92/vim-autoformat'
 Plug 'jiangmiao/auto-pairs'
 Plug 'Shougo/deoplete.nvim'
@@ -66,11 +65,11 @@ Plug 'iCyMind/NeoSolarized'
 
 call plug#end()
 
-" set background=dark
-" colorscheme NeoSolarized
+set background=dark
+colorscheme NeoSolarized
 " colorscheme dracula
 " colorscheme monokai
-colorscheme gruvbox
+" colorscheme gruvbox
 " colorscheme onedark
 " colorscheme nord
 
@@ -200,8 +199,7 @@ map <leader>t :new term://zsh<CR>
 noremap <F3> :Autoformat<CR>
 
 " remap the fucking escape key
-inoremap jk <Esc>
-inoremap kj <Esc>
+inoremap jj <Esc>
 
 " Replace all is aliased to S.
 nnoremap S :%s//g<left><left>
