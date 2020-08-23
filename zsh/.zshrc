@@ -10,9 +10,9 @@ precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
 RPROMPT=\$vcs_info_msg_0_
-# PROMPT=\$vcs_info_msg_0_'%# '
 zstyle ':vcs_info:git:*' formats 'on branch %b'
 PROMPT='%B%F{yellow}%2~ %b%B%F{white}${vcs_info_msg_0_}%B%F{gray}%(!.#h.>) '
+# PROMPT=\$vcs_info_msg_0_'%# '
 
 # Disable ctrl-s to freeze terminal.
 stty stop undef
@@ -22,7 +22,7 @@ HISTFILE=/home/andou/.config/.histfile
 HISTSIZE=50000
 SAVEHIST=50000
 bindkey -e
-# End of lines configured by zsh-newuser-install
+
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/andou/.zshrc'
 
