@@ -13,8 +13,6 @@
     (nyan-mode dracula-theme gruvbox-theme mastodon wakatime-mode smex rust-mode fill-column-indicator autothemer auto-complete)))
  '(scroll-bar-mode nil)
  '(tool-bar-mode nil)
- '(wakatime-cli-path "/usr/bin/wakatime")
- '(wakatime-python-bin nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -44,8 +42,6 @@ Inhibits startup screen on the first unrecognised option."
 
 (define-globalized-minor-mode global-fci-mode fci-mode (lambda () (fci-mode 1)))
 (global-fci-mode 1)
-
-(global-wakatime-mode)
 
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)

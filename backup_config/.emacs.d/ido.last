@@ -11,8 +11,8 @@
  ("/" . "usr/")
  ("/home/" . "andou/")
  ("/home/andou/.config/zsh/" . ".shellConfig/")
- ("/home/andou/.config/" . "zsh/")
- ("/home/andou/main/" . "st/")
+ ("/home/andou/.config/" . "alacritty/")
+ ("/home/andou/main/" . "dwm-6.2/")
  ("/home/andou/.emacs.d/elpa/" . "exwm-0.24/")
  ("/home/andou/.emacs.d/" . "elpa/")
  ("/home/andou/" . ".emacs.d/")
@@ -22,9 +22,11 @@
 ;; ----- ido-work-directory-list -----
 (
  "/home/andou/.emacs.d/"
+ "/home/andou/main/dwm-6.2/"
+ "/home/andou/"
+ "/home/andou/.config/alacritty/"
  "/home/andou/.config/zsh/"
  "/sudo::/etc/"
- "/home/andou/"
  "/home/andou/.config/lf/"
  "/home/andou/main/st/"
  "/usr/share/X11/xkb/rules/"
@@ -32,36 +34,45 @@
  "/home/andou/test_project/tictactoe_c/"
  "/home/andou/.config/nvim/"
  "/home/andou/.config/zsh/.shellConfig/"
- "/home/andou/main/dwm-6.2/"
 )
 
 ;; ----- ido-work-file-list -----
 (
- "init.el"
- "myinit.el"
  "myinit.org"
+ "init.el"
+ "config.h"
+ ".xinitrc"
+ "alacritty.yml"
+ "myinit.el"
  ".zshrc"
  "pacman.conf"
  ".zprofile"
- ".xinitrc"
  "lfrc"
- ".gitconfig"
- "config.h"
 )
 
 ;; ----- ido-dir-file-cache -----
 (
- ("/home/andou/.emacs.d/" (24380 26655 72087 144000) "ido.last" "init.el" "init.el.orgorig" "myinit.el" "init.el.bak" "mastodon.plstore" "myinit.org" "tramp" "emacs-color-theme-solarized/" "ac-comphist.dat" "smex-items" "auto-save-list/" "savehist" "backups/" "elpa/" "../" "./")
+ ("/home/andou/.emacs.d/" (24428 49194 61977 962000) "ido.last" "myinit.el" "myinit.org" "transient/" "init.el.bak~" "backups/" "init.el~" "tramp" "smex-items" "savehist" "mastodon.plstore" "init.el.orgorig" "init.el.bak" "init.el" "emacs-color-theme-solarized/" "elpa/" "auto-save-list/" "ac-comphist.dat" "../" "./")
 
- ("/home/andou/" (24380 26654 932088 11000) ".w3m/" ".steampath" ".asoundrc" ".npm/" ".en_QC" ".gitconfig" "pix/" ".steampid" ".mozc/" ".mplayer/" ".thumbnails/" ".pulse-cookie" ".steam/" "unity_test/" ".smex-items" ".emacs.d/" "test_project/" ".saves/" ".newsboat/" "guide/" ".xinitrc" ".rustup/" "go/" ".lesshst" "dwm" "learnc/" ".tmux/" ".tmux.conf" "dw/" "GPUCache/" ".minecraft/" "doc/" "pCloudDrive/" ".nv/" ".pcloud/" ".gnupg/" ".wakatime.db" ".wakatime.log" ".wakatime.cfg" ".wakatime.data" ".ssh/" ".pki/" ".Xauthority" ".cache/" ".config/" "main/" ".local/" "../" "./")
+ ("/home/andou/dotfiles/backup_config/.emacs.d/" (24428 49100 80997 844000) ".#myinit.org" "ido.last" "myinit.el" "myinit.org" "transient/" "init.el.bak~" "backups/" "init.el~" "tramp" "smex-items" "savehist" "mastodon.plstore" "init.el.orgorig" "init.el.bak" "init.el" "emacs-color-theme-solarized/" "elpa/" "auto-save-list/" "ac-comphist.dat" "../" "./")
 
- ("/home/andou/.config/zsh/" (24373 50103 918632 871000) ".zprofile" ".zshrc" ".zshrc~" ".zshrc.bak" ".shellConfig/" ".zcompdump" "../" "./")
+ ("/home/andou/" (24428 48105 884627 474000) "test.org" "Desktop/" ".w3m/" ".asoundrc" ".npm/" ".en_QC" ".steampid" ".solfege/" ".gitconfig" "pix/" ".emacs.d/" ".xinitrc" ".mozilla/" ".mozc/" ".mplayer/" ".thumbnails/" ".pulse-cookie" ".steam/" ".smex-items" "dotfiles/" ".solfegerc" "test_project/" ".saves/" ".newsboat/" ".emacs.d.old/" ".steampath" "guide/" ".rustup/" "go/" ".lesshst" "dwm" "learnc/" ".tmux/" ".tmux.conf" "dw/" "GPUCache/" ".minecraft/" "doc/" "pCloudDrive/" ".nv/" ".pcloud/" ".gnupg/" ".ssh/" ".pki/" ".Xauthority" ".cache/" ".config/" "main/" ".local/" "../" "./")
 
- ("/home/andou/.config/" (24377 39983 137432 860000) "ranger/" "nnn/" "mimeapps.list" "GIMP/" "kritarc" "kritadisplayrc" "openrazer/" "polychromatic/" "zathura/" "QtProject.conf" "Dharkael/" "CrossCode/" "cef_user_data/" "nitrogen/" "gtk-2.0/" "lf/" "yay/" "dconf/" "pulse/" "pcloud/" "fcitx/" ".histfile" "BraveSoftware/" "configstore/" "backup_config/" ".gitignore" "README.org" "fontforge/" "vimb/" ".git/" "config/" "newsboat/" "mpv/" "gconf/" "procps/" "nvim/" "zsh/" "gtk-3.0/" "../" "./")
+ ("/home/andou/main/dwm-6.2/" (24427 60374 83762 957000) "util.o" "dwm.o" "drw.o" "dwm.c" "dwm.c.rej" "config.mk.rej" "dwm-gaps-6.0.diff" "config.def.h.bak" ".#config.h" "dwm" "config.mk" "config.def.h" "config.def.h.rej" "dwm-swallow-20200807-b2de9b0.diff" "dwm.c.orig" "config.mk.orig" "config.def.h.orig" "config.h" "config.mk.bak" "dwm.c.bak" "config.h.bak" "dwm-swallow-20200707-8d1e703.diff" "transient.c" "dwm.png" "util.c" "drw.c" "util.h" "drw.h" "dwm.1" "README" "Makefile" "LICENSE" "../" "./")
 
- ("/home/andou/.config/lf/" (24357 34814 403350 910000) "lfrc" "../" "./")
+ ("/home/andou/.config/alacritty/" (24425 61751 638240 253000) ".#alacritty.yml" "alacritty.yml" "../" "./")
 
- ("/home/andou/main/st/" (24354 50120 644024 561000) "st" "x.o" "st.o" "x.c" "st-bold-is-not-bright-20190127-3be4cf1.diff" ".#config.h" "hb.o" "config.h" "config.mk" "x.c.rej" "x.c.bak" "config.h.bak" "hb.h" "hb.c" "st.c" "st.c.orig" "config.def.h" "x.c.orig" "st.h" "st.h.orig" "config.def.h.orig" "st-scrollback-20200419-72e3f6c.diff" "st-anysize-0.8.1.diff" "st-alpha-0.8.2.diff" "win.h" "arg.h" "st.1" "st.info" "README" "Makefile" "LICENSE" "TODO" "LEGACY" "FAQ" "../" "./")
+ ("/home/andou/.config/" (24407 37000 821477 437000) "alacritty/" "BraveSoftware/" "mimeapps.list" "kritarc" "kritadisplayrc" "zathura/" "QtProject.conf" "Dharkael/" "CrossCode/" "cef_user_data/" "nitrogen/" "gtk-2.0/" "lf/" "yay/" "dconf/" "pulse/" "pcloud/" "fcitx/" ".histfile" "configstore/" "backup_config/" ".gitignore" "README.org" "fontforge/" "vimb/" ".git/" "config/" "newsboat/" "mpv/" "gconf/" "procps/" "nvim/" "zsh/" "gtk-3.0/" "../" "./")
+
+ ("/home/andou/.config/zsh/" (24407 35519 677611 90000) ".zshrc" ".zprofile" ".zshrc~" ".zshrc.bak" ".shellConfig/" ".zcompdump" "../" "./")
+
+ ("/home/andou/.emacs.d/elpa/exwm-0.24/" (24379 62345 634164 833000) "exwm.elc" "exwm-xim.elc" "exwm-workspace.elc" "exwm-systemtray.elc" "exwm-randr.elc" "exwm-manage.elc" "exwm-layout.elc" "exwm-input.elc" "exwm-floating.elc" "exwm-core.elc" "exwm-config.elc" "exwm-cm.elc" ".elpaignore" "exwm-randr.el" "exwm-cm.el" "exwm-manage.el" "exwm-workspace.el" "exwm-input.el" "exwm-config.el" "exwm-layout.el" "exwm-systemtray.el" "exwm-pkg.el" "exwm.el" "exwm-xim.el" "ChangeLog" "exwm-floating.el" "xinitrc" "exwm-core.el" "exwm-autoloads.el" "../" "./")
+
+ ("/home/andou/main/st/" (24378 40839 168897 871000) "config.h" "x.c" "st-bold-is-not-bright-20190127-3be4cf1.diff" "st" "x.o" "st.o" "config.mk" "x.c.rej" "x.c.bak" "config.h.bak" "st.c" "st.c.orig" "config.def.h" "x.c.orig" "st.h" "st.h.orig" "config.def.h.orig" "st-scrollback-20200419-72e3f6c.diff" "st-anysize-0.8.1.diff" "st-alpha-0.8.2.diff" "win.h" "arg.h" "st.1" "st.info" "README" "Makefile" "LICENSE" "TODO" "LEGACY" "FAQ" "../" "./")
+
+ ("/home/andou/.config/lf/" (24373 47832 722499 773000) "lfrc" "lfrc.bak" "../" "./")
+
+ ("/home/andou/.config/nvim/" (24386 30301 780308 534000) "init.vim" "plugged/" ".netrwhist" "undodir/" "../" "./")
 
  ("/usr/share/X11/xkb/rules/" (24300 35675 780496 674000) "xorg.xml" "xorg.lst" "xorg" "xkb.dtd" "xfree98" "evdev.xml" "evdev.lst" "evdev.extras.xml" "evdev" "base.xml" "base.lst" "base.extras.xml" "base" "README" "../" "./")
 
@@ -79,21 +90,15 @@
 
  ("/home/andou/.emacs.d/elpa/" (24352 11099 212764 240000) "use-package-2.4/" "bind-key-2.4/" "guide-key-1.2.5/" "popwin-1.0.1/" "undo-tree-0.7.4.signed" "undo-tree-0.7.4/" "smart-mode-line-2.13/" "rich-minority-1.0.3/" "magit-2.90.1/" "ghub-3.4.0/" "treepy-0.1.1/" "git-commit-2.90.1/" "magit-popup-2.13.3/" "with-editor-2.9.4/" "async-1.9.4/" "nyan-mode-1.1.3/" "exwm-0.24.signed" "exwm-0.24/" "xelb-0.18.signed" "xelb-0.18/" "fill-column-indicator-1.90/" "autothemer-0.2.2/" "dash-2.17.0/" "vdiff-magit-readme.txt" "smex-3.0/" "wakatime-mode-20180920.702/" "auto-complete-1.5.1/" "rust-mode-20200618.1314/" "popup-20200610.317/" "archives/" "gnupg/" "../" "./")
 
- ("/home/andou/.config/nvim/" (24352 7737 494524 84000) "init.vim" ".netrwhist" "undodir/" "plugged/" "../" "./")
-
  ("/home/andou/.config/backup_config/" (24350 16331 695582 53000) ".emacs.d/" "st/" "Xresources" "vimrc" "vimium_c-20200721_125931.json" "vimium_c-20200629_162337.json" "vimium-options.json" "tst.txt" "myinit.org" "memo.txt" "init.el" "config.h" "bookmarks.html" ".tmux.conf" ".xinitrc.freebsd" ".xinitrc" "dwm/" ".vim/" "../" "./")
 
  ("/home/" (24283 43352 409303 518000) "andou/" "../" "./")
-
- ("/home/andou/main/dwm-6.2/" (24349 55678 54425 385000) "dwm.o" "dwm-gaps-6.0.diff" "config.h" "config.def.h.bak" "dwm" "util.o" "drw.o" "dwm.c" "dwm.c.orig" "config.mk" "config.mk.orig" "config.def.h" "config.def.h.orig" "config.mk.bak" "dwm.c.bak" "config.h.bak" "dwm-swallow-20200707-8d1e703.diff" "transient.c" "dwm.png" "util.c" "drw.c" "util.h" "drw.h" "dwm.1" "README" "Makefile" "LICENSE" "../" "./")
 
  ("/home/andou/test_project/tictactoe_c/" (24349 41768 647783 960000) "tictactoe.c" "a.out" "../" "./")
 
  ("/home/andou/.config/zsh/.shellConfig/" (24349 62126 608009 308000) "aliases" "../" "./")
 
  ("/home/andou/.config/dotfiles/" (24348 45000 714875 767000) "README.org" "myinit.org" "vimium_c-20200721_125931.json" "vimium-options.json" "config.h" "dwm/" "vimium_c-20200629_162337.json" "zshenv" "zsh/" "vimrc" "tst.txt" "memo.txt" "init.vim" "init.el" "bookmarks.html" "Xresources" ".xinitrc.freebsd" ".xinitrc" ".vim/" ".tmux.conf" ".git/" "../" "./")
-
- ("/home/andou/.emacs.d/elpa/exwm-0.24/" (24348 10140 798997 998000) "exwm.elc" "exwm-xim.elc" "exwm-workspace.elc" "exwm-systemtray.elc" "exwm-randr.elc" "exwm-manage.elc" "exwm-layout.elc" "exwm-input.elc" "exwm-floating.elc" "exwm-core.elc" "exwm-config.elc" "exwm-cm.elc" "exwm-autoloads.el" ".elpaignore" "exwm-randr.el" "exwm-cm.el" "exwm-manage.el" "exwm-workspace.el" "exwm-input.el" "exwm-config.el" "exwm-layout.el" "exwm-systemtray.el" "exwm-pkg.el" "exwm.el" "exwm-xim.el" "ChangeLog" "exwm-floating.el" "xinitrc" "exwm-core.el" "../" "./")
 
  ("/home/andou/main/" (24336 23561 638380 244000) "st/" "sxiv/" "dwm-6.2/" "../" "./")
 

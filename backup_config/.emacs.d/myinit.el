@@ -41,6 +41,42 @@ Inhibits startup screen on the first unrecognised option."
 (when (display-graphic-p)
   (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
 
+(defun package-autoremove ()
+"Remove packages that are no more needed.
+	Packages that are no more needed by other packages in
+	`package-selected-packages' and their dependencies
+	will be deleted."
+(interactive)
+;; If `package-selected-packages' is nil, it would make no sense to
+;; try to populate it here, because then `package-autoremove' will
+;; do absolutely nothing.
+(when (or package-selected-packages
+	    (yes-or-no-p
+	    (format-message
+	    "`package-selected-packages' is empty! Really remove ALL packages? ")))
+    (let ((removable (package--removable-packages)))
+    (if removable
+	(when (y-or-n-p
+		(format "%s packages will be deleted:\n%s, proceed? "
+			(length removable)
+			(mapconcat #'symbol-name removable ", ")))
+	    (mapc (lambda (p)
+		    (package-delete (cadr (assq p package-alist)) t))
+		removable))
+	(message "Nothing to autoremove")))))
+
+(defun package--removable-packages ()
+  "Return a list of names of packages no longer needed.
+These are packages which are neither contained in
+`package-selected-packages' nor a dependency of one that is."
+  (let ((needed (cl-loop for p in package-selected-packages
+			 if (assq p package-alist)
+			 ;; `p' and its dependencies are needed.
+			 append (cons p (package--get-deps p)))))
+    (cl-loop for p in (mapcar #'car package-alist)
+	     unless (memq p needed)
+	     collect p)))
+
 (display-time-mode 1)
 
 ;; (require 'nyan-mode)
@@ -64,10 +100,16 @@ Inhibits startup screen on the first unrecognised option."
 ;;      (list (line-beginning-position)
 ;; 	   (line-beginning-position 2)))))
 
+(global-set-key (kbd "M-;") #'comment-line)
+
+(require 'xah-fly-keys)
+
+(xah-fly-keys-set-layout "dvorak")
+
+(xah-fly-keys 1)
+
 (define-globalized-minor-mode global-fci-mode fci-mode (lambda () (fci-mode 1)))
 (global-fci-mode 1)
-
-(global-wakatime-mode)
 
 (use-package undo-tree
 	     :diminish undo-tree-mode
@@ -88,17 +130,24 @@ Inhibits startup screen on the first unrecognised option."
 (use-package winner
   :defer t)
 
+(require 'which-key)
+
+(which-key-mode 1)
+
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 (global-set-key (kbd "C-c M-x") 'execute-extended-command)
 
 (global-set-key (kbd "C-x g") 'magit-status)
 
-(load-theme 'solarized t)
+;; (load-theme 'solarized t)
 
 ;; (load-theme 'exotica t)
 
-;; (load-theme 'gruvbox-dark-medium t)
+(load-theme 'gruvbox-dark-medium t)
+
+(set-face-foreground 'font-lock-string-face "red")
+(set-face-foreground 'font-lock-comment-face "light pink")
 
 ;; (require 'exwm)
 ;; (require 'exwm-config)

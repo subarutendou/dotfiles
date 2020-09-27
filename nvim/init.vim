@@ -52,8 +52,11 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'Shougo/deoplete.nvim'
 Plug 'tpope/vim-commentary'
 Plug 'ptzz/lf.vim'
-" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'ThePrimeagen/vim-be-good'
+Plug 'tpope/vim-fugitive'
+Plug 'easymotion/vim-easymotion'
+Plug 'tpope/vim-fugitive'
 
 " color_schemes
 Plug 'joshdick/onedark.vim'
@@ -66,12 +69,22 @@ Plug 'iCyMind/NeoSolarized'
 call plug#end()
 
 set background=dark
-colorscheme NeoSolarized
+" colorscheme NeoSolarized
 " colorscheme dracula
 " colorscheme monokai
-" colorscheme gruvbox
+colorscheme gruvbox
 " colorscheme onedark
 " colorscheme nord
+
+""""""""""""""""""""""""
+""""""""Gruvbox"""""""""
+""""""""""""""""""""""""
+let g:gruvbox_contrast_dark = 'hard'
+if exists('+termguicolors')
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+let g:gruvbox_invert_selection='0'
 
 """"""""""""""""""""""""
 """"Neovim Solarized""""
@@ -185,10 +198,10 @@ nnoremap <silent> <Leader>- :vertical resize -5<CR>
 vnoremap J :m '>+1<CR>gv=gv'
 vnoremap K :m '<-2<CR>gv=gv'
 
-inoremap <silent><expr> <TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<TAB>" :
-            \ coc#refresh()
+" inoremap <silent><expr> <TAB>
+"             \ pumvisible() ? "\<C-n>" :
+"             \ <SID>check_back_space() ? "\<TAB>" :
+"             \ coc#refresh()
 
 map <leader>t :new term://zsh<CR>
 
@@ -203,3 +216,10 @@ inoremap jj <Esc>
 
 " Replace all is aliased to S.
 nnoremap S :%s//g<left><left>
+
+" easymotion
+map <leader><leader>. <Plug>(easymotion-repeat)
+map <leader><leader>f <Plug>(easymotion-overwin-f)
+map <leader><leader>j <Plug>(easymotion-overwin-line)
+map <leader><leader>k <Plug>(easymotion-overwin-line)
+map <leader><leader>w <Plug>(easymotion-overwin-w)

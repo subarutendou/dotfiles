@@ -1,5 +1,7 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =5
+let g:netrw_dirhistcnt =7
+let g:netrw_dirhist_7='/home/andou/.tmux'
+let g:netrw_dirhist_6='/home/andou/.config/pcloud'
 let g:netrw_dirhist_5='/home/andou/main/dwm-6.2'
 let g:netrw_dirhist_4='/home/andou/main'
 let g:netrw_dirhist_3='/home/andou/tetris_in_c'

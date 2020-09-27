@@ -8,16 +8,13 @@
  '(electric-pair-mode t)
  '(frame-background-mode 'dark)
  '(global-display-line-numbers-mode t)
- '(global-wakatime-mode t)
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(gruvbox-theme monokai-theme exotica-theme guide-key undo-tree smart-mode-line magit wakatime-mode smex rust-mode fill-column-indicator autothemer auto-complete))
+   '(which-key xah-fly-keys gruvbox-theme monokai-theme exotica-theme guide-key undo-tree smart-mode-line magit wakatime-mode smex rust-mode fill-column-indicator autothemer auto-complete))
  '(pdf-view-midnight-colors '("#fdf4c1" . "#282828"))
  '(scroll-bar-mode nil)
  '(show-paren-mode t)
- '(tool-bar-mode nil)
- '(wakatime-cli-path "/usr/bin/wakatime")
- '(wakatime-python-bin nil))
+ '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
