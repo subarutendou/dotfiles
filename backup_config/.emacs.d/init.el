@@ -21,8 +21,6 @@
 (ido-mode 1)
 
 (package-initialize)
-(unless package-archives-contents
-  (package-refresh-contents))
 
 (use-package smart-mode-line)
 (defun package-autoremove ()
