@@ -20,9 +20,22 @@
 (setq ido-everywhere t)
 (ido-mode 1)
 
-(package-initialize)
+(setq backup-directory-alist `(("." . "~/.emacs.d/backups")))
+(setq delet-old-versions -1)
+(setq version-control t)
+(setq vc-make-backup-files t)
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
 
-(use-package smart-mode-line)
+(setq savehist-file "~/.emacs.d/savehist")
+(savehist-mode 1)
+(setq history-length t)
+(setq history-delete-duplicates t)
+(setq savehist-save-minibuffer-history 1)
+(setq savehist-additional-variables
+	'(kill-ring
+	  search-ring
+	  regexp-search-ring))
+
 (defun package-autoremove ()
   "Remove packages that are no more needed.
 	  Packages that are no more needed by other packages in
@@ -59,29 +72,25 @@
 	       unless (memq p needed)
 	       collect p)))
 
-(setq backup-directory-alist `(("." . "~/.emacs.d/backups")))
-(setq delet-old-versions -1)
-(setq version-control t)
-(setq vc-make-backup-files t)
-(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
+(require 'package)
+(setq package-archive '("melpa" . "https://melpa.org/packages/"))
 
-(setq savehist-file "~/.emacs.d/savehist")
-(savehist-mode 1)
-(setq history-length t)
-(setq history-delete-duplicates t)
-(setq savehist-save-minibuffer-history 1)
-(setq savehist-additional-variables
-	'(kill-ring
-	  search-ring
-	  regexp-search-ring))
+(package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
+
+;; Initialize use-package on non-Linux platform
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+
+(require 'use-package)
+(setq use-package-always-ensure t)
 
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 (global-set-key (kbd "C-c M-x") 'execute-extended-command)
 
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'custom-theme-load-path "/home/andou/.emacs.d/emacs-color-theme-solarized/")
+(use-package smart-mode-line)
 
 (require 'xah-fly-keys)
 (xah-fly-keys-set-layout "dvorak")
@@ -92,3 +101,4 @@
 
 (use-package winner
     :defer t)
+
