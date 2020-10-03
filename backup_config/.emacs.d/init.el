@@ -1,18 +1,38 @@
 (setq inhibit-startup-message t)
 
+; Setting for GUI emacs
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (tooltip-mode -1)
 (set-fringe-mode 10)
+;; (require 'exwm)
+;; (require 'exwm-config)
+;; (exwm-config-default)
+; LINE NUMBE
+(column-number-mode)
+(global-display-line-numbers-mode t)
+
+;; Disable line numbers for some modes
+(dolist (mode '(org-mode-hook
+		term-mode-hook
+		shell-mode-hook
+		eshell-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+(package-initialize)
+
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
 (menu-bar-mode -1)
 (setq visible-bell t)
 (set-face-attribute 'default nil :font "Ricty Diminished" :height 140)
-(require 'exwm)
-(require 'exwm-config)
-(exwm-config-default)
 (load-theme 'gruvbox-dark-medium t)
-(set-face-foreground 'font-lock-string-face "red")
-(set-face-foreground 'font-lock-comment-face "light pink")
+;;(set-face-foreground 'font-lock-string-face "red")
+;;(set-face-foreground 'font-lock-comment-face "light pink")
 (server-start)
 (ac-config-default)
 (setq ido-enable-flex-matching nil)
@@ -72,20 +92,6 @@
 	       unless (memq p needed)
 	       collect p)))
 
-(require 'package)
-(setq package-archive '("melpa" . "https://melpa.org/packages/"))
-
-(package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
-
-;; Initialize use-package on non-Linux platform
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-
-(require 'use-package)
-(setq use-package-always-ensure t)
-
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 (global-set-key (kbd "C-c M-x") 'execute-extended-command)
@@ -102,3 +108,16 @@
 (use-package winner
     :defer t)
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(rainbow-delimiters xah-fly-keys which-key wakatime-mode use-package undo-tree solarized-theme smex smart-mode-line shrink-path rust-mode monokai-theme magit-popup magit guide-key gruvbox-theme ghub fill-column-indicator exwm exotica-theme auto-complete all-the-icons)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
