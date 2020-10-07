@@ -54,6 +54,9 @@
 
   (require 'use-package)
   (setq use-package-always-ensure t)
+  
+  (require 'engine-mode)
+  (engine-mode t)
 
   (defun package-autoremove ()
     "Remove packages that are no more needed.
@@ -203,4 +206,14 @@
   (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
   (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
   (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+#+end_src
+* Engine Mode
+#+begin_src emacs-lisp
+  (defengine duckduckgo
+    "https://duckduckgo.com/?q=%s"
+    :keybinding "d")
+
+  (defengine github
+    "https://github.com/search?ref=simplesearch&q=%s"
+    :keybinding "g")
 #+end_src
