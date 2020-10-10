@@ -11,20 +11,20 @@
 (load-theme 'gruvbox-dark-medium t)
 
 ;; EXWM
-(use-package exwm
-  :init
-  (setq mouse-autoselect-window nil))
+;; (use-package exwm
+;;   :init
+;;   (setq mouse-autoselect-window nil))
 
 ;; Fix problem with ido
-(require 'exwm-config)
-(exwm-config-ido)
+;; (require 'exwm-config)
+;; (exwm-config-ido)
 
 ;; Set the initial number of workspace
-(setq exwm-workspace-number 4)
+;; (setq exwm-workspace-number 4)
 
-(add-hook 'exwm-update-class-hook
-          (lambda ()
-            (exwm-workspace-rename-buffer exwm-class-name)))
+;; (add-hook 'exwm-update-class-hook
+;;           (lambda ()
+;;             (exwm-workspace-rename-buffer exwm-class-name)))
 ;; (add-hook 'exwm-update-title-hook
 ;;           (lambda ()
 ;;             (when (string-equal exwm-class-name "Vimb")
@@ -32,44 +32,44 @@
 
 ;; Global keybindings can be defined with `exwm-input-global-keys'.
 ;; Here are a few examples:
-(setq exwm-input-global-keys
-      `(
+;; (setq exwm-input-global-keys
+      ;; `(
         ;; Bind "s-r" to exit char-mode and fullscreen mode.
-        ([?\s-r] . exwm-reset)
+        ;; ([?\s-r] . exwm-reset)
         ;; Bind "s-w" to switch workspace interactively.
-        ([?\s-w] . exwm-workspace-switch)
+        ;; ([?\s-w] . exwm-workspace-switch)
         ;; Bind "s-0" to "s-9" to switch to a workspace by its index.
-        ,@(mapcar (lambda (i)
-                    `(,(kbd (format "s-%d" i)) .
-                      (lambda ()
-                        (interactive)
-                        (exwm-workspace-switch-create ,i))))
-                  (number-sequence 0 9))
+        ;; ,@(mapcar (lambda (i)
+                    ;; `(,(kbd (format "s-%d" i)) .
+                      ;; (lambda ()
+                        ;; (interactive)
+                        ;; (exwm-workspace-switch-create ,i))))
+                  ;; (number-sequence 0 9))
         ;; Bind "s-&" to launch applications ('M-&' also works if the output
         ;; buffer does not bother you).
-        ([?\s-&] . (lambda (command)
-		     (interactive (list (read-shell-command "$ ")))
-		     (start-process-shell-command command nil command)))
+        ;; ([?\s-&] . (lambda (command)
+		     ;; (interactive (list (read-shell-command "$ ")))
+		     ;; (start-process-shell-command command nil command)))
         ;; Bind "s-<f2>" to "slock", a simple X display locker.
-        ([s-f2] . (lambda ()
-		    (interactive)
-		    (start-process "" nil "/usr/bin/slock")))))
+        ;; ([s-f2] . (lambda ()
+		    ;; (interactive)
+		    ;; (start-process "" nil "/usr/bin/slock")))))
 
-(exwm-enable)
+;; (exwm-enable)
 
 ;;(when dw/exwm-enabled
   ;; These keys should always pass through to Emacs
-(setq exwm-input-prefix-keys
-   '(?\C-x
-     ?\C-h
-     ?\M-x
-     ?\M-`
-     ?\M-&
-     ?\M-:
-     ?\C-\M-j  ;; Buffer list
-     ?\C-\M-k  ;; Browser list
-     ?\C-\     ;; Ctrl+Space
-     ?\C-\;))
+;; (setq exwm-input-prefix-keys
+;;    '(?\C-x
+;;      ?\C-h
+;;      ?\M-x
+;;      ?\M-`
+;;      ?\M-&
+;;      ?\M-:
+;;      ?\C-\M-j  ;; Buffer list
+;;      ?\C-\M-k  ;; Browser list
+;;      ?\C-\     ;; Ctrl+Space
+;;      ?\C-\;))
 
   ;; Ctrl+Q will enable the next key to be sent directly
 ;;  (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
@@ -136,16 +136,16 @@
   :init
   (ivy-mode 1))
 
-(use-package ivy-rich
-  :init
-  (ivy-rich-mode 1))
+;; (use-package ivy-rich
+;;   :init
+;;   (ivy-rich-mode 1))
 
-(use-package counsel
-  :bind (("M-x" . counsel-M-x)
-	 ("C-x b" . counsel-ibuffer)
-	 ("C-x C-f" . counsel-find-file)
-	 :map minibuffer-local-map
-	 ("C-r" . 'counsel-minibuffer-history)))
+;; (use-package counsel
+;;   :bind (("M-x" . counsel-M-x)
+;; 	 ("C-x b" . counsel-ibuffer)
+;; 	 ("C-x C-f" . counsel-find-file)
+;; 	 :map minibuffer-local-map
+;; 	 ("C-r" . 'counsel-minibuffer-history)))
 
 (use-package helpful
   :custom
