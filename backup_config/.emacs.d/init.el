@@ -147,15 +147,15 @@
 ;; 	 :map minibuffer-local-map
 ;; 	 ("C-r" . 'counsel-minibuffer-history)))
 
-(use-package helpful
-  :custom
-  (counsel-describe-function-function #'helpful-callable)
-  (counsel-describe-variable-function #'helpful-variable)
-  :bind
-  ([remap describe-function] . counsel-describe-function)
-  ([remap describe-command] . helpful-command)
-  ([remap describe-variable] . counsel-describe-variable)
-  ([remap describe-key] . helpful-key))
+;;(use-package helpful
+;;  :custom
+;;  (counsel-describe-function-function #'helpful-callable)
+;;  (counsel-describe-variable-function #'helpful-variable)
+;;  :bind
+;;  ([remap describe-function] . counsel-describe-function)
+;;  ([remap describe-command] . helpful-command)
+;;  ([remap describe-variable] . counsel-describe-variable)
+;;  ([remap describe-key] . helpful-key))
 
 (use-package smart-mode-line)
 
@@ -169,8 +169,8 @@
   :config
   (setq which-key-idle-delay 1))
 
-(use-package winner
-    :defer t)
+;;(use-package winner
+;;    :defer t)
 
 (ac-config-default)
 
@@ -220,10 +220,23 @@
 (require 'org-indent)
 
 ;; Ensure that anything that should be fixed-pitch in Org files appears that way
-(set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
-(set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+;;(set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+;;(set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+;;(set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+;;(set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+;;(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+;;(set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+;;(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(xah-fly-keys org-bullets which-key wakatime-mode use-package undo-tree solarized-theme smart-mode-line rust-mode rainbow-delimiters monokai-theme magit ivy guide-key gruvbox-theme fill-column-indicator exotica-theme engine-mode auto-complete)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
