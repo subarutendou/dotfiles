@@ -10,72 +10,6 @@
 
 (load-theme 'gruvbox-dark-medium t)
 
-;; EXWM
-(use-package exwm
-  :init
-  (setq mouse-autoselect-window nil))
-
-;; Fix problem with ido
-(require 'exwm-config)
-(exwm-config-ido)
-
-;; Set the initial number of workspace
-(setq exwm-workspace-number 4)
-
-(add-hook 'exwm-update-class-hook
-          (lambda ()
-            (exwm-workspace-rename-buffer exwm-class-name)))
-;; (add-hook 'exwm-update-title-hook
-;;           (lambda ()
-;;             (when (string-equal exwm-class-name "Vimb")
-;;               (exwm-workspace-rename-buffer (format "vimb: %s" exwm-title)))))
-
-;; Global keybindings can be defined with `exwm-input-global-keys'.
-;; Here are a few examples:
-(setq exwm-input-global-keys
-      `(
-        ;; Bind "s-r" to exit char-mode and fullscreen mode.
-        ([?\s-r] . exwm-reset)
-        ;; Bind "s-w" to switch workspace interactively.
-        ([?\s-w] . exwm-workspace-switch)
-        ;; Bind "s-0" to "s-9" to switch to a workspace by its index.
-        ,@(mapcar (lambda (i)
-                    `(,(kbd (format "s-%d" i)) .
-                      (lambda ()
-                        (interactive)
-                        (exwm-workspace-switch-create ,i))))
-                  (number-sequence 0 9))
-        ;; Bind "s-&" to launch applications ('M-&' also works if the output
-        ;; buffer does not bother you).
-        ([?\s-&] . (lambda (command)
-		     (interactive (list (read-shell-command "$ ")))
-		     (start-process-shell-command command nil command)))
-        ;; Bind "s-<f2>" to "slock", a simple X display locker.
-        ([s-f2] . (lambda ()
-		    (interactive)
-		    (start-process "" nil "/usr/bin/slock")))))
-
-(exwm-enable)
-
-;;(when dw/exwm-enabled
-  ;; These keys should always pass through to Emacs
-(setq exwm-input-prefix-keys
-   '(?\C-x
-     ?\C-h
-     ?\M-x
-     ?\M-`
-     ?\M-&
-     ?\M-:
-     ?\C-\M-j  ;; Buffer list
-     ?\C-\M-k  ;; Browser list
-     ?\C-\     ;; Ctrl+Space
-     ?\C-\;))
-
-  ;; Ctrl+Q will enable the next key to be sent directly
-;;  (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
-
-(exwm-config-default)
-
 (require 'engine-mode)
 (engine-mode t)
 
@@ -135,17 +69,6 @@
 	 ("C-d" . ivy-reverse-i-search-kill))
   :init
   (ivy-mode 1))
-
-(use-package ivy-rich
-  :init
-  (ivy-rich-mode 1))
-
-(use-package counsel
-  :bind (("M-x" . counsel-M-x)
-	 ("C-x b" . counsel-ibuffer)
-	 ("C-x C-f" . counsel-find-file)
-	 :map minibuffer-local-map
-	 ("C-r" . 'counsel-minibuffer-history)))
 
 (use-package helpful
   :custom
@@ -227,3 +150,16 @@
 (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
 (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
 (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(counsel ivy-rich xah-fly-keys which-key use-package undo-tree swiper smart-mode-line rust-mode rainbow-delimiters org-bullets magit ivy-posframe helpful guide-key gruvbox-theme fill-column-indicator engine-mode auto-complete all-the-icons)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
