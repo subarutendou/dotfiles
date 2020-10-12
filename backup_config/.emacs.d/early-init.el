@@ -134,7 +134,7 @@
   ;;
   )
 
-(set-face-attribute 'default nil :height 140)
+(set-face-attribute 'default nil :height 120)
 
 ;; LINE NUMBE
 ;; (global-display-line-numbers-mode t)
