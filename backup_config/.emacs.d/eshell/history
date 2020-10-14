@@ -1,0 +1,32 @@
+watch -n 2 sensors
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+cargo run
+la
+cd dotfiles/
+cd dotfiles/backup_config/.emacs.d/
+git pull
+cp ~/.emacs.d/early-init.el ./
+ls
+cp ~/.emacs.d/init.el ./
+ls
+git add early-init.el init.el
+git commit early-init.el init.el -m "update"
+git push
+cd dotfiles/backup_config/.emacs.d/
+git commit early-init.el init.el -m "update"
+git push
+mkdir html_learn
+sudo pacman -Syu
+suspend
