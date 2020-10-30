@@ -8,7 +8,16 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+(blink-cursor-mode 0)
 (load-theme 'gruvbox-dark-medium t)
+
+(require 'exwm-randr)
+(setq exwm-randr-workspace-output-plist '(1 "DP-1"))
+(add-hook 'exwm-randr-screen-change-hook
+	  (lambda ()
+	    (start-process-shell-command
+	     "xrandr" nil "xrandr --output eDP-1 --off --output DP-1 --auto")))
+(exwm-randr-enable)
 
 ;; EXWM
 (use-package exwm
@@ -160,6 +169,7 @@
 (xah-fly-keys 1)
 
 (define-key xah-fly-key-map (kbd "<end>") 'xah-fly-insert-mode-activate)
+(define-key xah-fly-n-keymap (kbd "e") 'vterm)
 
 (use-package which-key
   :init (which-key-mode)
@@ -226,3 +236,16 @@
 (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
 (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
 (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(vterm magit xah-fly-keys which-key use-package rainbow-delimiters org-bullets ivy-rich helpful gruvbox-theme exwm engine-mode counsel auto-complete)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

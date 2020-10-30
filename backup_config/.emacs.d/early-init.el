@@ -29,7 +29,6 @@
   (global-display-line-numbers-mode))
 
 (column-number-mode 1)
-(blink-cursor-mode 0)
 (setq use-dialog-box nil)
 
 ;; Disable line numbers for some modes
