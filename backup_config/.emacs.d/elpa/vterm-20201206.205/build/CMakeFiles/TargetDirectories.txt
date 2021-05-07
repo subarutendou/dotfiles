@@ -1,0 +1,5 @@
+/home/subaru/.emacs.d/elpa/vterm-20201206.205/build/CMakeFiles/rebuild_cache.dir
+/home/subaru/.emacs.d/elpa/vterm-20201206.205/build/CMakeFiles/edit_cache.dir
+/home/subaru/.emacs.d/elpa/vterm-20201206.205/build/CMakeFiles/run.dir
+/home/subaru/.emacs.d/elpa/vterm-20201206.205/build/CMakeFiles/libvterm.dir
+/home/subaru/.emacs.d/elpa/vterm-20201206.205/build/CMakeFiles/vterm-module.dir

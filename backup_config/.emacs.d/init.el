@@ -4,100 +4,101 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/")
 	     '("org" . "https://orgmode.org/elpa/"))
+;; (defun exwm-change-screen-hook()
+  ;; (let ((xrandr-output-regexp "\n\\([^ ]+\\) connected")
+	;; default-output)
+    ;; (with-temp-buffer
+      ;; (call-process "xrandr" nil t nil)
+      ;; (goto-char (point-min))
+      ;; (re-search-forward xrandr-output-regexp nil 'noerror)
+      ;; (setq default-output (match-string 1))
+      ;; (forward-line)
+      ;; (if (not (re-search-forward xrandr-output-regexp nil 'noerror))
+	  ;; (call-process "xrandr" nil nil nil "--output" default-output "--auto")
+	;; (call-process
+	 ;; "xrandr" nil nil nil
+	 ;; "--output" (match-string 1) "--primary" "--auto"
+	 ;; "--output" default-output "--off")
+	;; (setq exwm-randr-workspace-output-plist (list 0 (match-string 1)))))))
+;; 
+;; (require 'exwm-randr)
+;; (setq exwm-randr-workspace-output-plist '(0 "DP-1"))
+;; (add-hook 'exwm-randr-screen-change-hook
+	  ;; (lambda ()
+	    ;; (start-process-shell-command
+	     ;; "xrandr" nil "xrandr --output eDP-1"
+	     ;; "xrandr" nil "xrandr --output DP-1"
+	     ;; "xrandr" nil "xrandr --output eDP-1 --off --output DP-1 --auto"
+	     ;; )))
+;; (exwm-randr-enable)
+
+;; EXWM
+;; (use-package exwm
+  ;; :init
+  ;; (setq mouse-autoselect-window nil))
+
+;; Fix problem with ido
+;; (require 'exwm-config)
+;; (exwm-config-ido)
+
+;; Set the initial number of workspace
+;; (setq exwm-workspace-number 4)
+
+;; (add-hook 'exwm-update-class-hook
+          ;; (lambda ()
+            ;; (exwm-workspace-rename-buffer exwm-class-name)))
+
+;; Global keybindings can be defined with `exwm-input-global-keys'.
+;; Here are a few examples:
+;; (setq exwm-input-global-keys
+      ;; `(
+        ;; Bind "s-r" to exit char-mode and fullscreen mode.
+        ;; ([?\s-r] . exwm-reset)
+        ;; Bind "s-w" to switch workspace interactively.
+        ;; ([?\s-w] . exwm-workspace-switch)
+        ;; Bind "s-0" to "s-9" to switch to a workspace by its index.
+        ;; ,@(mapcar (lambda (i)
+                    ;; `(,(kbd (format "s-%d" i)) .
+                      ;; (lambda ()
+                        ;; (interactive)
+                        ;; (exwm-workspace-switch-create ,i))))
+                  ;; (number-sequence 0 9))
+        ;; Bind "s-&" to launch applications ('M-&' also works if the output
+        ;; buffer does not bother you).
+        ;; ([?\s-&] . (lambda (command)
+		     ;; (interactive (list (read-shell-command "$ ")))
+		     ;; (start-process-shell-command command nil command)))
+        ;; Bind "s-<f2>" to "slock", a simple X display locker.
+        ;; ([s-f2] . (lambda ()
+		    ;; (interactive)
+		    ;; (start-process "" nil "/usr/bin/slock")))))
+
+;; (exwm-enable)
+
+;;(when dw/exwm-enabled
+  ;; These keys should always pass through to Emacs
+;; (setq exwm-input-prefix-keys
+   ;; '(?\C-x
+     ;; ?\C-h
+     ;; ?\M-x
+     ;; ?\M-`
+     ;; ?\M-&
+     ;; ?\M-:
+     ;; ?\C-\M-j  ;; Buffer list
+     ;; ?\C-\M-k  ;; Browser list
+     ;; ?\C-\     ;; Ctrl+Space
+     ;; ?\C-\;))
+
+  ;; Ctrl+Q will enable the next key to be sent directly
+;; (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
 
 (require 'use-package)
 (setq use-package-always-ensure t)
 
 (blink-cursor-mode 0)
-(load-theme 'gruvbox-dark-medium t)
-
-(defun exwm-change-screen-hook()
-  (let ((xrandr-output-regexp "\n\\([^ ]+\\) connected")
-	default-output)
-    (with-temp-buffer
-      (call-process "xrandr" nil t nil)
-      (goto-char (point-min))
-      (re-search-forward xrandr-output-regexp nil 'noerror)
-      (setq default-output (match-string 1))
-      (forward-line)
-      (if (not (re-search-forward xrandr-output-regexp nil 'noerror))
-	  (call-process "xrandr" nil nil nil "--output" default-output "--auto")
-	(call-process
-	 "xrandr" nil nil nil
-	 "--output" (match-string 1) "--primary" "--auto"
-	 "--output" default-output "--off")
-	(setq exwm-randr-workspace-output-plist (list 0 (match-string 1)))))))
-
-(require 'exwm-randr)
-(setq exwm-randr-workspace-output-plist '(0 "DP-1"))
-(add-hook 'exwm-randr-screen-change-hook
-	  (lambda ()
-	    (start-process-shell-command
-	     ;; "xrandr" nil "xrandr --output eDP-1"
-	     "xrandr" nil "xrandr --output DP-1"
-	     ;; "xrandr" nil "xrandr --output eDP-1 --off --output DP-1 --auto"
-	     )))
-(exwm-randr-enable)
-
-;; EXWM
-(use-package exwm
-  :init
-  (setq mouse-autoselect-window nil))
-
-;; Fix problem with ido
-(require 'exwm-config)
-(exwm-config-ido)
-
-;; Set the initial number of workspace
-(setq exwm-workspace-number 4)
-
-(add-hook 'exwm-update-class-hook
-          (lambda ()
-            (exwm-workspace-rename-buffer exwm-class-name)))
-
-;; Global keybindings can be defined with `exwm-input-global-keys'.
-;; Here are a few examples:
-(setq exwm-input-global-keys
-      `(
-        ;; Bind "s-r" to exit char-mode and fullscreen mode.
-        ([?\s-r] . exwm-reset)
-        ;; Bind "s-w" to switch workspace interactively.
-        ([?\s-w] . exwm-workspace-switch)
-        ;; Bind "s-0" to "s-9" to switch to a workspace by its index.
-        ,@(mapcar (lambda (i)
-                    `(,(kbd (format "s-%d" i)) .
-                      (lambda ()
-                        (interactive)
-                        (exwm-workspace-switch-create ,i))))
-                  (number-sequence 0 9))
-        ;; Bind "s-&" to launch applications ('M-&' also works if the output
-        ;; buffer does not bother you).
-        ([?\s-&] . (lambda (command)
-		     (interactive (list (read-shell-command "$ ")))
-		     (start-process-shell-command command nil command)))
-        ;; Bind "s-<f2>" to "slock", a simple X display locker.
-        ([s-f2] . (lambda ()
-		    (interactive)
-		    (start-process "" nil "/usr/bin/slock")))))
-
-(exwm-enable)
-
-;;(when dw/exwm-enabled
-  ;; These keys should always pass through to Emacs
-(setq exwm-input-prefix-keys
-   '(?\C-x
-     ?\C-h
-     ?\M-x
-     ?\M-`
-     ?\M-&
-     ?\M-:
-     ?\C-\M-j  ;; Buffer list
-     ?\C-\M-k  ;; Browser list
-     ?\C-\     ;; Ctrl+Space
-     ?\C-\;))
-
-  ;; Ctrl+Q will enable the next key to be sent directly
-(define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+;; (load-theme 'gruvbox-dark-medium t)
+(add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
+(load-theme 'nord t)
 
 (defun package-autoremove ()
   "Remove packages that are no more needed.
@@ -184,6 +185,7 @@
   :config
   ;; (xah-fly-keys-set-layout "colemak"))
   (xah-fly-keys-set-layout "dvorak")
+  ;; (xah-fly-keys-set-layout "qwerty")
   (setq xah-fly-use-control-key nil))
 
 (xah-fly-keys 1)
@@ -261,8 +263,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("37768a79b479684b0756dec7c0fc7652082910c37d8863c35b702db3f16000f8" default))
  '(package-selected-packages
-   '(vterm magit xah-fly-keys which-key use-package rainbow-delimiters org-bullets ivy-rich helpful gruvbox-theme exwm engine-mode counsel auto-complete)))
+   '(nord-theme python-mode rust-mode multi-vterm vterm magit xah-fly-keys which-key use-package rainbow-delimiters org-bullets ivy-rich helpful gruvbox-theme exwm engine-mode counsel auto-complete)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

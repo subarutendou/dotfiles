@@ -1,13 +1,14 @@
-;; -*- emacs-lisp -*- <20/08/11 12:40:22 /home/andou/.emacs.d/tramp>
+;; -*- emacs-lisp -*- <21/01/30 12:46:51 /home/subaru/.emacs.d/tramp>
 ;; Tramp connection history.  Don't change this file.
-;; You can delete it, forcing Tramp to reapply the checks.
+;; Run `M-x tramp-cleanup-all-connections' instead.
 
 (((tramp-file-name "sudo" "root" nil "archlinux" nil nil nil)
-  ("uname" "Linux 5.4.55-1-lts")
+  ("uname" "Linux 5.10.11-arch1-1")
   ("locale" "LC_ALL=en_US.utf8")
   ("test" "test")
   ("remote-path"
    ("/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin"))
+  ("pipe-buf" 4096)
   ("remote-shell" "/bin/sh")
   ("stat" "env QUOTING_STYLE=locale \\stat")
   ("file-exists" "test -e")
@@ -19,6 +20,5 @@
   ("tmpdir" "/sudo:root@archlinux:/tmp")
   ("uid-integer" 0)
   ("gid-integer" 0)
-  ("case-insensitive" nil)
   ("readlink" "\\readlink")
-  ("~root" "/root")))
+  ("case-insensitive" nil)))

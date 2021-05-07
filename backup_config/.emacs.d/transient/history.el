@@ -1,3 +1,1 @@
-((magit-commit nil)
- (magit-push nil)
- (magit-tag nil))
+((magit-commit nil))
