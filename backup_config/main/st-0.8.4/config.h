@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "JetBrains Mono:pixelsize=15:antialias=true:autohint=true";
+static char *font = "Ricty Diminished:pixelsize=18:antialias=true:autohint=true";
 static int borderpx = 2;
 
 /*
@@ -93,35 +93,32 @@ char *termname = "st-256color";
  */
 unsigned int tabspaces = 8;
 
-/* bg opacity */
-float alpha = 0.83;
-
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
 	/* 8 normal colors */
-	"#313539", /* black   */
-	"#b02626", /* red     */
-	"#40a62f", /* green   */
-	"#f2e635", /* yellow  */
-	"#314ad0", /* blue    */
-	"#b30ad0", /* magenta */
-	"#32d0fc", /* cyan    */
-	"#acadb1", /* white   */
+	"#3b4252", /* black   */
+	"#bf616a", /* red     */
+	"#a3be8c", /* green   */
+	"#ebcb8b", /* yellow  */
+	"#81a1c1", /* blue    */
+	"#b48ead", /* magenta */
+	"#88c0d0", /* cyan    */
+	"#e5e9f0", /* white   */
 
 	/* 8 bright colors */
-	"#676f78", /* black   */
-	"#b55454", /* red     */
-	"#78a670", /* green   */
-	"#faf380", /* yellow  */
-	"#707fd0", /* blue    */
-	"#c583d0", /* magenta */
-	"#8adaf1", /* cyan    */
-	"#e0e3e7", /* white   */
+	"#4c566a", /* black   */
+	"#bf616a", /* red     */
+	"#a3be8c", /* green   */
+	"#ebcb8b", /* yellow  */
+	"#81a1c1", /* blue    */
+	"#b48ead", /* magenta */
+	"#8fbcbb", /* cyan    */
+	"#eceff4", /* white   */
 
 	[255] = 0,
 
 	/* more colors can be added after 255 to use with DefaultXX */
-	"#191919", /* background */
+	"#2e3440", /* background */
 	"#d8dee9", /* foreground */
 };
 
@@ -202,8 +199,6 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
-	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
-	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
 };
 
 /*
