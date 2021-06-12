@@ -1,189 +1,32 @@
-;; Package
-(package-initialize)
+(setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
+(blink-cursor-mode 0)
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/")
 	     '("org" . "https://orgmode.org/elpa/"))
-;; (defun exwm-change-screen-hook()
-  ;; (let ((xrandr-output-regexp "\n\\([^ ]+\\) connected")
-	;; default-output)
-    ;; (with-temp-buffer
-      ;; (call-process "xrandr" nil t nil)
-      ;; (goto-char (point-min))
-      ;; (re-search-forward xrandr-output-regexp nil 'noerror)
-      ;; (setq default-output (match-string 1))
-      ;; (forward-line)
-      ;; (if (not (re-search-forward xrandr-output-regexp nil 'noerror))
-	  ;; (call-process "xrandr" nil nil nil "--output" default-output "--auto")
-	;; (call-process
-	 ;; "xrandr" nil nil nil
-	 ;; "--output" (match-string 1) "--primary" "--auto"
-	 ;; "--output" default-output "--off")
-	;; (setq exwm-randr-workspace-output-plist (list 0 (match-string 1)))))))
-;; 
-;; (require 'exwm-randr)
-;; (setq exwm-randr-workspace-output-plist '(0 "DP-1"))
-;; (add-hook 'exwm-randr-screen-change-hook
-	  ;; (lambda ()
-	    ;; (start-process-shell-command
-	     ;; "xrandr" nil "xrandr --output eDP-1"
-	     ;; "xrandr" nil "xrandr --output DP-1"
-	     ;; "xrandr" nil "xrandr --output eDP-1 --off --output DP-1 --auto"
-	     ;; )))
-;; (exwm-randr-enable)
+;;(setq package-archives '("melpa" . "https://melpa.org/packages/")
+  ;;    '("org" . "https://orgmode.org/elpa/"))
 
-;; EXWM
-;; (use-package exwm
-  ;; :init
-  ;; (setq mouse-autoselect-window nil))
+;; Package
+(package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
 
-;; Fix problem with ido
-;; (require 'exwm-config)
-;; (exwm-config-ido)
-
-;; Set the initial number of workspace
-;; (setq exwm-workspace-number 4)
-
-;; (add-hook 'exwm-update-class-hook
-          ;; (lambda ()
-            ;; (exwm-workspace-rename-buffer exwm-class-name)))
-
-;; Global keybindings can be defined with `exwm-input-global-keys'.
-;; Here are a few examples:
-;; (setq exwm-input-global-keys
-      ;; `(
-        ;; Bind "s-r" to exit char-mode and fullscreen mode.
-        ;; ([?\s-r] . exwm-reset)
-        ;; Bind "s-w" to switch workspace interactively.
-        ;; ([?\s-w] . exwm-workspace-switch)
-        ;; Bind "s-0" to "s-9" to switch to a workspace by its index.
-        ;; ,@(mapcar (lambda (i)
-                    ;; `(,(kbd (format "s-%d" i)) .
-                      ;; (lambda ()
-                        ;; (interactive)
-                        ;; (exwm-workspace-switch-create ,i))))
-                  ;; (number-sequence 0 9))
-        ;; Bind "s-&" to launch applications ('M-&' also works if the output
-        ;; buffer does not bother you).
-        ;; ([?\s-&] . (lambda (command)
-		     ;; (interactive (list (read-shell-command "$ ")))
-		     ;; (start-process-shell-command command nil command)))
-        ;; Bind "s-<f2>" to "slock", a simple X display locker.
-        ;; ([s-f2] . (lambda ()
-		    ;; (interactive)
-		    ;; (start-process "" nil "/usr/bin/slock")))))
-
-;; (exwm-enable)
-
-;;(when dw/exwm-enabled
-  ;; These keys should always pass through to Emacs
-;; (setq exwm-input-prefix-keys
-   ;; '(?\C-x
-     ;; ?\C-h
-     ;; ?\M-x
-     ;; ?\M-`
-     ;; ?\M-&
-     ;; ?\M-:
-     ;; ?\C-\M-j  ;; Buffer list
-     ;; ?\C-\M-k  ;; Browser list
-     ;; ?\C-\     ;; Ctrl+Space
-     ;; ?\C-\;))
-
-  ;; Ctrl+Q will enable the next key to be sent directly
-;; (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+;; Initialize use-package on non-Linux platforms
+(unless (package-installed-p 'use-package)
+  (package-insall 'use-package))
 
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-(blink-cursor-mode 0)
 ;; (load-theme 'gruvbox-dark-medium t)
 (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
 (load-theme 'nord t)
 
-(defun package-autoremove ()
-  "Remove packages that are no more needed.
-	  Packages that are no more needed by other packages in
-	  `package-selected-packages' and their dependencies
-	  will be deleted."
-  (interactive)
-  ;; If `package-selected-packages' is nil, it would make no sense to
-  ;; try to populate it here, because then `package-autoremove' will
-  ;; do absolutely nothing.
-  (when (or package-selected-packages
-	      (yes-or-no-p
-	      (format-message
-	      "`package-selected-packages' is empty! Really remove ALL packages? ")))
-      (let ((removable (package--removable-packages)))
-      (if removable
-	  (when (y-or-n-p
-		  (format "%s packages will be deleted:\n%s, proceed? "
-			  (length removable)
-			  (mapconcat #'symbol-name removable ", ")))
-	      (mapc (lambda (p)
-		      (package-delete (cadr (assq p package-alist)) t))
-		  removable))
-	  (message "Nothing to autoremove")))))
-
-  (defun package--removable-packages ()
-    "Return a list of names of packages no longer needed.
-  These are packages which are neither contained in
-  `package-selected-packages' nor a dependency of one that is."
-    (let ((needed (cl-loop for p in package-selected-packages
-			   if (assq p package-alist)
-			   ;; `p' and its dependencies are needed.
-			   append (cons p (package--get-deps p)))))
-      (cl-loop for p in (mapcar #'car package-alist)
-	       unless (memq p needed)
-	       collect p)))
-
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
-
-(use-package ivy
-  :diminish
-  :bind (("C-s" . swiper)
-	 :map ivy-minibuffer-map
-	 ("TAB" . ivy-alt-done)
-	 ("C-l" . ivy-alt-done)
-	 ("C-j" . ivy-next-line)
-	 ("C-k" . ivy-previous-line)
-	 :map ivy-switch-buffer-map
-	 ("C-k" . ivy-previous-line)
-	 ("C-l" . ivy-done)
-	 ("C-d" . ivy-switch-buffer-kill)
-	 :map ivy-reverse-i-search-map
-	 ("C-k" . ivy-previous-line)
-	 ("C-d" . ivy-reverse-i-search-kill))
-  :init
-  (ivy-mode 1))
-
-(use-package ivy-rich
-  :init
-  (ivy-rich-mode 1))
-
-(use-package counsel
-  :bind (("M-x" . counsel-M-x)
-	 ("C-x b" . counsel-ibuffer)
-	 ("C-x C-f" . counsel-find-file)
-	 :map minibuffer-local-map
-	 ("C-r" . 'counsel-minibuffer-history)))
-
-(use-package helpful
-  :custom
-  (counsel-describe-function-function #'helpful-callable)
-  (counsel-describe-variable-function #'helpful-variable)
-  :bind
-  ([remap describe-function] . counsel-describe-function)
-  ([remap describe-command] . helpful-command)
-  ([remap describe-variable] . counsel-describe-variable)
-  ([remap describe-key] . helpful-key))
-
 (setq xah-fly-use-meta-key nil)
-
 ;; (require 'xah-fly-keys)
 (use-package xah-fly-keys
   :config
-  ;; (xah-fly-keys-set-layout "colemak"))
   (xah-fly-keys-set-layout "dvorak")
   ;; (xah-fly-keys-set-layout "qwerty")
   (setq xah-fly-use-control-key nil))
@@ -192,41 +35,10 @@
 
 (define-key xah-fly-key-map (kbd "<end>") 'xah-fly-insert-mode-activate)
 (define-key xah-fly-n-keymap (kbd "e") 'vterm)
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-(use-package which-key
-  :init (which-key-mode)
-  :diminish which-key-mode
-  :config
-  (setq which-key-idle-delay 1))
 
-(use-package winner
-    :defer t)
-
-(use-package engine-mode
-  :init
-  (engine-mode))
-
-(use-package auto-complete
-  :init
-  (auto-complete)
-  :config
-  (ac-config-default))
-
-;; ido
-(setq ido-enable-flex-matching nil)
-(setq ido-create-new-buffer 'always)
-(setq ido-everywhere t)
-(ido-mode 1)
-
-;; Engine Mode
-(defengine duckduckgo
-  "https://duckduckgo.com/?q=%s"
-  :keybinding "d")
-
-(defengine github
-  "https://github.com/search?ref=simplesearch&q=%s"
-  :keybinding "g")
-
+;; org mode
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode)
   :custom
@@ -250,6 +62,61 @@
 ;; Make sure org-indent face is available
 (require 'org-indent)
 
+;; Disable line numbers for some modes
+(dolist (mode '(org-mode-hook
+		term-mode-hook
+		shell-mode-hook
+		eshell-mode-hook
+		vterm-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+(progn
+  ;; no need to warn
+  (put 'narrow-to-region 'disabled nil)
+  (put 'narrow-to-page 'disabled nil)
+  (put 'upcase-region 'disabled nil)
+  (put 'downcase-region 'disabled nil)
+  (put 'erase-buffer 'disabled nil)
+  (put 'scroll-left 'disabled nil)
+  (put 'dired-find-alternate-file 'disabled nil)
+  )
+
+;; My Package
+(use-package rust-mode)
+
+(use-package python-mode)
+
+(use-package magit)
+
+(use-package command-log-mode)
+
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package helpful
+  :custom
+  (counsel-describe-function-function #'helpful-callable)
+  (counsel-describe-variable-function #'helpful-variable)
+  :bind
+  ([remap describe-function] . counsel-describe-function)
+  ([remap describe-command] . helpful-command)
+  ([remap describe-variable] . counsel-describe-variable)
+  ([remap describe-key] . helpful-key))
+
+(use-package which-key
+  :init (which-key-mode)
+  :diminish which-key-mode
+  :config
+  (setq which-key-idle-delay 1))
+
+(use-package ivy
+  :init
+  (ivy-mode 1))
+
+(use-package wakatime-mode
+  :init
+  (global-wakatime-mode))
+
 ;; Ensure that anything that should be fixed-pitch in Org files appears that way
 (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
 (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
@@ -258,15 +125,17 @@
 (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
 (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
 (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("37768a79b479684b0756dec7c0fc7652082910c37d8863c35b702db3f16000f8" default))
+ '(global-command-log-mode t)
  '(package-selected-packages
-   '(nord-theme python-mode rust-mode multi-vterm vterm magit xah-fly-keys which-key use-package rainbow-delimiters org-bullets ivy-rich helpful gruvbox-theme exwm engine-mode counsel auto-complete)))
+   '(magit vterm python-mode rust-mode wakatime-mode org-bullets ivy command-log-mode nord-theme xah-fly-keys use-package))
+ '(wakatime-cli-path "/usr/bin/wakatime")
+ '(wakatime-python-bin nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

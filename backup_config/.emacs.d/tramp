@@ -1,24 +1,6 @@
-;; -*- emacs-lisp -*- <21/01/30 12:46:51 /home/subaru/.emacs.d/tramp>
+;; -*- emacs-lisp -*- <21/06/12 06:22:08 /home/subaru/.emacs.d/tramp>
 ;; Tramp connection history.  Don't change this file.
 ;; Run `M-x tramp-cleanup-all-connections' instead.
 
-(((tramp-file-name "sudo" "root" nil "archlinux" nil nil nil)
-  ("uname" "Linux 5.10.11-arch1-1")
-  ("locale" "LC_ALL=en_US.utf8")
-  ("test" "test")
-  ("remote-path"
-   ("/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin"))
-  ("pipe-buf" 4096)
-  ("remote-shell" "/bin/sh")
-  ("stat" "env QUOTING_STYLE=locale \\stat")
-  ("file-exists" "test -e")
-  ("id" "/bin/id")
-  ("gid-string" "root")
-  ("perl-file-spec" t)
-  ("perl-cwd-realpath" t)
-  ("perl" "\\perl")
-  ("tmpdir" "/sudo:root@archlinux:/tmp")
-  ("uid-integer" 0)
-  ("gid-integer" 0)
-  ("readlink" "\\readlink")
-  ("case-insensitive" nil)))
+(((tramp-file-name "sudo" "root" nil "tendou" nil nil nil)
+  nil))
