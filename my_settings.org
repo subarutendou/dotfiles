@@ -1,0 +1,414 @@
+#+title Emacs settings
+#+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/init.el :mkdirp yes
+
+* System configuration
+** xinitrc
+   #+begin_src conf :tangle ~/.xinitrc
+
+     #!/bin/sh
+
+     # Fixing Java applications
+     export _JAVA_AWT_WM_NONREPARENTING=1
+
+     # fcitx input
+     export GTK_IM_MODULE=fcitx
+     export QT_IM_MODULE=fcitx
+     export XMODIFIERS=@im=fcitx
+     fcitx5 -d -r
+     # fcitx &
+
+     # # C
+     ursor and mouse behavier
+     xset r rate 300 50 &
+     xset s off &
+     xset -dpms &
+     unclutter &
+     udiskie &
+     picom -CGb --vsync --backend glx &
+     pcloud -b &
+     # nitrogen --restore &
+
+     # DWM settings
+     # while true; do
+	 # xsetroot -name "$( date +"%F %R" )"
+	 # sleep 1m    # Update time every minute
+     # done &
+     # exec dwm
+
+     # EXWM settings
+     exec dbus-launch --exit-with-session emacs -mm --debug-init
+
+   #+end_src
+** bashrc
+   #+begin_src conf :tangle ~/.bashrc
+
+     #!/bin/bash
+     #
+     # ~/.bashrc
+     #
+
+     # If not running interactively, don't do anything
+     [[ $- != *i* ]] && return
+
+     alias ls='ls --color=auto'
+     PS1='[\u@\h \W]\$ '
+
+     export PATH=$HOME/.local/bin:$PATH
+     export EDITOR='emacsclient -c'
+     export VISUAL='emacsclient -c'
+
+     # scriptname - description of script
+
+     # Text color variables
+     txtund=$(tput sgr 0 1)          # Underline
+     txtbld=$(tput bold)             # Bold
+     bldred=${txtbld}$(tput setaf 1) #  red
+     bldblu=${txtbld}$(tput setaf 4) #  blue
+     bldwht=${txtbld}$(tput setaf 7) #  white
+     txtrst=$(tput sgr0)             # Reset
+     info=${bldwht}*${txtrst}        # Feedback
+     pass=${bldblu}*${txtrst}
+     warn=${bldred}*${txtrst}
+     ques=${bldblu}?${txtrst}
+
+     # my settings
+     alias ll='ls -l'
+     alias la='ls -lA'
+     alias gpgl='gpg --list-secret-keys --keyid-format LONG'
+     alias cl='sudo pacman -Rns $(pacman -Qdtq)'
+
+   #+end_src
+* Basic UI Configuration
+  #+begin_src emacs-lisp :tangle ./early-init.el
+
+    ;; The default is 800 kilobytes.  Measured in bytes.
+    (setq gc-cons-threshold (* 50 1000 1000))
+
+    ;; Profile emacs startup
+    (add-hook 'emacs-startup-hook
+	      (lambda ()
+		(message "*** Emacs loaded in %s with %d garbage collections."
+			 (format "%.2f seconds"
+				 (float-time
+				  (time-subtract after-init-time before-init-time)))
+			 gcs-done)))
+
+    ;; Setting for GUI emacs
+    (setq inhibit-startup-message t)
+    (scroll-bar-mode -1)
+    (tool-bar-mode -1)
+    (tooltip-mode -1)
+    (menu-bar-mode -1)
+    (set-fringe-mode 10)
+    (display-time-mode 1)
+    (electric-pair-mode 1)
+    (server-start)
+    (fset 'yes-or-no-p 'y-or-n-p)
+    (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+    (setq visible-bell t)
+
+    (set-face-attribute 'default nil :height 120)
+
+    ;; user interface
+    (when (version<= "26.0.50" emacs-version )
+      (global-display-line-numbers-mode))
+
+    (column-number-mode 1)
+    (setq use-dialog-box nil)
+
+  #+end_src
+
+* Basic settings
+  #+begin_src emacs-lisp
+
+    (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
+    (blink-cursor-mode 0)
+
+    (require 'package)
+    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/")
+		 '("org" . "https://orgmode.org/elpa/"))
+
+    ;; Package
+    (package-initialize)
+    (unless package-archive-contents
+      (package-refresh-contents))
+
+    ;; Initialize use-package on non-Linux platforms
+    (unless (package-installed-p 'use-package)
+      (package-insall 'use-package))
+
+    (require 'use-package)
+    (setq use-package-always-ensure t)
+
+    ;; (load-theme)
+    (use-package gruvbox-theme)
+    (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
+    (load-theme 'gruvbox t)
+
+    (setq xah-fly-use-meta-key nil)
+    ;; (require 'xah-fly-keys)
+    (use-package xah-fly-keys
+      :config
+      (xah-fly-keys-set-layout "dvorak")
+      ;; (xah-fly-keys-set-layout "qwerty")
+      (setq xah-fly-use-control-key nil))
+
+    (xah-fly-keys 1)
+
+    ;; (define-key xah-fly-key-map (kbd "<end>") 'xah-fly-insert-mode-activate)
+    (define-key xah-fly-n-keymap (kbd "e") 'vterm)
+    (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+  #+end_src
+
+* Org settings
+  #+begin_src emacs-lisp
+
+	    ;; org mode
+    (use-package org
+      :custom
+      (org-agenda-start-with-log-mode t)
+      (org-log-done 'time)
+      (org-log-into-drawer t)
+      (org-agenda-files
+       '("~/orgfile/Tasks.org")		; example
+       '("~/orgfile/birthday.org")))
+
+    (use-package org-bullets
+      :hook (org-mode . org-bullets-mode)
+      :custom
+      (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+
+    ;; Replace list hyphen with dot
+    (font-lock-add-keywords 'org-mode
+			    '(("^ *\\([-]\\) "
+			       (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+    (dolist (face '((org-level-1 . 1.2)
+		    (org-level-2 . 1.1)
+		    (org-level-3 . 1.05)
+		    (org-level-4 . 1.0)
+		    (org-level-5 . 1.1)
+		    (org-level-6 . 1.1)
+		    (org-level-7 . 1.1)
+		    (org-level-8 . 1.1))))
+
+    ;; Make sure org-indent face is available
+    (require 'org-indent)
+
+    ;; Disable line numbers for some modes
+    (dolist (mode '(org-mode-hook
+		    term-mode-hook
+		    shell-mode-hook
+		    eshell-mode-hook
+		    vterm-mode-hook))
+      (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+    (progn
+      ;; no need to warn
+      (put 'narrow-to-region 'disabled nil)
+      (put 'narrow-to-page 'disabled nil)
+      (put 'upcase-region 'disabled nil)
+      (put 'downcase-region 'disabled nil)
+      (put 'erase-buffer 'disabled nil)
+      (put 'scroll-left 'disabled nil)
+      (put 'dired-find-alternate-file 'disabled nil)
+      )
+
+    ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+    (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+    (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+    (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+    (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+    (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+    (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+    (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+
+  #+end_src
+
+* Package
+
+** package without setting
+   #+begin_src emacs-lisp
+
+     (use-package rust-mode)
+     (use-package python-mode)
+     (use-package command-log-mode)
+     (use-package counsel)
+
+   #+end_src
+
+** package with setting
+   #+begin_src emacs-lisp
+
+       (use-package magit
+	 :custom
+	 (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+
+       (use-package rainbow-delimiters
+	 :hook (prog-mode . rainbow-delimiters-mode))
+
+       (use-package helpful
+	 :custom
+	 (counsel-describe-function-function #'helpful-callable)
+	 (counsel-describe-variable-function #'helpful-variable)
+	 :bind
+	 ([remap describe-function] . counsel-describe-function)
+	 ([remap describe-command] . helpful-command)
+	 ([remap describe-variable] . counsel-describe-variable)
+	 ([remap describe-key] . helpful-key))
+
+       (use-package which-key
+	 :init (which-key-mode)
+	 :diminish which-key-mode
+	 :config
+	 (setq which-key-idle-delay 1))
+
+       (use-package ivy
+	 :init
+	 (ivy-mode 1))
+
+       (use-package ivy-rich
+	 :init
+	 (ivy-rich-mode 1))
+
+       (use-package wakatime-mode
+	 :init
+	 (global-wakatime-mode))
+
+   #+end_src
+
+** Projectile settings
+   #+begin_src emacs-lisp
+
+     (use-package projectile
+       :diminish projectile-mode
+       :config (projectile-mode)
+       :custom ((projectile-complition-system 'ivy))
+       :bind-keymap
+       ("C-c p" . projectile-command-map)
+       :init
+       (when (file-directory-p "~/Projects/Code")
+	 (setq projectile-project-search-path '("~/Projects/Code")))
+       (setq projectile-switch-project-action #'projectile-dired))
+
+     (use-package counsel-projectile
+       :config (counsel-projectile-mode))
+
+   #+end_src
+
+* Keep .emacs.d Clean
+  #+begin_src emacs-lisp
+
+    ;; Change the user-emacs-directory to keep unwanted thing out of ~/.emacs.d
+    (setq user-emacs-directory (expand-file-name "~/.cache/emacs/")
+	  url-history-file (expand-file-name "url/history" user-emacs-directory))
+
+    ;; Use no-littering to automatically set common path to the new user-emacs-directory
+    (use-package no-littering)
+
+    ;; Keep customization settings in a temperary file
+    (setq custom-file
+	  (if (boundp 'server-socket-dir)
+	      (expand-file-name "custom.el" server-socket-dir)
+	    (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
+
+  #+end_src
+
+* EXWM
+  #+begin_src emacs-lisp
+
+    ;; EXWM settings
+    (defun efs/exwm-update-class ()
+      (exwm-workspace-rename-buffer exwm-class-name))
+
+    (use-package exwm
+      :config
+      ;; Set the default number of workspaces
+      (setq exwm-workspace-number 5)
+
+      ;; When window "class" updates, use it to set the buffer name
+      (add-hook 'exwm-update-class-hook #'efs/exwm-update-class)
+
+      ;; Rebind CapsLock to Ctrl
+      (start-process-shell-command "xmodmap" nil "xmodmap ~/.emacs.d/exwm/Xmodmap")
+
+      ;; Set the screen resolution (update this to be the correct resolution for your screen!)
+      (require 'exwm-randr)
+      (exwm-randr-enable)
+      ;; (start-process-shell-command "xrandr" nil "xrandr --output Virtual-1 --primary --mode 2048x1152 --pos 0x0 --rotate normal")
+
+      ;; Load the system tray before exwm-init
+      (require 'exwm-systemtray)
+      (exwm-systemtray-enable)
+
+      ;; These keys should always pass through to Emacs
+      (setq exwm-input-prefix-keys
+	'(?\C-x
+	  ?\C-u
+	  ?\C-h
+	  ?\M-x
+	  ?\M-`
+	  ?\M-&
+	  ?\M-:
+	  ?\C-\M-j  ;; Buffer list
+	  ?\C-\ ))  ;; Ctrl+Space
+
+      ;; Ctrl+Q will enable the next key to be sent directly
+      (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+
+      ;; Set up global key bindings.  These always work, no matter the input state!
+      ;; Keep in mind that changing this list after EXWM initializes has no effect.
+      (setq exwm-input-global-keys
+	    `(
+	      ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
+	      ([?\s-r] . exwm-reset)
+
+	      ;; Move between windows
+	      ([s-left] . windmove-left)
+	      ([s-right] . windmove-right)
+	      ([s-up] . windmove-up)
+	      ([s-down] . windmove-down)
+
+	      ;; Launch applications via shell command
+	      ([?\s-&] . (lambda (command)
+			   (interactive (list (read-shell-command "$ ")))
+			   (start-process-shell-command command nil command)))
+
+	      ;; Switch workspace
+	      ([?\s-w] . exwm-workspace-switch)
+	      ([?\s-`] . (lambda () (interactive) (exwm-workspace-switch-create 0)))
+
+	      ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
+	      ,@(mapcar (lambda (i)
+			  `(,(kbd (format "s-%d" i)) .
+			    (lambda ()
+			      (interactive)
+			      (exwm-workspace-switch-create ,i))))
+			(number-sequence 0 9))))
+
+      (exwm-enable))
+
+  #+end_src
+
+* Application
+
+** Media Player
+
+*** mpv
+    #+begin_src conf :tangle ~/.config/mpv/mpv.conf :noweb yes
+
+      # Start the window in the upper right screen corner
+      geometry=22%-30+20
+
+      # Save video position on quit
+      save-position-on-quit
+
+      # When playing audio files, display the album art
+      audio-dispaly=attachment
+
+      # Keep the player open after the file finishes
+      keep-open
+
+    #+end_src
+
