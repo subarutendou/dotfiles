@@ -9,3 +9,5 @@ It can be a good idea to tell git to disable colors as it would conflict with ne
 git config --global color.pager no
 
 This second command fix the bug of your screenshot
+
+/msg NickServ VERIFY REGISTER subaru ZqPPlCRXIrJkQr07
