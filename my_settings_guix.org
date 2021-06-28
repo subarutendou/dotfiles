@@ -187,9 +187,18 @@
        :init
        (ivy-rich-mode 1))
 
-     ;; (use-package wakatime-mode
-     ;;   :init
-     ;;   (global-wakatime-mode))
+     (use-package wakatime-mode
+       :init
+       (global-wakatime-mode)
+       :custom
+       (custom-set-variable '(wakatime-api-key "fe660f54-95f6-4496-ad09-96ed709d39ad")))
+
+     ;; (use-package 0x0
+     ;;   :config
+     ;;   (setq 0x0-ixio-basic-auth-creds ':user "subaru" :pass "Ii8366901"))
+     ;; (map! :localleader
+     ;;       :map (dired-mode-map erc-mode-map)
+     ;;       :desc "0x0 Upload File" "u" #'0x0-upload-file)
    #+end_src
 ** Projectile settings
    #+begin_src emacs-lisp
