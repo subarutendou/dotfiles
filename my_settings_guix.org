@@ -70,12 +70,11 @@
     (setq xah-fly-use-meta-key nil)
     (use-package xah-fly-keys
       :config
+      (xah-fly-keys 1)
       (xah-fly-keys-set-layout "dvorak")
-      (setq xah-fly-use-control-key nil))
+      (setq xah-fly-use-control-key nil)
+      (define-key xah-fly-n-keymap (kbd "e") 'vterm))
 
-    (xah-fly-keys 1)
-
-    (define-key xah-fly-n-keymap (kbd "e") 'vterm)
     (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
   #+end_src
 * Org settings
