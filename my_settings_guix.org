@@ -152,8 +152,6 @@
 * Package
 ** package without setting
    #+begin_src emacs-lisp
-     (use-package rust-mode)
-     (use-package python-mode)
      (use-package counsel)
      (use-package all-the-icons)
    #+end_src
@@ -307,3 +305,15 @@
 	  erc-kill-buffer-on-part t
 	  erc-auto-query 'bury)
   #+end_src
+* lsp
+** python
+   #+begin_src emacs-lisp
+     (use-package python-mode
+       :ensure nil
+       :custom
+       (python-shell-interpreter "python3"))
+   #+end_src
+** rust
+   #+begin_src emacs-lisp
+     (use-package rust-mode)
+   #+end_src
