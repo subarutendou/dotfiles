@@ -76,6 +76,12 @@
       (define-key xah-fly-n-keymap (kbd "e") 'vterm))
 
     (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+    (xah-fly--define-keys
+     xah-fly-command-map
+     '(
+       ("b" . swiper)
+       ))
   #+end_src
 * Org settings
   #+begin_src emacs-lisp
