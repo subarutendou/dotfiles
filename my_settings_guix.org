@@ -29,7 +29,9 @@
     (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
     (setq visible-bell t)
 
-    (set-face-attribute 'default nil :height 120)
+    ;; (set-face-attribute 'default nil :font "Noto Sans Mono":height 120)
+    (set-face-attribute 'default nil :font "Fira Code":height 120)
+    ;; (set-frame-font "-GOOG-Noto Sans Mono-normal-normal-extracondensed-*-16-*-*-*-*-0-iso10646-1")
 
     ;; user interface
     (when (version<= "26.0.50" emacs-version )
@@ -37,6 +39,14 @@
 
     (column-number-mode 1)
     (setq use-dialog-box nil)
+
+    ;; Disable line numbers for some modes
+    (dolist (mode '(org-mode-hook
+		    term-mode-hook
+		    shell-mode-hook
+		    eshell-mode-hook
+		    vterm-mode-hook))
+      (add-hook mode (lambda () (display-line-numbers-mode 0))))
   #+end_src
 * Basic settings
   #+begin_src emacs-lisp
@@ -116,14 +126,6 @@
     ;; Make sure org-indent face is available
     (require 'org-indent)
 
-    ;; Disable line numbers for some modes
-    (dolist (mode '(org-mode-hook
-		    term-mode-hook
-		    shell-mode-hook
-		    eshell-mode-hook
-		    vterm-mode-hook))
-      (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
     (progn
       ;; no need to warn
       (put 'narrow-to-region 'disabled nil)
@@ -148,12 +150,12 @@
   #+begin_src emacs-lisp
     (require 'vterm)
     (require 'matrix-client)
+    (require 'all-the-icons)
   #+end_src
 * Package
 ** package without setting
    #+begin_src emacs-lisp
      (use-package counsel)
-     (use-package all-the-icons)
    #+end_src
 ** package with setting
    #+begin_src emacs-lisp
@@ -317,3 +319,72 @@
    #+begin_src emacs-lisp
      (use-package rust-mode)
    #+end_src
+* system
+  #+begin_src conf :tangle ~/.config/guix/system.scm
+    ;; This is an operating system configuration generated
+    ;; by the graphical installer.
+
+    (use-modules (gnu) (nongnu packages linux))
+    (use-service-modules desktop networking ssh xorg)
+
+    (operating-system
+     (kernel linux)
+     (firmware (list linux-firmware))
+      (locale "en_US.utf8")
+      (timezone "America/New_York")
+      (keyboard-layout (keyboard-layout "us"))
+      (host-name "subaru")
+      (users (cons* (user-account
+		      (name "subaru")
+		      (comment "Subaru Tendou")
+		      (group "users")
+		      (home-directory "/home/subaru")
+		      (supplementary-groups
+			'("wheel" "netdev" "audio" "video")))
+		    %base-user-accounts))
+      (packages
+	(append
+	  (list (specification->package "emacs")
+		(specification->package "emacs-exwm")
+		(specification->package "font-fira-code")
+		(specification->package "font-adobe-source-han-sans")
+		(specification->package "emacs-vterm")
+		(specification->package "emacs-matrix-client")
+		(specification->package "emacs-all-the-icons")
+		(specification->package
+		  "emacs-desktop-environment")
+		(specification->package "nss-certs"))
+	  %base-packages))
+      (services
+	(append
+	  (list (service openssh-service-type)
+		(set-xorg-configuration
+		  (xorg-configuration
+		    (keyboard-layout keyboard-layout))))
+	  %desktop-services))
+      (bootloader
+	(bootloader-configuration
+	  (bootloader grub-efi-bootloader)
+	  (target "/boot/efi")
+	  (keyboard-layout keyboard-layout)))
+      (swap-devices
+	(list (uuid "73fc4e6b-3600-4ab0-a72b-90537d571ec2")))
+      (file-systems
+	(cons* (file-system
+		 (mount-point "/boot/efi")
+		 (device (uuid "63B9-13B2" 'fat32))
+		 (type "vfat"))
+	       (file-system
+		 (mount-point "/")
+		 (device
+		   (uuid "fcb0674b-d0e3-444f-865c-747f702d1cff"
+			 'ext4))
+		 (type "ext4"))
+	       (file-system
+		 (mount-point "/home")
+		 (device
+		   (uuid "b9a2ea0c-fd10-422f-b408-3203e0971837"
+			 'ext4))
+		 (type "ext4"))
+	       %base-file-systems)))
+  #+end_src
