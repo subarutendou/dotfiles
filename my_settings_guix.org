@@ -344,14 +344,14 @@
 	(append
 	  (list (specification->package "emacs")
 		(specification->package "emacs-exwm")
-		(specification->package "font-fira-code")
-		(specification->package "font-adobe-source-han-sans")
 		(specification->package "emacs-vterm")
 		(specification->package "emacs-matrix-client")
 		(specification->package "emacs-all-the-icons")
 		(specification->package "youtube-dl")
 		(specification->package "mpv")
 		(specification->package "font-google-noto")
+		(specification->package "rust")
+		(specification->package "rust-cargo")
 		(specification->package
 		  "emacs-desktop-environment")
 		(specification->package "nss-certs"))
