@@ -71,9 +71,13 @@
     (setq use-package-always-ensure t)
 
     ;; (load-theme)
-    (use-package gruvbox-theme)
-    (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
-    (load-theme 'gruvbox t)
+    ;; (use-package gruvbox-theme
+    ;;   :config
+    ;;   (load-theme 'gruvbox t))
+
+    (use-package monokai-theme
+      :config
+      (load-theme 'monokai t))
 
     (setq xah-fly-use-meta-key nil)
     (use-package xah-fly-keys
@@ -427,4 +431,14 @@
     alias grep='grep --color=auto'
     alias ping='~/prettyping/prettyping'
     alias update='sudo -E guix system reconfigure ~/.config//guix/system.scm'
+  #+end_src
+* bash profile
+  #+begin_src conf :tangle ~/.bash_profile
+    # Honor per-interactive-shell startup file
+    if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
+
+    GUIX_PROFILE="/home/subaru/.guix-profile"
+	 . "$GUIX_PROFILE/etc/profile"
+
+    PATH=$PATH:~/.local/bin
   #+end_src
