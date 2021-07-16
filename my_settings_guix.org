@@ -1,19 +1,19 @@
 #+title Emacs settings
 #+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/init.el :mkdirp yes
 
-* Basic UI Configuration
+* early
   #+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
     ;; The default is 800 kilobytes.  Measured in bytes.
     (setq gc-cons-threshold (* 50 1000 1000))
 
     ;; Profile emacs startup
-    (add-hook 'emacs-startup-hook
-	      (lambda ()
-		(message "*** Emacs loaded in %s with %d garbage collections."
-			 (format "%.2f seconds"
-				 (float-time
-				  (time-subtract after-init-time before-init-time)))
-			 gcs-done)))
+    ;; (add-hook 'emacs-startup-hook
+    ;; 	  (lambda ()
+    ;; 	    (message "*** Emacs loaded in %s with %d garbage collections."
+    ;; 		     (format "%.2f seconds"
+    ;; 			     (float-time
+    ;; 			      (time-subtract after-init-time before-init-time)))
+    ;; 		     gcs-done)))
 
     ;; Setting for GUI emacs
     (setq inhibit-startup-message t)
@@ -22,9 +22,7 @@
     (tooltip-mode -1)
     (menu-bar-mode -1)
     (set-fringe-mode 10)
-    ;; (display-time-mode 1)
     (electric-pair-mode 1)
-    ;; (server-start)
     (fset 'yes-or-no-p 'y-or-n-p)
     (setq visible-bell t)
 
@@ -36,14 +34,6 @@
 
     (column-number-mode 1)
     (setq use-dialog-box nil)
-
-    ;; Disable line numbers for some modes
-    (dolist (mode '(org-mode-hook
-		    term-mode-hook
-		    shell-mode-hook
-		    eshell-mode-hook
-		    vterm-mode-hook))
-      (add-hook mode (lambda () (display-line-numbers-mode 0))))
   #+end_src
 * Basic settings
   #+begin_src emacs-lisp
@@ -57,6 +47,14 @@
     (let ((default-directory "~/.guix-profile/share/emacs/site-lisp/"))
       (normal-top-level-add-subdirs-to-load-path))
 
+    ;; Disable line numbers for some modes
+    (dolist (mode '(org-mode-hook
+		    term-mode-hook
+		    shell-mode-hook
+		    eshell-mode-hook
+		    vterm-mode-hook))
+      (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
     ;; Package
     (package-initialize)
     (unless package-archive-contents
@@ -69,14 +67,9 @@
     (require 'use-package)
     (setq use-package-always-ensure t)
 
-    ;; (load-theme)
-    ;; (use-package gruvbox-theme
-    ;;   :config
-    ;;   (load-theme 'gruvbox t))
-
-    (use-package monokai-theme
+    (use-package vscode-dark-plus-theme
       :config
-      (load-theme 'monokai t))
+      (load-theme 'vscode-dark-plus t))
 
     (setq xah-fly-use-meta-key nil)
     (use-package xah-fly-keys
@@ -84,16 +77,10 @@
       (xah-fly-keys 1)
       (xah-fly-keys-set-layout "dvorak")
       (setq xah-fly-use-control-key nil)
-      (define-key xah-fly-n-keymap (kbd "e") 'vterm))
+      (define-key xah-fly-n-keymap (kbd "e") 'vterm)
+      (define-key xah-fly-command-map (kbd "b") 'swiper))
 
     (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-    ;; (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
-
-    (xah-fly--define-keys
-     xah-fly-command-map
-     '(
-       ("b" . swiper)
-       ))
   #+end_src
 * Org settings
   #+begin_src emacs-lisp
@@ -148,7 +135,7 @@
     (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
     (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
   #+end_src
-* package require
+* guix package
   #+begin_src emacs-lisp
     (require 'vterm)
     (require 'matrix-client)
@@ -157,7 +144,6 @@
 * Package
 ** package without setting
    #+begin_src emacs-lisp
-     (use-package counsel)
    #+end_src
 ** package with setting
    #+begin_src emacs-lisp
@@ -168,17 +154,6 @@
      (use-package rainbow-delimiters
        :hook (prog-mode . rainbow-delimiters-mode))
 
-     (use-package helpful
-       :commands (helpful-callable helpful-variable helpful-command helpful-key)
-       :custom
-       (counsel-describe-function-function #'helpful-callable)
-       (counsel-describe-variable-function #'helpful-variable)
-       :bind
-       ([remap describe-function] . counsel-describe-function)
-       ([remap describe-command] . helpful-command)
-       ([remap describe-variable] . counsel-describe-variable)
-       ([remap describe-key] . helpful-key))
-
      (use-package which-key
        :defer 0
        :diminish which-key-mode
@@ -186,30 +161,31 @@
        (which-key-mode)
        (setq which-key-idle-delay 1))
 
-     (use-package ivy
+     (use-package vertico
+       :ensure
+       :custom
+       (vertico-cycle t)
        :init
-       (ivy-mode 1))
+       (vertico-mode))
 
-     (use-package ivy-rich
+     (use-package marginalia
+       :after vertico
+       :ensure t
+       :custom
+       (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
        :init
-       (ivy-rich-mode 1))
-
+       (marginalia-mode))
    #+end_src
-** Projectile settings
+** python
    #+begin_src emacs-lisp
-     ;; (use-package projectile
-     ;;   :diminish projectile-mode
-     ;;   :config (projectile-mode)
-     ;;   :custom ((projectile-complition-system 'ivy))
-     ;;   :bind-keymap
-     ;;   ("C-c p" . projectile-command-map)
-     ;;   :init
-     ;;   (when (file-directory-p "~/Projects/Code")
-     ;;     (setq projectile-project-search-path '("~/Projects/Code")))
-     ;;   (setq projectile-switch-project-action #'projectile-dired))
-
-     ;; (use-package counsel-projectile
-     ;;   :config (counsel-projectile-mode))
+     (use-package python-mode
+       :ensure nil
+       :custom
+       (python-shell-interpreter "python3"))
+   #+end_src
+** rust
+   #+begin_src emacs-lisp
+     (use-package rust-mode)
    #+end_src
 * Keep .emacs.d Clean
   #+begin_src emacs-lisp
@@ -310,19 +286,7 @@
 	  erc-kill-buffer-on-part t
 	  erc-auto-query 'bury)
   #+end_src
-* lsp
-** python
-   #+begin_src emacs-lisp
-     (use-package python-mode
-       :ensure nil
-       :custom
-       (python-shell-interpreter "python3"))
-   #+end_src
-** rust
-   #+begin_src emacs-lisp
-     (use-package rust-mode)
-   #+end_src
-* system
+* Guix-system
   #+begin_src lisp :tangle ~/.config/guix/system.scm
     ;; This is an operating system configuration generated
     ;; by the graphical installer.
@@ -359,6 +323,7 @@
 		(specification->package "rust-cargo")
 		(specification->package "python")
 		(specification->package "python-pip")
+		(specification->package "gcc-toolchain")
 		(specification->package
 		  "emacs-desktop-environment")
 		(specification->package "nss-certs"))
