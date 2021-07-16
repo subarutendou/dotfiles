@@ -142,10 +142,7 @@
     (require 'all-the-icons)
   #+end_src
 * Package
-** package without setting
-   #+begin_src emacs-lisp
-   #+end_src
-** package with setting
+** package
    #+begin_src emacs-lisp
      (use-package magit
        :custom
@@ -161,20 +158,27 @@
        (which-key-mode)
        (setq which-key-idle-delay 1))
 
-     (use-package vertico
-       :ensure
+     (use-package helpful
+       :commands (helpful-callable helpful-variable helpful-command helpful-key)
        :custom
-       (vertico-cycle t)
-       :init
-       (vertico-mode))
+       (counsel-describe-function-function #'helpful-callable)
+       (counsel-describe-variable-function #'helpful-variable)
+       :bind
+       ([remap describe-function] . counsel-describe-function)
+       ([remap describe-command] . helpful-command)
+       ([remap describe-variable] . counsel-describe-variable)
+       ([remap describe-key] . helpful-key))
 
-     (use-package marginalia
-       :after vertico
-       :ensure t
-       :custom
-       (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+     (use-package ivy
        :init
-       (marginalia-mode))
+       (ivy-mode 1))
+
+     (use-package ivy-rich
+       :after ivy
+       :init
+       (ivy-rich-mode 1))
+
+     (use-package counsel)
    #+end_src
 ** python
    #+begin_src emacs-lisp
