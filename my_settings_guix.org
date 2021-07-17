@@ -169,6 +169,12 @@
        :init
        (vertico-mode))
 
+     (use-package orderless
+       :init
+       (setq completion-style '(orderless)
+	     completion-category-defaults nil
+	     completion-category-overrides '((file (style partial-completion)))))
+
      (use-package marginalia
        :after vertico
        :ensure t
