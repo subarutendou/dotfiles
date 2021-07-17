@@ -73,6 +73,7 @@
 
     (setq xah-fly-use-meta-key nil)
     (use-package xah-fly-keys
+      :diminish xah-fly-keys
       :config
       (xah-fly-keys 1)
       (xah-fly-keys-set-layout "dvorak")
@@ -144,6 +145,8 @@
 * Package
 ** package
    #+begin_src emacs-lisp
+     (use-package diminish)
+
      (use-package magit
        :custom
        (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
@@ -151,34 +154,20 @@
      (use-package rainbow-delimiters
        :hook (prog-mode . rainbow-delimiters-mode))
 
-     (use-package which-key
-       :defer 0
-       :diminish which-key-mode
-       :config
-       (which-key-mode)
-       (setq which-key-idle-delay 1))
-
-     (use-package helpful
-       :commands (helpful-callable helpful-variable helpful-command helpful-key)
+     (use-package vertico
+       :ensure
        :custom
-       (counsel-describe-function-function #'helpful-callable)
-       (counsel-describe-variable-function #'helpful-variable)
-       :bind
-       ([remap describe-function] . counsel-describe-function)
-       ([remap describe-command] . helpful-command)
-       ([remap describe-variable] . counsel-describe-variable)
-       ([remap describe-key] . helpful-key))
-
-     (use-package ivy
+       (vertico-cycle t)
        :init
-       (ivy-mode 1))
+       (vertico-mode))
 
-     (use-package ivy-rich
-       :after ivy
+     (use-package marginalia
+       :after vertico
+       :ensure t
+       :custom
+       (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
        :init
-       (ivy-rich-mode 1))
-
-     (use-package counsel)
+       (marginalia-mode))
    #+end_src
 ** python
    #+begin_src emacs-lisp
