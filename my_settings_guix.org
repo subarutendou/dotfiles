@@ -26,7 +26,8 @@
     (fset 'yes-or-no-p 'y-or-n-p)
     (setq visible-bell t)
 
-    (set-face-attribute 'default nil :height 120)
+    (set-face-attribute 'default nil :family "Fira Code" :height 120)
+    (set-fontset-font t nil "monospace" nil 'append)
 
     ;; user interface
     (when (version<= "26.0.50" emacs-version )
@@ -37,51 +38,55 @@
   #+end_src
 * Basic settings
   #+begin_src emacs-lisp
-	(setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
-	(blink-cursor-mode 0)
+    (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
+    (blink-cursor-mode 0)
 
-	(require 'package)
-	(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/")
-		     '("org" . "https://orgmode.org/elpa/"))
+    (require 'package)
+    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/")
+		 '("org" . "https://orgmode.org/elpa/"))
 
-	(let ((default-directory "~/.guix-profile/share/emacs/site-lisp/"))
-	  (normal-top-level-add-subdirs-to-load-path))
+    (let ((default-directory "~/.guix-profile/share/emacs/site-lisp/"))
+      (normal-top-level-add-subdirs-to-load-path))
 
-	;; Disable line numbers for some modes
-	(dolist (mode '(org-mode-hook
-			term-mode-hook
-			shell-mode-hook
-			eshell-mode-hook
-			vterm-mode-hook))
-	  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+    ;; Disable line numbers for some modes
+    (dolist (mode '(org-mode-hook
+		    term-mode-hook
+		    shell-mode-hook
+		    eshell-mode-hook
+		    vterm-mode-hook))
+      (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
-	;; Package
-	(package-initialize)
-	(unless package-archive-contents
-	  (package-refresh-contents))
+    ;; Package
+    (package-initialize)
+    (unless package-archive-contents
+      (package-refresh-contents))
 
-	;; Initialize use-package on non-Linux platforms
-	(unless (package-installed-p 'use-package)
-	  (package-insall 'use-package))
+    ;; Initialize use-package on non-Linux platforms
+    (unless (package-installed-p 'use-package)
+      (package-insall 'use-package))
 
-	(require 'use-package)
-	(setq use-package-always-ensure t)
+    (require 'use-package)
+    (setq use-package-always-ensure t)
 
-	(use-package vscode-dark-plus-theme
-	  :config
-	  (load-theme 'vscode-dark-plus t))
+    ;; (use-package monokai-theme
+    ;;   :config
+    ;;   (load-theme 'monokai t))
 
-	(setq xah-fly-use-meta-key nil)
-	(use-package xah-fly-keys
-	  :diminish xah-fly-keys
-	  :config
-	  (xah-fly-keys 1)
-	  (xah-fly-keys-set-layout "dvorak")
-	  (setq xah-fly-use-control-key nil)
-	  (define-key xah-fly-n-keymap (kbd "e") 'vterm)
-	  )
+    (use-package ayu-theme
+      :config
+      (load-theme 'ayu-dark t))
 
-	(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+    (setq xah-fly-use-meta-key nil)
+    (use-package xah-fly-keys
+      :diminish xah-fly-keys
+      :config
+      (xah-fly-keys 1)
+      (xah-fly-keys-set-layout "dvorak")
+      (setq xah-fly-use-control-key nil)
+      (define-key xah-fly-n-keymap (kbd "e") 'vterm)
+      )
+
+    (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
   #+end_src
 * Org settings
   #+begin_src emacs-lisp
@@ -146,6 +151,7 @@
 ** package
    #+begin_src emacs-lisp
      (use-package diminish)
+     (use-package guix)
 
      (use-package magit
        :custom
@@ -169,12 +175,6 @@
        :init
        (vertico-mode))
 
-     (use-package orderless
-       :init
-       (setq completion-style '(orderless)
-	     completion-category-defaults nil
-	     completion-category-overrides '((file (style partial-completion)))))
-
      (use-package marginalia
        :after vertico
        :ensure t
@@ -182,6 +182,32 @@
        (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
        :init
        (marginalia-mode))
+
+     (use-package ligature
+       :load-path "~/.emacs.d/github/ligature.el/"
+       :config
+       ;; Enable the "www" ligature in every possible major mode
+       (ligature-set-ligatures 't '("www"))
+       ;; Enable traditional ligature support in eww-mode, if the
+       ;; `variable-pitch' face supports it
+       (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+       ;; Enable all Cascadia Code ligatures in programming modes
+       (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+					      ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+					      "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+					      "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+					      "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+					      "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+					      "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+					      "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+					      ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+					      "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+					      "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+					      "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+					      "\\\\" "://"))
+       ;; Enables ligature checks globally in all buffers. You can also do it
+       ;; per mode with `ligature-mode'.
+       (global-ligature-mode t))
    #+end_src
 ** python
    #+begin_src emacs-lisp
@@ -233,8 +259,8 @@
        ;; (start-process-shell-command "xrandr" nil "xrandr --output Virtual-1 --primary --mode 2048x1152 --pos 0x0 --rotate normal")
 
        ;; Load the system tray before exwm-init
-       (require 'exwm-systemtray)
-       (exwm-systemtray-enable)
+       ;; (require 'exwm-systemtray)
+       ;; (exwm-systemtray-enable)
 
        ;; These keys should always pass through to Emacs
        (setq exwm-input-prefix-keys
@@ -325,14 +351,15 @@
 		(specification->package "emacs-all-the-icons")
 		(specification->package "youtube-dl")
 		(specification->package "mpv")
-		(specification->package "font-google-noto")
+		(specification->package "font-fira-code")
+		(specification->package "font-adobe-source-han-sans")
 		(specification->package "rust")
 		(specification->package "rust-cargo")
 		(specification->package "python")
 		(specification->package "python-pip")
 		(specification->package "gcc-toolchain")
-		(specification->package
-		  "emacs-desktop-environment")
+		(specification->package "emacs-guix")	    
+		(specification->package "emacs-desktop-environment")
 		(specification->package "nss-certs"))
 	  %base-packages))
       (services
