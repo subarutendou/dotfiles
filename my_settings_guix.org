@@ -26,7 +26,8 @@
     (fset 'yes-or-no-p 'y-or-n-p)
     (setq visible-bell t)
 
-    (set-face-attribute 'default nil :family "Fira Code" :height 120)
+    (set-face-attribute 'default nil :family "JetBrains Mono" :height 120)
+    (set-fontset-font t nil "Fira Code" nil 'append)
     (set-fontset-font t nil "monospace" nil 'append)
 
     ;; user interface
@@ -258,10 +259,6 @@
        (exwm-randr-enable)
        ;; (start-process-shell-command "xrandr" nil "xrandr --output Virtual-1 --primary --mode 2048x1152 --pos 0x0 --rotate normal")
 
-       ;; Load the system tray before exwm-init
-       ;; (require 'exwm-systemtray)
-       ;; (exwm-systemtray-enable)
-
        ;; These keys should always pass through to Emacs
        (setq exwm-input-prefix-keys
 	 '(?\C-x
@@ -353,6 +350,7 @@
 		(specification->package "mpv")
 		(specification->package "font-fira-code")
 		(specification->package "font-adobe-source-han-sans")
+		(specification->package "font-jetbrains-mono")
 		(specification->package "rust")
 		(specification->package "rust-cargo")
 		(specification->package "python")
