@@ -88,6 +88,8 @@
       )
 
     (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+    (delete-selection-mode 1)
+    (setq shift-select-mode nil)
   #+end_src
 * Org settings
   #+begin_src emacs-lisp
