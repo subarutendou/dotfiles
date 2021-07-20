@@ -152,6 +152,9 @@
      (use-package diminish)
      (use-package guix)
 
+     (use-package emojify
+       :hook (after-init . global-emojify-mode))
+
      (use-package magit
        :custom
        (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
