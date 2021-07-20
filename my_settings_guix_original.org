@@ -69,10 +69,6 @@
     (require 'use-package)
     (setq use-package-always-ensure t)
 
-    ;; (use-package monokai-theme
-    ;;   :config
-    ;;   (load-theme 'monokai t))
-
     (use-package ayu-theme
       :config
       (load-theme 'ayu-dark t))
@@ -352,7 +348,6 @@
     alias ll='ls -l'
     alias grep='grep --color=auto'
     alias ping='~/prettyping/prettyping'
-    alias update='sudo -E guix system reconfigure ~/.config//guix/system.scm'
   #+end_src
 * bash profile
   #+begin_src conf :tangle ~/.bash_profile
