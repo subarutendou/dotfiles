@@ -133,9 +133,9 @@
     (require 'use-package)
     (setq use-package-always-ensure t)
 
-    (use-package gruvbox-theme
+    (use-package doom-themes
       :config
-      (load-theme 'gruvbox t))
+      (load-theme 'doom-gruvbox t))
 
     (setq xah-fly-use-meta-key nil)
     (use-package xah-fly-keys
@@ -143,9 +143,7 @@
       :config
       (xah-fly-keys 1)
       (xah-fly-keys-set-layout "dvorak")
-      (define-key xah-fly-n-keymap (kbd "e") 'vterm)
-      (define-key xah-fly-key-map (kbd "b") 'swiper)
-      )
+      (define-key xah-fly-n-keymap (kbd "e") 'vterm))
 
     (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
     (delete-selection-mode 1)
@@ -173,12 +171,10 @@
 
     (require 'vterm)
     (require 'matrix-client)
-    (require 'all-the-icons)
   #+end_src
 * Package
    #+begin_src emacs-lisp
      (use-package diminish)
-     (use-package counsel)
      (use-package guix)
 
      (use-package perspective
@@ -204,28 +200,24 @@
        (which-key-mode)
        (setq which-key-idle-delay 1))
 
-     (use-package helpful
+     (use-package vertico
+       :ensure
        :custom
-       (counsel-describe-function-function #'helpful-callable)
-       (counsel-describe-variable-function #'helpful-variable)
-       :bind
-       ([remap describe-function] . counsel-describe-function)
-       ([remap describe-command] . helpful-command)
-       ([remap describe-variable] . counsel-describe-variable)
-       ([remap describe-key] . helpful-key))
-
-     (use-package ivy
+       (vertico-cycle t)
        :init
-       (ivy-mode 1))
+       (vertico-mode))
 
-     (use-package ivy-rich
+     (use-package consult
+       :hook (completion-list-mode . consult-preview-at-point-mode)
+       :init)
+
+     (use-package marginalia
+       :after vertico
+       :ensure t
+       :custom
+       (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
        :init
-       (ivy-rich-mode 1))
-
-     (use-package ivy-prescient
-       :after counsel
-       :config
-       (ivy-prescient-mode 1))
+       (marginalia-mode))
 
      (use-package ligature
        :load-path "~/.emacs.d/github/ligature.el/"
@@ -311,7 +303,7 @@
    #+begin_src emacs-lisp
      (defun efs/org-babel-tangle-config()
        (when (string-equal (buffer-file-name)
-			  (expand-file-name "~/dotfiles/guix_eamcs.org"))
+			  (expand-file-name "~/dotfiles/guix_emacs.org"))
        (let ((org-confirm-babel-evaluate nil))
 	 (org-babel-tangle))))
 
