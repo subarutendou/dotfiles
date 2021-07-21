@@ -17,6 +17,8 @@
 
     ;; Setting for GUI emacs
     (setq inhibit-startup-message t)
+    (custom-set-variables
+     '(initial-frame-alist (quote ((fullscreen . maximized)))))
     (scroll-bar-mode -1)
     (tool-bar-mode -1)
     (tooltip-mode -1)
@@ -146,6 +148,7 @@
       (define-key xah-fly-n-keymap (kbd "e") 'vterm))
 
     (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+    (global-set-key (kbd "C-x k") 'kill-matching-buffers)
     (delete-selection-mode 1)
     (setq shift-select-mode nil)
   #+end_src
@@ -176,11 +179,6 @@
    #+begin_src emacs-lisp
      (use-package diminish)
      (use-package guix)
-
-     (use-package perspective
-       :bind (("C-x k" . persp-kill-buffer*))
-       :config
-       (presp-mode))
 
      (use-package emojify
        :hook (after-init . global-emojify-mode))
