@@ -15,8 +15,6 @@
 				  (time-subtract after-init-time before-init-time)))
 			 gcs-done)))
 
-    (setq byte-compile-warnings '(cl-functions))
-
     ;; Setting for GUI emacs
     (setq inhibit-startup-message t)
     (scroll-bar-mode -1)
@@ -216,7 +214,6 @@
 ** python
    #+begin_src emacs-lisp
      (use-package python-mode
-       :ensure nil
        :custom
        (python-shell-interpreter "python3"))
    #+end_src
