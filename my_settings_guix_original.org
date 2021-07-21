@@ -25,29 +25,10 @@
     (electric-pair-mode 1)
     (fset 'yes-or-no-p 'y-or-n-p)
     (setq visible-bell t)
-
-    (set-face-attribute 'default nil :family "JetBrains Mono" :height 120)
-    (set-fontset-font t nil "Fira Code" nil 'append)
-    (set-fontset-font t nil "monospace" nil 'append)
-
-    ;; user interface
+    (setq use-dialog-box nil)
+    (column-number-mode 1)
     (when (version<= "26.0.50" emacs-version )
       (global-display-line-numbers-mode))
-
-    (column-number-mode 1)
-    (setq use-dialog-box nil)
-  #+end_src
-* Basic settings
-  #+begin_src emacs-lisp
-    (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
-    (blink-cursor-mode 0)
-
-    (require 'package)
-    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/")
-		 '("org" . "https://orgmode.org/elpa/"))
-
-    (let ((default-directory "~/.guix-profile/share/emacs/site-lisp/"))
-      (normal-top-level-add-subdirs-to-load-path))
 
     ;; Disable line numbers for some modes
     (dolist (mode '(org-mode-hook
@@ -56,6 +37,22 @@
 		    eshell-mode-hook
 		    vterm-mode-hook))
       (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+    ;; Fonts
+    (set-face-attribute 'default nil :family "JetBrains Mono" :height 120)
+    (set-fontset-font t nil "Fira Code" nil 'append)
+    (set-fontset-font t nil "monospace" nil 'append)
+  #+end_src
+* Basic settings
+  #+begin_src emacs-lisp
+    ;; disable cursor blink only work in init.el
+    (blink-cursor-mode 0)
+
+    (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
+
+    (require 'package)
+    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/")
+		 '("org" . "https://orgmode.org/elpa/"))
 
     ;; EXWM settings
     (defun exwm-update-class ()
@@ -151,61 +148,26 @@
     (delete-selection-mode 1)
     (setq shift-select-mode nil)
   #+end_src
-* Org settings
+* Keep .emacs.d Clean
   #+begin_src emacs-lisp
-    (use-package org
-      :custom
-      (org-agenda-start-with-log-mode t)
-      (org-log-done 'time)
-      (org-log-into-drawer t)
-      (org-agenda-files
-       '("~/orgfile/Tasks.org")		; example
-       '("~/orgfile/birthday.org")))
+    ;; Change the user-emacs-directory to keep unwanted thing out of ~/.emacs.d
+    (setq user-emacs-directory (expand-file-name "~/.cache/emacs/")
+	  url-history-file (expand-file-name "url/history" user-emacs-directory))
 
-    (use-package org-bullets
-      :hook (org-mode . org-bullets-mode)
-      :custom
-      (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+    ;; Use no-littering to automatically set common path to the new user-emacs-directory
+    (use-package no-littering)
 
-    ;; Replace list hyphen with dot
-    (font-lock-add-keywords 'org-mode
-			    '(("^ *\\([-]\\) "
-			       (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-
-    (dolist (face '((org-level-1 . 1.2)
-		    (org-level-2 . 1.1)
-		    (org-level-3 . 1.05)
-		    (org-level-4 . 1.0)
-		    (org-level-5 . 1.1)
-		    (org-level-6 . 1.1)
-		    (org-level-7 . 1.1)
-		    (org-level-8 . 1.1))))
-
-    ;; Make sure org-indent face is available
-    (require 'org-indent)
-
-    (progn
-      ;; no need to warn
-      (put 'narrow-to-region 'disabled nil)
-      (put 'narrow-to-page 'disabled nil)
-      (put 'upcase-region 'disabled nil)
-      (put 'downcase-region 'disabled nil)
-      (put 'erase-buffer 'disabled nil)
-      (put 'scroll-left 'disabled nil)
-      (put 'dired-find-alternate-file 'disabled nil)
-      )
-
-    ;; Ensure that anything that should be fixed-pitch in Org files appears that way
-    (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
-    (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
-    (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
-    (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-    (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-    (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-    (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+    ;; Keep customization settings in a temperary file
+    (setq custom-file
+	  (if (boundp 'server-socket-dir)
+	      (expand-file-name "custom.el" server-socket-dir)
+	    (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
   #+end_src
 * guix package
   #+begin_src emacs-lisp
+    (let ((default-directory "~/.guix-profile/share/emacs/site-lisp/"))
+      (normal-top-level-add-subdirs-to-load-path))
+
     (require 'vterm)
     (require 'matrix-client)
     (require 'all-the-icons)
@@ -285,20 +247,58 @@
    #+begin_src emacs-lisp
      (use-package rust-mode)
    #+end_src
-* Keep .emacs.d Clean
+* Org settings
   #+begin_src emacs-lisp
-    ;; Change the user-emacs-directory to keep unwanted thing out of ~/.emacs.d
-    (setq user-emacs-directory (expand-file-name "~/.cache/emacs/")
-	  url-history-file (expand-file-name "url/history" user-emacs-directory))
+    (use-package org
+      :custom
+      (org-agenda-start-with-log-mode t)
+      (org-log-done 'time)
+      (org-log-into-drawer t)
+      (org-agenda-files
+       '("~/orgfile/Tasks.org")		; example
+       '("~/orgfile/birthday.org")))
 
-    ;; Use no-littering to automatically set common path to the new user-emacs-directory
-    (use-package no-littering)
+    (use-package org-bullets
+      :hook (org-mode . org-bullets-mode)
+      :custom
+      (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
-    ;; Keep customization settings in a temperary file
-    (setq custom-file
-	  (if (boundp 'server-socket-dir)
-	      (expand-file-name "custom.el" server-socket-dir)
-	    (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
+    ;; Replace list hyphen with dot
+    (font-lock-add-keywords 'org-mode
+			    '(("^ *\\([-]\\) "
+			       (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+    (dolist (face '((org-level-1 . 1.2)
+		    (org-level-2 . 1.1)
+		    (org-level-3 . 1.05)
+		    (org-level-4 . 1.0)
+		    (org-level-5 . 1.1)
+		    (org-level-6 . 1.1)
+		    (org-level-7 . 1.1)
+		    (org-level-8 . 1.1))))
+
+    ;; Make sure org-indent face is available
+    (require 'org-indent)
+
+    (progn
+      ;; no need to warn
+      (put 'narrow-to-region 'disabled nil)
+      (put 'narrow-to-page 'disabled nil)
+      (put 'upcase-region 'disabled nil)
+      (put 'downcase-region 'disabled nil)
+      (put 'erase-buffer 'disabled nil)
+      (put 'scroll-left 'disabled nil)
+      (put 'dired-find-alternate-file 'disabled nil)
+      )
+
+    ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+    (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+    (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+    (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+    (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+    (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+    (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+    (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
   #+end_src
 * ERC
   #+begin_src emacs-lisp
