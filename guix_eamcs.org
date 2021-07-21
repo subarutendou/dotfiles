@@ -39,8 +39,8 @@
       (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
     ;; Fonts
-    (set-face-attribute 'default nil :family "JetBrains Mono" :height 120)
-    (set-fontset-font t nil "Fira Code" nil 'append)
+    (set-face-attribute 'default nil :family "Fira Code" :height 120)
+    (set-fontset-font t nil "JetBrains Mono" nil 'append)
     (set-fontset-font t nil "monospace" nil 'append)
   #+end_src
 * Basic settings
@@ -143,8 +143,8 @@
       :config
       (xah-fly-keys 1)
       (xah-fly-keys-set-layout "dvorak")
-      (setq xah-fly-use-control-key nil)
       (define-key xah-fly-n-keymap (kbd "e") 'vterm)
+      (define-key xah-fly-key-map (kbd "b") 'swiper)
       )
 
     (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -176,10 +176,15 @@
     (require 'all-the-icons)
   #+end_src
 * Package
-** package
    #+begin_src emacs-lisp
      (use-package diminish)
+     (use-package counsel)
      (use-package guix)
+
+     (use-package perspective
+       :bind (("C-x k" . persp-kill-buffer*))
+       :config
+       (presp-mode))
 
      (use-package emojify
        :hook (after-init . global-emojify-mode))
@@ -199,20 +204,28 @@
        (which-key-mode)
        (setq which-key-idle-delay 1))
 
-     (use-package vertico
-       :ensure
+     (use-package helpful
        :custom
-       (vertico-cycle t)
-       :init
-       (vertico-mode))
+       (counsel-describe-function-function #'helpful-callable)
+       (counsel-describe-variable-function #'helpful-variable)
+       :bind
+       ([remap describe-function] . counsel-describe-function)
+       ([remap describe-command] . helpful-command)
+       ([remap describe-variable] . counsel-describe-variable)
+       ([remap describe-key] . helpful-key))
 
-     (use-package marginalia
-       :after vertico
-       :ensure t
-       :custom
-       (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+     (use-package ivy
        :init
-       (marginalia-mode))
+       (ivy-mode 1))
+
+     (use-package ivy-rich
+       :init
+       (ivy-rich-mode 1))
+
+     (use-package ivy-prescient
+       :after counsel
+       :config
+       (ivy-prescient-mode 1))
 
      (use-package ligature
        :load-path "~/.emacs.d/github/ligature.el/"
@@ -239,16 +252,6 @@
        ;; Enables ligature checks globally in all buffers. You can also do it
        ;; per mode with `ligature-mode'.
        (global-ligature-mode t))
-   #+end_src
-** python
-   #+begin_src emacs-lisp
-     (use-package python-mode
-       :custom
-       (python-shell-interpreter "python3"))
-   #+end_src
-** rust
-   #+begin_src emacs-lisp
-     (use-package rust-mode)
    #+end_src
 * Org settings
 ** basic
@@ -308,7 +311,7 @@
    #+begin_src emacs-lisp
      (defun efs/org-babel-tangle-config()
        (when (string-equal (buffer-file-name)
-			  (expand-file-name "~/dotfiles/my_settings_guix_original.org"))
+			  (expand-file-name "~/dotfiles/guix_eamcs.org"))
        (let ((org-confirm-babel-evaluate nil))
 	 (org-babel-tangle))))
 
@@ -419,6 +422,7 @@
     fi
     alias ls='ls -p --color=auto'
     alias ll='ls -l'
+    alias la='ls -Al'
     alias grep='grep --color=auto'
     alias ping='~/prettyping/prettyping'
   #+end_src
