@@ -175,9 +175,24 @@
     (require 'vterm)
     (require 'matrix-client)
     (require 'elfeed)
+    (require 'all-the-icons)
+    (require 'all-the-icons-dired)
+    (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+
+    (global-set-key (kbd "C-x w") 'elfeed)
+    (setq elfeed-feeds
+	  '("http://lukesmith.xyz/rss.xml"
+	    "https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA"
+	    "https://www.youtube.com/feeds/videos.xml?channel_id=UCPf-EnX70UM7jqjKwhDmS8g"
+	    "http://www.youtube.com/feeds/videos.xml?channel_id=UCyl1z3jo3XHR1riLFKG5UAg"))
+    (add-hook 'elfeed-new-entry-hook
+	      (elfeed-make-tagger :before "2 weeks ago"
+				  :remove 'unread))
   #+end_src
 * Package
    #+begin_src emacs-lisp
+     (use-package doom-modeline
+       :hook (after-init . doom-modeline-mode))
 
      (use-package vertico
        :custom
