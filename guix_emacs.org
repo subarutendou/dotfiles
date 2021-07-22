@@ -137,7 +137,7 @@
 
     (use-package doom-themes
       :config
-      (load-theme 'doom-gruvbox t))
+      (load-theme 'doom-nord t))
 
     (setq xah-fly-use-meta-key nil)
     (use-package xah-fly-keys
@@ -174,11 +174,14 @@
 
     (require 'vterm)
     (require 'matrix-client)
+    (require 'elfeed)
   #+end_src
 * Package
    #+begin_src emacs-lisp
      (use-package diminish)
      (use-package guix)
+     (use-package python-mode)
+     (use-package rust-mode)
 
      (use-package emojify
        :hook (after-init . global-emojify-mode))
@@ -199,7 +202,6 @@
        (setq which-key-idle-delay 1))
 
      (use-package vertico
-       :ensure
        :custom
        (vertico-cycle t)
        :init
@@ -211,7 +213,6 @@
 
      (use-package marginalia
        :after vertico
-       :ensure t
        :custom
        (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
        :init
@@ -344,7 +345,21 @@
 		(specification->package "emacs-exwm")
 		(specification->package
 		  "emacs-desktop-environment")
-		(specification->package "nss-certs"))
+		(specification->package "nss-certs")
+		(specification->package "emacs-elfeed")
+		(specification->package "emacs-guix")
+		(specification->package "emacs-vterm")
+		(specification->package "font-fira-code")
+		(specification->package "font-jetbrains-mono")
+		(specification->package "font-adobe-source-han-sans")
+		(specification->package "git")
+		(specification->package "gcc-toolchain")
+		(specification->package "python")
+		(specification->package "python-pip")
+		(specification->package "rust")
+		(specification->package "rust-cargo")
+		(specification->package "ungoogled-chromium")
+		(specification->package "emacs-matrix-client"))
 	  %base-packages))
       (services
 	(append
