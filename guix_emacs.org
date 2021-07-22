@@ -41,7 +41,7 @@
       (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
     ;; Fonts
-    (set-face-attribute 'default nil :family "Fira Code" :height 120)
+    (set-face-attribute 'default nil :family "Fira Code" :height 130)
     (set-fontset-font t nil "JetBrains Mono" nil 'append)
     (set-fontset-font t nil "monospace" nil 'append)
   #+end_src
@@ -137,7 +137,7 @@
 
     (use-package doom-themes
       :config
-      (load-theme 'doom-nord t))
+      (load-theme 'doom-gruvbox t))
 
     (setq xah-fly-use-meta-key nil)
     (use-package xah-fly-keys
@@ -178,28 +178,6 @@
   #+end_src
 * Package
    #+begin_src emacs-lisp
-     (use-package diminish)
-     (use-package guix)
-     (use-package python-mode)
-     (use-package rust-mode)
-
-     (use-package emojify
-       :hook (after-init . global-emojify-mode))
-
-     (use-package magit
-       :custom
-       (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
-
-     (use-package rainbow-delimiters
-       :hook (prog-mode . rainbow-delimiters-mode))
-
-     (use-package which-key
-       :diminish which-key
-       :defer 0
-       :diminish which-key-mode
-       :config
-       (which-key-mode)
-       (setq which-key-idle-delay 1))
 
      (use-package vertico
        :custom
@@ -217,6 +195,14 @@
        (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
        :init
        (marginalia-mode))
+
+     (use-package which-key
+       :diminish which-key
+       :defer 0
+       :diminish which-key-mode
+       :config
+       (which-key-mode)
+       (setq which-key-idle-delay 1))
 
      (use-package ligature
        :load-path "~/.emacs.d/github/ligature.el/"
@@ -243,6 +229,21 @@
        ;; Enables ligature checks globally in all buffers. You can also do it
        ;; per mode with `ligature-mode'.
        (global-ligature-mode t))
+
+     (use-package emojify
+       :hook (after-init . global-emojify-mode))
+
+     (use-package magit
+       :custom
+       (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+
+     (use-package rainbow-delimiters
+       :hook (prog-mode . rainbow-delimiters-mode))
+
+     (use-package diminish)
+     (use-package guix)
+     (use-package python-mode)
+     (use-package rust-mode)
    #+end_src
 * Org settings
 ** basic
