@@ -131,9 +131,6 @@
        :init
        (vertico-mode))
 
-     (use-package consult
-       :hook (completion-list-mode . consult-preview-at-point-mode))
-
      (use-package marginalia
        :after vertico
        :custom

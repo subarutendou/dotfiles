@@ -83,6 +83,9 @@
     ;; per mode with `ligature-mode'.
     (global-ligature-mode t))
 
+  (use-package consult
+    :hook (completion-list-mode . consult-preview-at-point-mode))
+
   (use-package perspective
     :demand t
     :bind (("C-M-k" . persp-switch)
