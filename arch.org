@@ -371,3 +371,15 @@
      alias cl='sudo pacman -Rns $(pacman -Qdtq)'
 
    #+end_src
+** bash_profile
+   #+begin_src conf :tangle ~/.bash_profile
+     #
+     # ~/.bash_profile
+     #
+
+     [[ -f ~/.bashrc ]] && . ~/.bashrc
+
+     if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+	 startx
+     fi
+   #+end_src
