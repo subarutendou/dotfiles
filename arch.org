@@ -1,3 +1,6 @@
+#+title Emacs settings
+#+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/init.el :mkdirp yes
+
 * early
   #+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
     ;; The default is 800 kilobytes.  Measured in bytes.
@@ -74,8 +77,8 @@
       :diminish xah-fly-keys
       :config
       (xah-fly-keys 1)
-      (xah-fly-keys-set-layout "dvorak")
-      (define-key xah-fly-n-keymap (kbd "e") 'vterm))
+      (xah-fly-keys-set-layout "colemak-mod-dh")
+      (define-key xah-fly-n-keymap (kbd "s") 'vterm))
 
     (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
     (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
@@ -98,11 +101,9 @@
 	      (expand-file-name "custom.el" server-socket-dir)
 	    (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
   #+end_src
-  * Package
+* Package
 ** back
    #+begin_src emacs-lisp
-     (use-package vterm)
-     (use-package matrix-client)
      (use-package elfeed)
      (use-package all-the-icons)
      (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
@@ -153,54 +154,13 @@
    #+end_src
 ** without setting
    #+begin_src emacs-lisp
+     (use-package vterm)
      (use-package diminish)
      (use-package guix)
      (use-package python-mode)
      (use-package rust-mode)
    #+end_src
-* Package
-** back
-   #+begin_src emacs-lisp
-     (use-package vertico
-       :custom
-       (vertico-cycle t)
-       :init
-       (vertico-mode))
-
-     (use-package marginalia
-       :after vertico
-       :custom
-       (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
-       :init
-       (marginalia-mode))
-
-     (use-package which-key
-       :diminish which-key
-       :defer 0
-       :diminish which-key-mode
-       :config
-       (which-key-mode)
-       (setq which-key-idle-delay 1))
-   #+end_src
-** package
-   #+begin_src emacs-lisp
-     (use-package emojify
-       :hook (after-init . global-emojify-mode))
-
-     (use-package magit
-       :custom
-       (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
-
-     (use-package rainbow-delimiters
-       :hook (prog-mode . rainbow-delimiters-mode))
-   #+end_src
-** without setting
-   #+begin_src emacs-lisp
-     (use-package diminish)
-     (use-package guix)
-     (use-package python-mode)
-     (use-package rust-mode)
-   #+end_src* Org settings
+* Org settings
 ** basic
    #+begin_src emacs-lisp
      (use-package org
@@ -258,7 +218,7 @@
    #+begin_src emacs-lisp
      (defun efs/org-babel-tangle-config()
        (when (string-equal (buffer-file-name)
-			  (expand-file-name "~/dotfiles/guix_emacs.org"))
+			  (expand-file-name "~/dotfiles/arch.org"))
        (let ((org-confirm-babel-evaluate nil))
 	 (org-babel-tangle))))
 
@@ -367,18 +327,10 @@
      udiskie &
      picom -CGb --vsync --backend glx &
      pcloud -b &
-     # nitrogen --restore &
-
-     # DWM settings
-     # while true; do
-	 # xsetroot -name "$( date +"%F %R" )"
-	 # sleep 1m    # Update time every minute
-     # done &
-     # exec dwm
 
      # EXWM settings
-     exec dbus-launch --exit-with-session emacs -mm --debug-init
-
+     # exec dbus-launch --exit-with-session emacs -mm --debug-init
+     exec dbus-launch --exit-with-session emacs --debug-init
    #+end_src
 ** bashrc
    #+begin_src conf :tangle ~/.bashrc
