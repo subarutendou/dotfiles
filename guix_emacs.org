@@ -63,7 +63,7 @@
 
     ;; Initialize use-package on non-Linux platforms
     (unless (package-installed-p 'use-package)
-      (package-insall 'use-package))
+      (package-install 'use-package))
 
     (require 'use-package)
     (setq use-package-always-ensure t)
@@ -77,8 +77,8 @@
       :diminish xah-fly-keys
       :config
       (xah-fly-keys 1)
-      (xah-fly-keys-set-layout "dvorak")
-      (define-key xah-fly-n-keymap (kbd "e") 'vterm))
+      (xah-fly-keys-set-layout "colemak-mod-dh-new")
+      (define-key xah-fly-n-keymap (kbd "s") 'vterm))
 
     (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
     (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
@@ -308,84 +308,8 @@
 	  erc-auto-query 'bury)
   #+end_src
 * guix settings
-  #+begin_src lisp :tangle ~/.config/guix/system.scm
-    ;; This is an operating system configuration generated
-    ;; by the graphical installer.
-
-    (use-modules (gnu))
-    (use-service-modules desktop networking ssh xorg)
-
-    (operating-system
-      (locale "en_US.utf8")
-      (timezone "America/New_York")
-      (keyboard-layout (keyboard-layout "us"))
-      (host-name "tendou")
-      (users (cons* (user-account
-		      (name "subaru")
-		      (comment "Subaru Tendou")
-		      (group "users")
-		      (home-directory "/home/subaru")
-		      (supplementary-groups
-			'("wheel" "netdev" "audio" "video")))
-		    %base-user-accounts))
-      (packages
-	(append
-	  (list (specification->package "emacs")
-		(specification->package "emacs-exwm")
-		(specification->package
-		  "emacs-desktop-environment")
-		(specification->package "nss-certs")
-		(specification->package "emacs-elfeed")
-		(specification->package "emacs-guix")
-		(specification->package "emacs-vterm")
-		(specification->package "font-fira-code")
-		(specification->package "font-jetbrains-mono")
-		(specification->package "font-adobe-source-han-sans")
-		(specification->package "git")
-		(specification->package "gcc-toolchain")
-		(specification->package "python")
-		(specification->package "python-pip")
-		(specification->package "rust")
-		(specification->package "rust-cargo")
-		(specification->package "ungoogled-chromium")
-		(specification->package "emacs-matrix-client")
-		(specification->package "emacs-all-the-icons")
-		(specification->package "emacs-all-the-icons-dired"))
-	  %base-packages))
-      (services
-	(append
-	  (list (service openssh-service-type)
-		(set-xorg-configuration
-		  (xorg-configuration
-		    (keyboard-layout keyboard-layout))))
-	  %desktop-services))
-      (bootloader
-	(bootloader-configuration
-	  (bootloader grub-efi-bootloader)
-	  (target "/boot/efi")
-	  (timeout 1)
-	  (keyboard-layout keyboard-layout)))
-      (swap-devices
-	(list (uuid "f40a3a7a-8bbc-479a-9df9-bfe795db9305")))
-      (file-systems
-	(cons* (file-system
-		 (mount-point "/boot/efi")
-		 (device (uuid "63B9-13B2" 'fat32))
-		 (type "vfat"))
-	       (file-system
-		 (mount-point "/")
-		 (device
-		   (uuid "abf6622c-2737-4859-8c17-d57df90d7c97"
-			 'ext4))
-		 (type "ext4"))
-	       (file-system
-		 (mount-point "/home")
-		 (device
-		   (uuid "5eefe124-230a-433d-94ba-337d8403c0a5"
-			 'ext4))
-		 (type "ext4"))
-	       %base-file-systems)))
-  #+end_src
+emacs-elfeed
+emacs-guix emacs-vterm font-fira-code font-jetbrains-mono font-adobe-source-han-sans git gcc-toolchain python python-pip rust ungoogled-chromium emacs-matrix-client emacs-all-the-icons emacs-all-the-icons-dired
 * bashrc
   #+begin_src conf :tangle ~/.bashrc
     # Bash initialization for interactive non-login shells and
