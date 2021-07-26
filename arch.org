@@ -18,6 +18,8 @@
     ;; Setting for GUI emacs
     (custom-set-variables
      '(initial-frame-alist (quote ((fullscreen . maximized)))))
+    (set-language-environment "UTF-8")
+    (set-default-coding-systems 'utf-8)
     (setq inhibit-startup-message t)
     (scroll-bar-mode -1)
     (tool-bar-mode -1)
