@@ -115,7 +115,8 @@
 	   '("http://lukesmith.xyz/rss.xml"
 	     "https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA"
 	     "https://www.youtube.com/feeds/videos.xml?channel_id=UCPf-EnX70UM7jqjKwhDmS8g"
-	     "http://www.youtube.com/feeds/videos.xml?channel_id=UCyl1z3jo3XHR1riLFKG5UAg"))
+	     "http://www.youtube.com/feeds/videos.xml?channel_id=UCyl1z3jo3XHR1riLFKG5UAg"
+	     "http://www.youtube.com/feeds/videos.xml?channel_id=UC1CfXB_kRs3C-zaeTG3oGyg"))
      (add-hook 'elfeed-new-entry-hook
 	       (elfeed-make-tagger :before "2 weeks ago"
 				   :remove 'unread))
