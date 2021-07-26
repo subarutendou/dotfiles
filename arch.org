@@ -335,7 +335,7 @@
 
      # EXWM settings
      # exec dbus-launch --exit-with-session emacs -mm --debug-init
-     exec dbus-launch --exit-with-session emacs --debug-init
+     exec emacs --debug-init
    #+end_src
 ** bashrc
    #+begin_src conf :tangle ~/.bashrc
