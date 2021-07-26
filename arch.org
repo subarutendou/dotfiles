@@ -317,11 +317,10 @@
      export _JAVA_AWT_WM_NONREPARENTING=1
 
      # fcitx input
-     export GTK_IM_MODULE=fcitx
-     export QT_IM_MODULE=fcitx
-     export XMODIFIERS=@im=fcitx
-     fcitx5 -d -r
-     # fcitx &
+     # export GTK_IM_MODULE=fcitx
+     # export QT_IM_MODULE=fcitx
+     # export XMODIFIERS=@im=fcitx
+     # fcitx5 -d -r
 
      # # C
      ursor and mouse behavier
