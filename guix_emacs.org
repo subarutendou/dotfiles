@@ -70,17 +70,17 @@
     (require 'use-package)
     (setq use-package-always-ensure t)
 
-    (use-package gruvbox-theme
+    (use-package vscdark-theme
       :config
-      (load-theme 'gruvbox-dark-medium t))
+      (load-theme 'vscdark t))
 
     (setq xah-fly-use-meta-key nil)
     (use-package xah-fly-keys
       :diminish xah-fly-keys
       :config
       (xah-fly-keys 1)
-      (xah-fly-keys-set-layout "colemak-mod-dh-new")
-      (define-key xah-fly-n-keymap (kbd "s") 'vterm))
+      (xah-fly-keys-set-layout "dvorak")
+      (define-key xah-fly-n-keymap (kbd "e") 'vterm))
 
     (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
     (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
