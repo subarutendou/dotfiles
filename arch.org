@@ -2,117 +2,109 @@
 #+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/init.el :mkdirp yes
 
 * early
-  #+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
-    ;; The default is 800 kilobytes.  Measured in bytes.
-    (setq gc-cons-threshold (* 50 1000 1000))
+** Check startup time
+   #+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
+     ;; The default is 800 kilobytes.  Measured in bytes.
+     (setq gc-cons-threshold (* 50 1000 1000))
 
-    ;; Profile emacs startup
-    (add-hook 'emacs-startup-hook
-	      (lambda ()
-		(message "*** Emacs loaded in %s with %d garbage collections."
-			 (format "%.2f seconds"
-				 (float-time
-				  (time-subtract after-init-time before-init-time)))
-			 gcs-done)))
+     ;; Profile emacs startup
+     (add-hook 'emacs-startup-hook
+	       (lambda ()
+		 (message "*** Emacs loaded in %s with %d garbage collections."
+			  (format "%.2f seconds"
+				  (float-time
+				   (time-subtract after-init-time before-init-time)))
+			  gcs-done)))
+   #+end_src
+** UI settings
+   #+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
+     ;; Setting for GUI emacs
+     (custom-set-variables
+      '(initial-frame-alist (quote ((fullscreen . maximized)))))
 
-    ;; Setting for GUI emacs
-    (custom-set-variables
-     '(initial-frame-alist (quote ((fullscreen . maximized)))))
-    (set-language-environment "UTF-8")
-    (set-default-coding-systems 'utf-8)
-    (setq inhibit-startup-message t)
-    (scroll-bar-mode -1)
-    (tool-bar-mode -1)
-    (tooltip-mode -1)
-    (menu-bar-mode -1)
-    (set-fringe-mode 10)
-    (electric-pair-mode 1)
-    (fset 'yes-or-no-p 'y-or-n-p)
-    (setq visible-bell t)
-    (setq use-dialog-box nil)
-    (column-number-mode 1)
-    (when (version<= "26.0.50" emacs-version )
-      (global-display-line-numbers-mode))
+     (set-language-environment "UTF-8")
+     (set-default-coding-systems 'utf-8)
+     (setq inhibit-startup-message t)
+     (scroll-bar-mode -1)
+     (tool-bar-mode -1)
+     (tooltip-mode -1)
+     (menu-bar-mode -1)
+     (set-fringe-mode 10)
+     (electric-pair-mode 1)
+     (fset 'yes-or-no-p 'y-or-n-p)
+     (setq visible-bell t)
+     (setq use-dialog-box nil)
 
-    ;; Disable line numbers for some modes
-    (dolist (mode '(org-mode-hook
-		    term-mode-hook
-		    shell-mode-hook
-		    eshell-mode-hook
-		    vterm-mode-hook))
-      (add-hook mode (lambda () (display-line-numbers-mode 0))))
+     (column-number-mode 1)
+     (when (version<= "26.0.50" emacs-version )
+       (global-display-line-numbers-mode))
 
-    ;; Fonts
-    (set-face-attribute 'default nil :family "Fira Code" :height 130)
-    (set-fontset-font t nil "JetBrains Mono" nil 'append)
-    (set-fontset-font t nil "monospace" nil 'append)
-  #+end_src
+     ;; Disable line numbers for some modes
+     (dolist (mode '(org-mode-hook
+		     term-mode-hook
+		     shell-mode-hook
+		     eshell-mode-hook
+		     vterm-mode-hook))
+       (add-hook mode (lambda () (display-line-numbers-mode 0))))
+   #+end_src
 * Basic settings
-  #+begin_src emacs-lisp
-    ;; disable cursor blink only work in init.el
-    (blink-cursor-mode 0)
-
-    (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
-
-    (require 'package)
-    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/")
-		 '("org" . "https://orgmode.org/elpa/"))
-
-    ;; Package
-    (package-initialize)
-    (unless package-archive-contents
-      (package-refresh-contents))
-
-    ;; Initialize use-package on non-Linux platforms
-    (unless (package-installed-p 'use-package)
-      (package-insall 'use-package))
-
-    (require 'use-package)
-    (setq use-package-always-ensure t)
-
-    (use-package vscdark-theme
-      :config
-      (load-theme 'vscdark t))
-
-    (setq xah-fly-use-meta-key nil)
-    (use-package xah-fly-keys
-      :diminish xah-fly-keys
-      :config
-      (xah-fly-keys 1)
-      (xah-fly-keys-set-layout "dvorak")
-      (define-key xah-fly-n-keymap (kbd "e") 'vterm))
-
-    (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-    (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
-    (global-set-key (kbd "C-x k") 'kill-matching-buffers)
-    (delete-selection-mode 1)
-    (setq shift-select-mode nil)
-  #+end_src
-* Keep .emacs.d Clean
-  #+begin_src emacs-lisp
-    ;; Change the user-emacs-directory to keep unwanted thing out of ~/.emacs.d
-    (setq user-emacs-directory (expand-file-name "~/.cache/emacs/")
-	  url-history-file (expand-file-name "url/history" user-emacs-directory))
-
-    ;; Use no-littering to automatically set common path to the new user-emacs-directory
-    (use-package no-littering)
-
-    ;; Keep customization settings in a temperary file
-    (setq custom-file
-	  (if (boundp 'server-socket-dir)
-	      (expand-file-name "custom.el" server-socket-dir)
-	    (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
-  #+end_src
-* Package
-** back
+** Basic
    #+begin_src emacs-lisp
-     (use-package elfeed)
+     ;; Cursor setting only work in init.el
+     (blink-cursor-mode 0)
+
+     (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+     (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+     (global-set-key (kbd "C-x k") 'kill-matching-buffers)
+     (global-set-key (kbd "C-x w") 'elfeed)
+     (delete-selection-mode 1)
+     (setq shift-select-mode nil)
+
+     ;; Fonts
+     (set-face-attribute 'default nil :family "Fira Code" :height 137)
+     (set-fontset-font t nil "JetBrains Mono" nil 'append)
+     (set-fontset-font t nil "monospace" nil 'append)
+
+     (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
+
+     (require 'package)
+     (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/")
+		  '("org" . "https://orgmode.org/elpa/"))
+   #+end_src
+** begin to load package
+   #+begin_src emacs-lisp
+     ;; Package
+     (package-initialize)
+     (unless package-archive-contents
+       (package-refresh-contents))
+
+     ;; Initialize use-package on non-Linux platforms
+     (unless (package-installed-p 'use-package)
+       (package-insall 'use-package))
+
+     (require 'use-package)
+     (setq use-package-always-ensure t)
+   #+end_src
+* Package
+** FrameWork
+   #+begin_src emacs-lisp
+     (use-package gruvbox-theme
+       :config
+       (load-theme 'gruvbox t))
+
+     (setq xah-fly-use-meta-key nil)
+     (use-package xah-fly-keys
+       :diminish xah-fly-keys
+       :config
+       (xah-fly-keys 1)
+       (xah-fly-keys-set-layout "dvorak")
+       (define-key xah-fly-n-keymap (kbd "e") 'vterm))
+
      (use-package all-the-icons)
      (use-package all-the-icons-dired)
-
      (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
 
-     (global-set-key (kbd "C-x w") 'elfeed)
+     (use-package elfeed)
      (setq elfeed-feeds
 	   '("http://lukesmith.xyz/rss.xml"
 	     "https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA"
@@ -157,77 +149,13 @@
      (use-package rainbow-delimiters
        :hook (prog-mode . rainbow-delimiters-mode))
    #+end_src
-** without setting
+** package without setting
    #+begin_src emacs-lisp
      (use-package vterm)
      (use-package diminish)
      (use-package guix)
      (use-package python-mode)
      (use-package rust-mode)
-   #+end_src
-* Org settings
-** basic
-   #+begin_src emacs-lisp
-     (use-package org
-       :custom
-       (org-agenda-start-with-log-mode t)
-       (org-log-done 'time)
-       (org-log-into-drawer t)
-       (org-agenda-files
-	'("~/orgfile/Tasks.org")		; example
-	'("~/orgfile/birthday.org")))
-
-     (use-package org-bullets
-       :hook (org-mode . org-bullets-mode)
-       :custom
-       (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
-
-     ;; Replace list hyphen with dot
-     (font-lock-add-keywords 'org-mode
-			     '(("^ *\\([-]\\) "
-				(0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-
-     (dolist (face '((org-level-1 . 1.2)
-		     (org-level-2 . 1.1)
-		     (org-level-3 . 1.05)
-		     (org-level-4 . 1.0)
-		     (org-level-5 . 1.1)
-		     (org-level-6 . 1.1)
-		     (org-level-7 . 1.1)
-		     (org-level-8 . 1.1))))
-
-     ;; Make sure org-indent face is available
-     (require 'org-indent)
-
-     (progn
-       ;; no need to warn
-       (put 'narrow-to-region 'disabled nil)
-       (put 'narrow-to-page 'disabled nil)
-       (put 'upcase-region 'disabled nil)
-       (put 'downcase-region 'disabled nil)
-       (put 'erase-buffer 'disabled nil)
-       (put 'scroll-left 'disabled nil)
-       (put 'dired-find-alternate-file 'disabled nil)
-       )
-
-     ;; Ensure that anything that should be fixed-pitch in Org files appears that way
-     (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
-     (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
-     (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
-     (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-     (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-     (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-     (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
-   #+end_src
-** auto tangle
-   #+begin_src emacs-lisp
-     (defun efs/org-babel-tangle-config()
-       (when (string-equal (buffer-file-name)
-			  (expand-file-name "~/dotfiles/arch.org"))
-       (let ((org-confirm-babel-evaluate nil))
-	 (org-babel-tangle))))
-
-     (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
    #+end_src
 * EXWM
   #+begin_src emacs-lisp
@@ -297,6 +225,70 @@
 
       (exwm-enable))
   #+end_src
+* Org settings
+** basic
+   #+begin_src emacs-lisp
+     (use-package org
+       :custom
+       (org-agenda-start-with-log-mode t)
+       (org-log-done 'time)
+       (org-log-into-drawer t)
+       (org-agenda-files
+	'("~/orgfile/Tasks.org")		; example
+	'("~/orgfile/birthday.org")))
+
+     (use-package org-bullets
+       :hook (org-mode . org-bullets-mode)
+       :custom
+       (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+
+     ;; Replace list hyphen with dot
+     (font-lock-add-keywords 'org-mode
+			     '(("^ *\\([-]\\) "
+				(0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+     (dolist (face '((org-level-1 . 1.2)
+		     (org-level-2 . 1.1)
+		     (org-level-3 . 1.05)
+		     (org-level-4 . 1.0)
+		     (org-level-5 . 1.1)
+		     (org-level-6 . 1.1)
+		     (org-level-7 . 1.1)
+		     (org-level-8 . 1.1))))
+
+     ;; Make sure org-indent face is available
+     (require 'org-indent)
+
+     (progn
+       ;; no need to warn
+       (put 'narrow-to-region 'disabled nil)
+       (put 'narrow-to-page 'disabled nil)
+       (put 'upcase-region 'disabled nil)
+       (put 'downcase-region 'disabled nil)
+       (put 'erase-buffer 'disabled nil)
+       (put 'scroll-left 'disabled nil)
+       (put 'dired-find-alternate-file 'disabled nil)
+       )
+
+     ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+     (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+     (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+     (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+     (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+     (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+     (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+     (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+   #+end_src
+** auto tangle
+   #+begin_src emacs-lisp
+     (defun efs/org-babel-tangle-config()
+       (when (string-equal (buffer-file-name)
+			  (expand-file-name "~/dotfiles/arch.org"))
+       (let ((org-confirm-babel-evaluate nil))
+	 (org-babel-tangle))))
+
+     (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
+   #+end_src
 * ERC
   #+begin_src emacs-lisp
     (setq erc-server "irc.libera.chat"
@@ -306,6 +298,21 @@
 	  erc-autojoin-channels-alist '(("irc.libera.chat" "#systemcrafters" "#emacs"))
 	  erc-kill-buffer-on-part t
 	  erc-auto-query 'bury)
+  #+end_src
+* Keep .emacs.d Clean
+  #+begin_src emacs-lisp
+    ;; Change the user-emacs-directory to keep unwanted thing out of ~/.emacs.d
+    (setq user-emacs-directory (expand-file-name "~/.cache/emacs/")
+	  url-history-file (expand-file-name "url/history" user-emacs-directory))
+
+    ;; Use no-littering to automatically set common path to the new user-emacs-directory
+    (use-package no-littering)
+
+    ;; Keep customization settings in a temperary file
+    (setq custom-file
+	  (if (boundp 'server-socket-dir)
+	      (expand-file-name "custom.el" server-socket-dir)
+	    (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
   #+end_src
 * System configuration
 ** xinitrc
@@ -334,7 +341,7 @@
 
      # EXWM settings
      # exec dbus-launch --exit-with-session emacs -mm --debug-init
-     exec emacs --debug-init
+     exec emacs
    #+end_src
 ** bashrc
    #+begin_src conf :tangle ~/.bashrc
@@ -373,7 +380,12 @@
      alias la='ls -lA'
      alias gpgl='gpg --list-secret-keys --keyid-format LONG'
      alias cl='sudo pacman -Rns $(pacman -Qdtq)'
+     alias cpu='sudo auto-cpufreq --stats'
 
+     # custom function
+     dlweb() {
+	 wget --recursive --no-clobber --page-requisites --html-extension --convert-links --domains "$1" --no-parent "$2"	 
+     }
    #+end_src
 ** bash_profile
    #+begin_src conf :tangle ~/.bash_profile
