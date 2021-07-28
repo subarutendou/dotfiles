@@ -66,13 +66,13 @@
      (set-fontset-font t nil "monospace" nil 'append)
 
      (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
-
-     (require 'package)
-     (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/")
-		  '("org" . "https://orgmode.org/elpa/"))
    #+end_src
 ** begin to load package
    #+begin_src emacs-lisp
+     (require 'package)
+     (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/")
+		  '("org" . "https://orgmode.org/elpa/"))
+
      ;; Package
      (package-initialize)
      (unless package-archive-contents
@@ -90,7 +90,7 @@
    #+begin_src emacs-lisp
      (use-package gruvbox-theme
        :config
-       (load-theme 'gruvbox t))
+       (load-theme 'gruvbox-dark-hard t))
 
      (setq xah-fly-use-meta-key nil)
      (use-package xah-fly-keys
@@ -148,6 +148,13 @@
 
      (use-package rainbow-delimiters
        :hook (prog-mode . rainbow-delimiters-mode))
+
+     (use-package pdf-tools
+       :config
+       (pdf-tools-install)
+       (setq-default pdf-view-display-size 'fit-width)
+       :custom
+       (pdf-annot-activate-created-annotations t "automatically annotate Highlights"))
    #+end_src
 ** package without setting
    #+begin_src emacs-lisp
