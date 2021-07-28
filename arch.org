@@ -30,7 +30,7 @@
      (tooltip-mode -1)
      (menu-bar-mode -1)
      (set-fringe-mode 10)
-     (electric-pair-mode 1)
+     ;; (electric-pair-mode 1)
      (fset 'yes-or-no-p 'y-or-n-p)
      (setq visible-bell t)
      (setq use-dialog-box nil)
@@ -265,6 +265,20 @@
 
      ;; Make sure org-indent face is available
      (require 'org-indent)
+     (require 'org-tempo)
+     (setq org-structure-template-alist
+       '(("a" . "export ascii\n")
+	 ("c" . "center\n")
+	 ("C" . "comment\n")
+	 ("e" . "example\n")
+	 ("E" . "export")
+	 ("h" . "export html\n")
+	 ("l" . "export latex\n")
+	 ("q" . "quote\n")
+	 ("s" . "src")
+	 ("v" . "verse\n")
+	 ("py" . "python\n")
+	 ("el" . "emacs-lisp\n"))
 
      (progn
        ;; no need to warn
