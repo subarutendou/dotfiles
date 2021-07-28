@@ -43,7 +43,7 @@
       (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
     ;; Fonts
-    (set-face-attribute 'default nil :family "Fira Code" :height 130)
+    (set-face-attribute 'default nil :family "Fira Code" :height 137)
     (set-fontset-font t nil "JetBrains Mono" nil 'append)
     (set-fontset-font t nil "monospace" nil 'append)
   #+end_src
@@ -74,7 +74,6 @@
       :config
       (load-theme 'vscdark t))
 
-    (setq xah-fly-use-meta-key nil)
     (use-package xah-fly-keys
       :diminish xah-fly-keys
       :config
@@ -159,6 +158,13 @@
 
      (use-package rainbow-delimiters
        :hook (prog-mode . rainbow-delimiters-mode))
+
+     (Use-package pdf-tools
+       :config
+       (pdf-tools-install)
+       (setq-default pdf-view-display-size 'fit-width)
+       :custom
+       (pdf-annot-activate-created-annotations t "automatically annotate Highlights"))
    #+end_src
 ** without setting
    #+begin_src emacs-lisp
