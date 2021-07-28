@@ -39,6 +39,18 @@
      (when (version<= "26.0.50" emacs-version )
        (global-display-line-numbers-mode))
 
+     (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+     (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+     (global-set-key (kbd "C-x k") 'kill-matching-buffers)
+     (global-set-key (kbd "C-x w") 'elfeed)
+     (delete-selection-mode 1)
+     (setq shift-select-mode nil)
+
+     ;; Fonts
+     (set-face-attribute 'default nil :family "Fira Code" :height 137)
+     (set-fontset-font t nil "JetBrains Mono" nil 'append)
+     (set-fontset-font t nil "monospace" nil 'append)
+
      ;; Disable line numbers for some modes
      (dolist (mode '(org-mode-hook
 		     term-mode-hook
@@ -52,18 +64,6 @@
    #+begin_src emacs-lisp
      ;; Cursor setting only work in init.el
      (blink-cursor-mode 0)
-
-     (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-     (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
-     (global-set-key (kbd "C-x k") 'kill-matching-buffers)
-     (global-set-key (kbd "C-x w") 'elfeed)
-     (delete-selection-mode 1)
-     (setq shift-select-mode nil)
-
-     ;; Fonts
-     (set-face-attribute 'default nil :family "Fira Code" :height 137)
-     (set-fontset-font t nil "JetBrains Mono" nil 'append)
-     (set-fontset-font t nil "monospace" nil 'append)
 
      (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
    #+end_src
@@ -88,10 +88,6 @@
 * Package
 ** FrameWork
    #+begin_src emacs-lisp
-     ;; (use-package gruvbox-theme
-     ;;   :config
-     ;;   (load-theme 'gruvbox-dark-hard t))
-
      (use-package solarized-theme
        :config
        (load-theme 'solarized-dark t))
