@@ -67,7 +67,7 @@
 
      (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
    #+end_src
-** begin to load package
+** Prerequest for package manager
    #+begin_src emacs-lisp
      (require 'package)
      (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/")
@@ -88,9 +88,13 @@
 * Package
 ** FrameWork
    #+begin_src emacs-lisp
-     (use-package gruvbox-theme
+     ;; (use-package gruvbox-theme
+     ;;   :config
+     ;;   (load-theme 'gruvbox-dark-hard t))
+
+     (use-package solarized-theme
        :config
-       (load-theme 'gruvbox-dark-hard t))
+       (load-theme 'solarized-dark t))
 
      (setq xah-fly-use-meta-key nil)
      (use-package xah-fly-keys
