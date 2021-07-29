@@ -33,7 +33,6 @@
      (blink-cursor-mode 0)
 
      (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-     (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
      (global-set-key (kbd "C-x k") 'kill-matching-buffers)
      (global-set-key (kbd "C-x w") 'elfeed)
      (setq xah-fly-use-meta-key nil)
