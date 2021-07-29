@@ -32,7 +32,6 @@
      ;; Initialize use-package on non-Linux platforms
      (unless (package-installed-p 'use-package)
        (package-insall 'use-package))
-
      (require 'use-package)
      ;; (setq use-package-verbose t)
      (setq use-package-always-ensure t)
