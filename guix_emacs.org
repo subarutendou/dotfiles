@@ -1,131 +1,178 @@
 #+title Emacs settings
 #+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/init.el :mkdirp yes
 
-* early
-  #+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
-    ;; The default is 800 kilobytes.  Measured in bytes.
-    (setq gc-cons-threshold (* 50 1000 1000))
-
-    ;; Profile emacs startup
-    (add-hook 'emacs-startup-hook
-	      (lambda ()
-		(message "*** Emacs loaded in %s with %d garbage collections."
-			 (format "%.2f seconds"
-				 (float-time
-				  (time-subtract after-init-time before-init-time)))
-			 gcs-done)))
-
-    ;; Setting for GUI emacs
-    (custom-set-variables
-     '(initial-frame-alist (quote ((fullscreen . maximized)))))
-    (set-language-environment "UTF-8")
-    (set-default-coding-systems 'utf-8)
-    (setq inhibit-startup-message t)
-    (scroll-bar-mode -1)
-    (tool-bar-mode -1)
-    (tooltip-mode -1)
-    (menu-bar-mode -1)
-    (set-fringe-mode 10)
-    (electric-pair-mode 1)
-    (fset 'yes-or-no-p 'y-or-n-p)
-    (setq visible-bell t)
-    (setq use-dialog-box nil)
-    (column-number-mode 1)
-    (when (version<= "26.0.50" emacs-version )
-      (global-display-line-numbers-mode))
-
-    ;; Disable line numbers for some modes
-    (dolist (mode '(org-mode-hook
-		    term-mode-hook
-		    shell-mode-hook
-		    eshell-mode-hook
-		    vterm-mode-hook))
-      (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
-    ;; Fonts
-    (set-face-attribute 'default nil :family "Fira Code" :height 137)
-    (set-fontset-font t nil "JetBrains Mono" nil 'append)
-    (set-fontset-font t nil "monospace" nil 'append)
-  #+end_src
-* Basic settings
-  #+begin_src emacs-lisp
-    ;; disable cursor blink only work in init.el
-    (blink-cursor-mode 0)
-
-    (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
-
-    (require 'package)
-    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-    (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/"))
-
-    ;; Package
-    (package-initialize)
-    (unless package-archive-contents
-      (package-refresh-contents))
-
-    ;; Initialize use-package on non-Linux platforms
-    (unless (package-installed-p 'use-package)
-      (package-install 'use-package))
-
-    (require 'use-package)
-    (setq use-package-always-ensure t)
-
-    (use-package vscdark-theme
-      :config
-      (load-theme 'vscdark t))
-
-    (use-package xah-fly-keys
-      :diminish xah-fly-keys
-      :config
-      (xah-fly-keys 1)
-      (xah-fly-keys-set-layout "dvorak")
-      (define-key xah-fly-n-keymap (kbd "e") 'vterm))
-
-    (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-    (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
-    (global-set-key (kbd "C-x k") 'kill-matching-buffers)
-    (delete-selection-mode 1)
-    (setq shift-select-mode nil)
-  #+end_src
-* Keep .emacs.d Clean
-  #+begin_src emacs-lisp
-    ;; Change the user-emacs-directory to keep unwanted thing out of ~/.emacs.d
-    (setq user-emacs-directory (expand-file-name "~/.cache/emacs/")
-	  url-history-file (expand-file-name "url/history" user-emacs-directory))
-
-    ;; Use no-littering to automatically set common path to the new user-emacs-directory
-    (use-package no-littering)
-
-    ;; Keep customization settings in a temperary file
-    (setq custom-file
-	  (if (boundp 'server-socket-dir)
-	      (expand-file-name "custom.el" server-socket-dir)
-	    (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
-  #+end_src
-* guix package
-  #+begin_src emacs-lisp
-    (let ((default-directory "~/.guix-profile/share/emacs/site-lisp/"))
-      (normal-top-level-add-subdirs-to-load-path))
-
-    (require 'vterm)
-    (require 'matrix-client)
-    (require 'elfeed)
-    (require 'all-the-icons)
-    (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
-
-    (global-set-key (kbd "C-x w") 'elfeed)
-    (setq elfeed-feeds
-	  '("http://lukesmith.xyz/rss.xml"
-	    "https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA"
-	    "https://www.youtube.com/feeds/videos.xml?channel_id=UCPf-EnX70UM7jqjKwhDmS8g"
-	    "http://www.youtube.com/feeds/videos.xml?channel_id=UCyl1z3jo3XHR1riLFKG5UAg"))
-    (add-hook 'elfeed-new-entry-hook
-	      (elfeed-make-tagger :before "2 weeks ago"
-				  :remove 'unread))
-  #+end_src
-* Package
-** back
+* Basic Settings
+** Check startup time
    #+begin_src emacs-lisp
+     ;; The default is 800 kilobytes.  Measured in bytes.
+     (setq gc-cons-threshold (* 50 1000 1000))
+
+     ;; Profile emacs startup
+     (add-hook 'emacs-startup-hook
+	       (lambda ()
+		 (message "*** Emacs loaded in %s with %d garbage collections."
+			  (format "%.2f seconds"
+				  (float-time
+				   (time-subtract after-init-time before-init-time)))
+			  gcs-done)))
+   #+end_src
+** Early Settings
+   #+begin_src emacs-lisp
+     (set-language-environment "UTF-8")
+     (set-default-coding-systems 'utf-8)
+     (setq inhibit-startup-message t)
+     (scroll-bar-mode -1)
+     (tool-bar-mode -1)
+     (tooltip-mode -1)
+     (menu-bar-mode -1)
+     (set-fringe-mode 10)
+     (fset 'yes-or-no-p 'y-or-n-p)
+     (setq visible-bell t)
+     (setq use-dialog-box nil)
+     (setq native-comp-async-report-warnings-errors nil)
+     (blink-cursor-mode 0)
+
+     (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+     (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+     (global-set-key (kbd "C-x k") 'kill-matching-buffers)
+     (global-set-key (kbd "C-x w") 'elfeed)
+     (setq xah-fly-use-meta-key nil)
+     (setq shift-select-mode nil)
+     (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
+
+     ;; Fonts
+     (set-face-attribute 'default nil :family "Fira Code" :height 137)
+     (set-fontset-font t nil "JetBrains Mono" nil 'append)
+
+     (column-number-mode 1)
+     (when (version<= "26.0.50" emacs-version )
+       (global-display-line-numbers-mode))
+
+     ;; Disable line numbers for some modes
+     (dolist (mode '(org-mode-hook
+		     term-mode-hook
+		     shell-mode-hook
+		     eshell-mode-hook
+		     vterm-mode-hook
+		     pdf-view-mode-hook))
+       (add-hook mode (lambda () (display-line-numbers-mode 0))))
+   #+end_src
+** Prerequest for package manager
+   #+begin_src emacs-lisp
+     (require 'package)
+     (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+			      ("melpa-stable" . "https://stable.melpa.org/packages/")
+			      ("org" . "https://orgmode.org/elpa/")
+			      ("elpa" . "https://elpa.gnu.org/packages/")))
+
+     ;; Package
+     (package-initialize)
+     (unless package-archive-contents
+     (package-refresh-contents))
+
+     ;; Initialize use-package on non-Linux platforms
+     (unless (package-installed-p 'use-package)
+       (package-insall 'use-package))
+     (require 'use-package)
+     ;; (setq use-package-verbose t)
+     (setq use-package-always-ensure t)
+   #+end_src
+** Theme
+   #+begin_src emacs-lisp
+     (use-package gruvbox-theme
+       :config
+       (load-theme 'gruvbox-dark-medium t))
+
+     ;; (use-package nord-theme
+     ;;   :config
+     ;;   (load-theme 'nord t))
+   #+end_src
+** EXWM without use-package
+   #+begin_src emacs-lisp
+     (defun efs/exwm-update-class ()
+       (exwm-workspace-rename-buffer exwm-class-name))
+
+     (require 'exwm)
+
+     (setq exwm-workspace-number 5)
+     (add-hook 'exwm-update-class-hook #'efs/exwm-update-class)
+
+     (setq exwm-input-prefix-keys
+	 '(?\C-x
+	   ?\C-u
+	   ?\C-h
+	   ?\M-x
+	   ?\M-`
+	   ?\M-&
+	   ?\M-:
+	   ?\C-\M-j  ;; Buffer list
+	   ?\C-\ ))  ;; Ctrl+Space
+
+     (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+
+     (setq exwm-input-global-keys
+	     `(
+	       ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
+	       ([?\s-r] . exwm-reset)
+
+	       ;; Move between windows
+	       ([s-left] . windmove-left)
+	       ([s-right] . windmove-right)
+	       ([s-up] . windmove-up)
+	       ([s-down] . windmove-down)
+
+	       ;; Launch applications via shell command
+	       ([?\s-&] . (lambda (command)
+			    (interactive (list (read-shell-command "$ ")))
+			    (start-process-shell-command command nil command)))
+
+	       ;; Switch workspace
+	       ([?\s-w] . exwm-workspace-switch)
+	       ([?\s-`] . (lambda () (interactive) (exwm-workspace-switch-create 0)))
+
+	       ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
+	       ,@(mapcar (lambda (i)
+			   `(,(kbd (format "s-%d" i)) .
+			     (lambda ()
+			       (interactive)
+			       (exwm-workspace-switch-create ,i))))
+			 (number-sequence 0 9))))
+     (exwm-enable)
+   #+end_src
+** guix package
+   #+begin_src emacs-lisp
+     (let ((default-directory "~/.guix-profile/share/emacs/site-lisp/"))
+       (normal-top-level-add-subdirs-to-load-path))
+
+     (require 'vterm)
+     (require 'matrix-client)
+     (require 'elfeed)
+     (require 'all-the-icons)
+     (require 'all-the-icons-dired)
+     (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+
+     (setq elfeed-feeds
+	    '("http://lukesmith.xyz/rss.xml"
+	      "https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA"
+	      "https://www.youtube.com/feeds/videos.xml?channel_id=UCPf-EnX70UM7jqjKwhDmS8g"
+	      "http://www.youtube.com/feeds/videos.xml?channel_id=UCyl1z3jo3XHR1riLFKG5UAg"
+	      "http://www.youtube.com/feeds/videos.xml?channel_id=UC1CfXB_kRs3C-zaeTG3oGyg"))
+      (add-hook 'elfeed-new-entry-hook
+		(elfeed-make-tagger :before "2 weeks ago"
+				    :remove 'unread))
+   #+end_src
+** FrameWork
+   #+begin_src emacs-lisp
+     (use-package xah-fly-keys
+       :diminish xah-fly-keys
+       :config
+       (xah-fly-keys-set-layout "dvorak")
+       (define-key xah-fly-n-keymap (kbd "e") 'vterm)
+       (xah-fly-keys 1))
+
+     (use-package rainbow-delimiters
+       :hook (prog-mode . rainbow-delimiters-mode))
+
      (use-package vertico
        :custom
        (vertico-cycle t)
@@ -147,6 +194,7 @@
        (which-key-mode)
        (setq which-key-idle-delay 1))
    #+end_src
+* Package
 ** package
    #+begin_src emacs-lisp
      (use-package emojify
@@ -156,10 +204,7 @@
        :custom
        (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-     (use-package rainbow-delimiters
-       :hook (prog-mode . rainbow-delimiters-mode))
-
-     (Use-package pdf-tools
+     (use-package pdf-tools
        :config
        (pdf-tools-install)
        (setq-default pdf-view-display-size 'fit-width)
@@ -176,60 +221,75 @@
 * Org settings
 ** basic
    #+begin_src emacs-lisp
-     (use-package org
-       :custom
-       (org-agenda-start-with-log-mode t)
-       (org-log-done 'time)
-       (org-log-into-drawer t)
-       (org-agenda-files
-	'("~/orgfile/Tasks.org")		; example
-	'("~/orgfile/birthday.org")))
+      (use-package org
+	:custom
+	(org-agenda-start-with-log-mode t)
+	(org-log-done 'time)
+	(org-log-into-drawer t)
+	(org-agenda-files
+	 '("~/orgfile/Tasks.org")		; example
+	 '("~/orgfile/birthday.org")))
 
-     (use-package org-bullets
-       :hook (org-mode . org-bullets-mode)
-       :custom
-       (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+      (use-package org-bullets
+	:hook (org-mode . org-bullets-mode)
+	:custom
+	(org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
-     ;; Replace list hyphen with dot
-     (font-lock-add-keywords 'org-mode
-			     '(("^ *\\([-]\\) "
-				(0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+      ;; Replace list hyphen with dot
+      (font-lock-add-keywords 'org-mode
+			      '(("^ *\\([-]\\) "
+				 (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
-     (dolist (face '((org-level-1 . 1.2)
-		     (org-level-2 . 1.1)
-		     (org-level-3 . 1.05)
-		     (org-level-4 . 1.0)
-		     (org-level-5 . 1.1)
-		     (org-level-6 . 1.1)
-		     (org-level-7 . 1.1)
-		     (org-level-8 . 1.1))))
+      (dolist (face '((org-level-1 . 1.2)
+		      (org-level-2 . 1.1)
+		      (org-level-3 . 1.05)
+		      (org-level-4 . 1.0)
+		      (org-level-5 . 1.1)
+		      (org-level-6 . 1.1)
+		      (org-level-7 . 1.1)
+		      (org-level-8 . 1.1))))
 
-     ;; Make sure org-indent face is available
-     (require 'org-indent)
-     (require 'org-tempo)
-     (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-     (add-to-list 'org-structure-template-alist '("sh" . "shell"))
-     (add-to-list 'org-structure-template-alist '("py" . "python"))
+      ;; Make sure org-indent face is available
+      (require 'org-indent)
+      (require 'org-tempo)
+      (setq org-structure-template-alist
+	    '(("py" . "python")
+	      ("el" . "src emacs-lisp")
+	      ("a" . "export ascii\n")
+	      ("c" . "center\n")
+	      ("C" . "comment\n")
+	      ("e" . "example\n")
+	      ("E" . "export")
+	      ("h" . "export html\n")
+	      ("l" . "export latex\n")
+	      ("q" . "quote\n")
+	      ("s" . "src")
+	      ("v" . "verse\n")))
+      (progn
+	;; no need to warn
+	(put 'narrow-to-region 'disabled nil)
+	(put 'narrow-to-page 'disabled nil)
+	(put 'upcase-region 'disabled nil)
+	(put 'downcase-region 'disabled nil)
+	(put 'erase-buffer 'disabled nil)
+	(put 'scroll-left 'disabled nil)
+	(put 'dired-find-alternate-file 'disabled nil)
+	)
 
-     (progn
-       ;; no need to warn
-       (put 'narrow-to-region 'disabled nil)
-       (put 'narrow-to-page 'disabled nil)
-       (put 'upcase-region 'disabled nil)
-       (put 'downcase-region 'disabled nil)
-       (put 'erase-buffer 'disabled nil)
-       (put 'scroll-left 'disabled nil)
-       (put 'dired-find-alternate-file 'disabled nil)
-       )
+      ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+      (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+      (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+      (set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
+      (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+      (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+      (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+      (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+      (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+      (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
 
-     ;; Ensure that anything that should be fixed-pitch in Org files appears that way
-     (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
-     (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
-     (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
-     (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-     (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-     (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-     (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+      ;; Get rid of the background on column views
+      (set-face-attribute 'org-column nil :background nil)
+      (set-face-attribute 'org-column-title nil :background nil)
    #+end_src
 ** auto tangle
    #+begin_src emacs-lisp
@@ -241,74 +301,6 @@
 
      (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
    #+end_src
-* EXWM
-  #+begin_src emacs-lisp
-    (defun efs/exwm-update-class ()
-      (exwm-workspace-rename-buffer exwm-class-name))
-
-    (use-package exwm
-      :config
-      ;; Set the default number of workspaces
-      (setq exwm-workspace-number 5)
-
-      ;; When window "class" updates, use it to set the buffer name
-      (add-hook 'exwm-update-class-hook #'efs/exwm-update-class)
-
-      ;; Rebind CapsLock to Ctrl
-      (start-process-shell-command "xmodmap" nil "xmodmap ~/.emacs.d/exwm/Xmodmap")
-
-      ;; Set the screen resolution (update this to be the correct resolution for your screen!)
-      (require 'exwm-randr)
-      (exwm-randr-enable)
-      ;; (start-process-shell-command "xrandr" nil "xrandr --output Virtual-1 --primary --mode 2048x1152 --pos 0x0 --rotate normal")
-
-      ;; These keys should always pass through to Emacs
-      (setq exwm-input-prefix-keys
-	'(?\C-x
-	  ?\C-u
-	  ?\C-h
-	  ?\M-x
-	  ?\M-`
-	  ?\M-&
-	  ?\M-:
-	  ?\C-\M-j  ;; Buffer list
-	  ?\C-\ ))  ;; Ctrl+Space
-
-      ;; Ctrl+Q will enable the next key to be sent directly
-      (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
-
-      ;; Set up global key bindings.  These always work, no matter the input state!
-      ;; Keep in mind that changing this list after EXWM initializes has no effect.
-      (setq exwm-input-global-keys
-	    `(
-	      ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
-	      ([?\s-r] . exwm-reset)
-
-	      ;; Move between windows
-	      ([s-left] . windmove-left)
-	      ([s-right] . windmove-right)
-	      ([s-up] . windmove-up)
-	      ([s-down] . windmove-down)
-
-	      ;; Launch applications via shell command
-	      ([?\s-&] . (lambda (command)
-			   (interactive (list (read-shell-command "$ ")))
-			   (start-process-shell-command command nil command)))
-
-	      ;; Switch workspace
-	      ([?\s-w] . exwm-workspace-switch)
-	      ([?\s-`] . (lambda () (interactive) (exwm-workspace-switch-create 0)))
-
-	      ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
-	      ,@(mapcar (lambda (i)
-			  `(,(kbd (format "s-%d" i)) .
-			    (lambda ()
-			      (interactive)
-			      (exwm-workspace-switch-create ,i))))
-			(number-sequence 0 9))))
-
-      (exwm-enable))
-  #+end_src
 * ERC
   #+begin_src emacs-lisp
     (setq erc-server "irc.libera.chat"
