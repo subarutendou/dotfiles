@@ -16,6 +16,48 @@
 				   (time-subtract after-init-time before-init-time)))
 			  gcs-done)))
    #+end_src
+** UI settings
+   #+begin_src emacs-lisp
+     ;; Setting for GUI emacs
+     (set-language-environment "UTF-8")
+     (set-default-coding-systems 'utf-8)
+     (setq inhibit-startup-message t)
+     (scroll-bar-mode -1)
+     (tool-bar-mode -1)
+     (tooltip-mode -1)
+     (menu-bar-mode -1)
+     (set-fringe-mode 10)
+     (fset 'yes-or-no-p 'y-or-n-p)
+     (setq visible-bell t)
+     (setq use-dialog-box nil)
+     (setq native-comp-async-report-warnings-errors nil)
+     (set-frame-parameter (selected-frame) 'alpha '(95 . 50))
+     (add-to-list 'default-frame-alist '(alpha . (95 . 50)))
+
+     (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+     (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+     (global-set-key (kbd "C-x k") 'kill-matching-buffers)
+     (global-set-key (kbd "C-x w") 'elfeed)
+     (setq xah-fly-use-meta-key nil)
+     (setq shift-select-mode nil)
+
+     ;; Fonts
+     (set-face-attribute 'default nil :family "Fira Code" :height 137)
+     (set-fontset-font t nil "JetBrains Mono" nil 'append)
+
+     (column-number-mode 1)
+     (when (version<= "26.0.50" emacs-version )
+       (global-display-line-numbers-mode))
+
+     ;; Disable line numbers for some modes
+     (dolist (mode '(org-mode-hook
+		     term-mode-hook
+		     shell-mode-hook
+		     eshell-mode-hook
+		     vterm-mode-hook
+		     pdf-view-mode-hook))
+       (add-hook mode (lambda () (display-line-numbers-mode 0))))
+   #+end_src
 ** Prerequest for package manager
    #+begin_src emacs-lisp
      (require 'package)
@@ -130,48 +172,6 @@
        :config
        (which-key-mode)
        (setq which-key-idle-delay 1))
-   #+end_src
-** UI settings
-   #+begin_src emacs-lisp
-     ;; Setting for GUI emacs
-     (set-language-environment "UTF-8")
-     (set-default-coding-systems 'utf-8)
-     (setq inhibit-startup-message t)
-     (scroll-bar-mode -1)
-     (tool-bar-mode -1)
-     (tooltip-mode -1)
-     (menu-bar-mode -1)
-     (set-fringe-mode 10)
-     (fset 'yes-or-no-p 'y-or-n-p)
-     (setq visible-bell t)
-     (setq use-dialog-box nil)
-     (setq native-comp-async-report-warnings-errors nil)
-     (set-frame-parameter (selected-frame) 'alpha '(93 . 50))
-     (add-to-list 'default-frame-alist '(alpha . (93 . 50)))
-
-     (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-     (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
-     (global-set-key (kbd "C-x k") 'kill-matching-buffers)
-     (global-set-key (kbd "C-x w") 'elfeed)
-     (setq xah-fly-use-meta-key nil)
-     (setq shift-select-mode nil)
-
-     ;; Fonts
-     (set-face-attribute 'default nil :family "Fira Code" :height 137)
-     (set-fontset-font t nil "JetBrains Mono" nil 'append)
-
-     (column-number-mode 1)
-     (when (version<= "26.0.50" emacs-version )
-       (global-display-line-numbers-mode))
-
-     ;; Disable line numbers for some modes
-     (dolist (mode '(org-mode-hook
-		     term-mode-hook
-		     shell-mode-hook
-		     eshell-mode-hook
-		     vterm-mode-hook
-		     pdf-view-mode-hook))
-       (add-hook mode (lambda () (display-line-numbers-mode 0))))
    #+end_src
 * Basic settings
    #+begin_src emacs-lisp
