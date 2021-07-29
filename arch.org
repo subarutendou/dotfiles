@@ -2,59 +2,20 @@
 #+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/init.el :mkdirp yes
 
 * early
-** UI settings
+** Check startup time
    #+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
-     ;; Setting for GUI emacs
-     (custom-set-variables
-      '(initial-frame-alist (quote ((fullscreen . maximized)))))
+     ;; The default is 800 kilobytes.  Measured in bytes.
+     (setq gc-cons-threshold (* 50 1000 1000))
 
-     (set-language-environment "UTF-8")
-     (set-default-coding-systems 'utf-8)
-     (setq inhibit-startup-message t)
-     (scroll-bar-mode -1)
-     (tool-bar-mode -1)
-     (tooltip-mode -1)
-     (menu-bar-mode -1)
-     (set-fringe-mode 10)
-     (fset 'yes-or-no-p 'y-or-n-p)
-     (setq visible-bell t)
-     (setq use-dialog-box nil)
-     (setq native-comp-async-report-warnings-errors nil)
-     (set-frame-parameter (selected-frame) 'alpha '(85 . 50))
-     (add-to-list 'default-frame-alist '(alpha . (85 . 50)))
-
-     (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-     (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
-     (global-set-key (kbd "C-x k") 'kill-matching-buffers)
-     (global-set-key (kbd "C-x w") 'elfeed)
-     (setq xah-fly-use-meta-key nil)
-     (setq shift-select-mode nil)
-
-     ;; Fonts
-     (set-face-attribute 'default nil :family "Fira Code" :height 137)
-     (set-fontset-font t nil "JetBrains Mono" nil 'append)
-
-     (column-number-mode 1)
-     (when (version<= "26.0.50" emacs-version )
-       (global-display-line-numbers-mode))
-
-     ;; Disable line numbers for some modes
-     (dolist (mode '(org-mode-hook
-		     term-mode-hook
-		     shell-mode-hook
-		     eshell-mode-hook
-		     vterm-mode-hook
-		     pdf-view-mode-hook))
-       (add-hook mode (lambda () (display-line-numbers-mode 0))))
+     ;; Profile emacs startup
+     (add-hook 'emacs-startup-hook
+	       (lambda ()
+		 (message "*** Emacs loaded in %s with %d garbage collections."
+			  (format "%.2f seconds"
+				  (float-time
+				   (time-subtract after-init-time before-init-time)))
+			  gcs-done)))
    #+end_src
-* Basic settings
-   #+begin_src emacs-lisp
-     ;; Cursor setting only work in init.el
-     (blink-cursor-mode 0)
-
-     (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
-   #+end_src
-* Package
 ** Prerequest for package manager
    #+begin_src emacs-lisp
      (require 'package)
@@ -72,6 +33,12 @@
 
      (require 'use-package)
      (setq use-package-always-ensure t)
+   #+end_src
+** Theme
+   #+begin_src emacs-lisp
+     (use-package gruvbox-theme
+       :config
+       (load-theme 'gruvbox-dark-medium t))
    #+end_src
 ** EXWM without use-package
    #+begin_src emacs-lisp
@@ -127,10 +94,6 @@
    #+end_src
 ** FrameWork
    #+begin_src emacs-lisp
-     (use-package gruvbox-theme
-       :config
-       (load-theme 'gruvbox-dark-medium t))
-
      (use-package xah-fly-keys
        :diminish xah-fly-keys
        :config
@@ -166,6 +129,56 @@
        (which-key-mode)
        (setq which-key-idle-delay 1))
    #+end_src
+** UI settings
+   #+begin_src emacs-lisp
+     ;; Setting for GUI emacs
+     (set-language-environment "UTF-8")
+     (set-default-coding-systems 'utf-8)
+     (setq inhibit-startup-message t)
+     (scroll-bar-mode -1)
+     (tool-bar-mode -1)
+     (tooltip-mode -1)
+     (menu-bar-mode -1)
+     (set-fringe-mode 10)
+     (fset 'yes-or-no-p 'y-or-n-p)
+     (setq visible-bell t)
+     (setq use-dialog-box nil)
+     (setq native-comp-async-report-warnings-errors nil)
+     (set-frame-parameter (selected-frame) 'alpha '(93 . 50))
+     (add-to-list 'default-frame-alist '(alpha . (93 . 50)))
+
+     (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+     (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+     (global-set-key (kbd "C-x k") 'kill-matching-buffers)
+     (global-set-key (kbd "C-x w") 'elfeed)
+     (setq xah-fly-use-meta-key nil)
+     (setq shift-select-mode nil)
+
+     ;; Fonts
+     (set-face-attribute 'default nil :family "Fira Code" :height 137)
+     (set-fontset-font t nil "JetBrains Mono" nil 'append)
+
+     (column-number-mode 1)
+     (when (version<= "26.0.50" emacs-version )
+       (global-display-line-numbers-mode))
+
+     ;; Disable line numbers for some modes
+     (dolist (mode '(org-mode-hook
+		     term-mode-hook
+		     shell-mode-hook
+		     eshell-mode-hook
+		     vterm-mode-hook
+		     pdf-view-mode-hook))
+       (add-hook mode (lambda () (display-line-numbers-mode 0))))
+   #+end_src
+* Basic settings
+   #+begin_src emacs-lisp
+     ;; Cursor setting only work in init.el
+     (blink-cursor-mode 0)
+
+     (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
+   #+end_src
+* Package
 ** package
    #+begin_src emacs-lisp
      (use-package emojify
@@ -327,8 +340,8 @@
      xhost +SI:localuser:$USER
 
      # EXWM settings
-     # exec dbus-launch --exit-with-session emacs -mm --debug-init
-     exec emacs
+     exec dbus-launch --exit-with-session emacs -mm --debug-init
+     # exec emacs
    #+end_src
 ** bashrc
    #+begin_src conf :tangle ~/.bashrc
