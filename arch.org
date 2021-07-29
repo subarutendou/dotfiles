@@ -31,8 +31,6 @@
      (setq visible-bell t)
      (setq use-dialog-box nil)
      (setq native-comp-async-report-warnings-errors nil)
-     (set-frame-parameter (selected-frame) 'alpha '(95 . 50))
-     (add-to-list 'default-frame-alist '(alpha . (95 . 50)))
 
      (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
      (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
@@ -80,9 +78,13 @@
    #+end_src
 ** Theme
    #+begin_src emacs-lisp
-     (use-package gruvbox-theme
+     ;; (use-package gruvbox-theme
+       ;; :config
+       ;; (load-theme 'gruvbox-dark-medium t))
+
+     (use-package nord-theme
        :config
-       (load-theme 'gruvbox-dark-medium t))
+       (load-theme 'nord t))
    #+end_src
 ** EXWM without use-package
    #+begin_src emacs-lisp
@@ -347,7 +349,7 @@
      udiskie &
      picom -CGb --vsync --backend glx &
      pcloud -b &
-     nitrogen --restore &
+     # nitrogen --restore &
 
      xhost +SI:localuser:$USER
 

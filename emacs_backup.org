@@ -1,4 +1,9 @@
 
+* opacity
+  #+begin_src emacs-lisp
+    (set-frame-parameter (selected-frame) 'alpha '(95 . 50))
+    (add-to-list 'default-frame-alist '(alpha . (95 . 50)))
+  #+end_src
 * early-init
 ** Check startup time
    #+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
