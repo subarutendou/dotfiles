@@ -34,10 +34,8 @@
      (setq visible-bell t)
      (setq use-dialog-box nil)
      (setq native-comp-async-report-warnings-errors nil)
-
-     (column-number-mode 1)
-     (when (version<= "26.0.50" emacs-version )
-       (global-display-line-numbers-mode))
+     (set-frame-parameter (selected-frame) 'alpha '(85 . 50))
+     (add-to-list 'default-frame-alist '(alpha . (85 . 50)))
 
      (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
      (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
@@ -49,7 +47,10 @@
      ;; Fonts
      (set-face-attribute 'default nil :family "Fira Code" :height 137)
      (set-fontset-font t nil "JetBrains Mono" nil 'append)
-     (set-fontset-font t nil "monospace" nil 'append)
+
+     (column-number-mode 1)
+     (when (version<= "26.0.50" emacs-version )
+       (global-display-line-numbers-mode))
 
      ;; Disable line numbers for some modes
      (dolist (mode '(org-mode-hook
@@ -103,8 +104,8 @@
        (start-process-shell-command "xmodmap" nil "xmodmap ~/.emacs.d/exwm/Xmodmap")
 
        ;; Set the screen resolution (update this to be the correct resolution for your screen!)
-       (require 'exwm-randr)
-       (exwm-randr-enable)
+       ;; (require 'exwm-randr)
+       ;; (exwm-randr-enable)
        ;; (start-process-shell-command "xrandr" nil "xrandr --output Virtual-1 --primary --mode 2048x1152 --pos 0x0 --rotate normal")
 
        ;; These keys should always pass through to Emacs
@@ -351,12 +352,13 @@
      udiskie &
      picom -CGb --vsync --backend glx &
      pcloud -b &
+     nitrogen --restore &
 
      xhost +SI:localuser:$USER
 
      # EXWM settings
-     exec dbus-launch --exit-with-session emacs -mm --debug-init
-     # exec emacs
+     # exec dbus-launch --exit-with-session emacs -mm --debug-init
+     exec emacs
    #+end_src
 ** bashrc
    #+begin_src conf :tangle ~/.bashrc
