@@ -19,8 +19,10 @@
 ** Prerequest for package manager
    #+begin_src emacs-lisp
      (require 'package)
-     (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-     (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/"))
+     (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+			      ("melpa-stable" . "https://stable.melpa.org/packages/")
+			      ("org" . "https://orgmode.org/elpa/")
+			      ("elpa" . "https://elpa.gnu.org/packages/")))
 
      ;; Package
      (package-initialize)
@@ -32,6 +34,7 @@
        (package-insall 'use-package))
 
      (require 'use-package)
+     ;; (setq use-package-verbose t)
      (setq use-package-always-ensure t)
    #+end_src
 ** Theme
@@ -240,9 +243,19 @@
       ;; Make sure org-indent face is available
       (require 'org-indent)
       (require 'org-tempo)
-      (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-      (add-to-list 'org-structure-template-alist '("py" . "python"))
-
+      (setq org-structure-template-alist
+	    '(("py" . "python")
+	      ("el" . "src emacs-lisp")
+	      ("a" . "export ascii\n")
+	      ("c" . "center\n")
+	      ("C" . "comment\n")
+	      ("e" . "example\n")
+	      ("E" . "export")
+	      ("h" . "export html\n")
+	      ("l" . "export latex\n")
+	      ("q" . "quote\n")
+	      ("s" . "src")
+	      ("v" . "verse\n")))
       (progn
 	;; no need to warn
 	(put 'narrow-to-region 'disabled nil)
