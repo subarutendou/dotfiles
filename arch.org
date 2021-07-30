@@ -81,10 +81,6 @@
      (use-package gruvbox-theme
        :config
        (load-theme 'gruvbox-dark-medium t))
-
-     ;; (use-package nord-theme
-     ;;   :config
-     ;;   (load-theme 'nord t))
    #+end_src
 ** EXWM without use-package
    #+begin_src emacs-lisp
