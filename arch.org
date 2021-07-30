@@ -338,13 +338,12 @@
      udiskie &
      picom -CGb --vsync --backend glx &
      pcloud -b &
-     nitrogen --restore &
+     # nitrogen --restore &
 
      xhost +SI:localuser:$USER
 
      # EXWM settings
      exec dbus-launch --exit-with-session emacs -mm --debug-init
-     # exec emacs
    #+end_src
 ** bashrc
    #+begin_src conf :tangle ~/.bashrc
