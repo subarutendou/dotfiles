@@ -1,4 +1,3 @@
-
 * opacity
   #+begin_src emacs-lisp
     (set-frame-parameter (selected-frame) 'alpha '(95 . 50))
