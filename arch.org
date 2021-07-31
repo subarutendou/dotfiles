@@ -36,6 +36,10 @@
      (when (version<= "26.0.50" emacs-version )
        (global-display-line-numbers-mode))
 
+     (setq-default tab-width 4)
+     (progn
+       (setq-default indent-tabs-mode nil))
+
      (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
      (global-set-key (kbd "C-x k") 'kill-matching-buffers)
      (global-set-key (kbd "C-x w") 'elfeed)
@@ -75,9 +79,13 @@
    #+end_src
 ** Theme
    #+begin_src emacs-lisp
-     (use-package zenburn-theme
+     ;; (use-package zenburn-theme
+     ;;   :config
+     ;;   (load-theme 'zenburn t))
+
+     (use-package doom-themes
        :config
-       (load-theme 'zenburn t))
+       (load-theme 'doom-nord t))
    #+end_src
 ** EXWM without use-package
    #+begin_src emacs-lisp
