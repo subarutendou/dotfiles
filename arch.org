@@ -326,7 +326,6 @@
 ** package without setting
    #+begin_src emacs-lisp
      (use-package vterm)
-     (use-package counsel)
      (use-package diminish)
      (use-package flx)
      (use-package python-mode)
