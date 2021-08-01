@@ -3,7 +3,7 @@
 
 * Basic Settings
 ** Check startup time
-   #+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
+   #+begin_src emacs-lisp
      ;; The default is 800 kilobytes.  Measured in bytes.
      (setq gc-cons-threshold (* 50 1000 1000))
 
@@ -79,20 +79,15 @@
    #+end_src
 ** Theme
    #+begin_src emacs-lisp
-     ;; (use-package zenburn-theme
-     ;;   :config
-     ;;   (load-theme 'zenburn t))
-
-     (use-package doom-themes
+     (use-package nord-theme
        :config
-       (load-theme 'doom-nord t))
+       (load-theme 'nord t))
    #+end_src
-** EXWM without use-package
+** EXWM
    #+begin_src emacs-lisp
      (require 'exwm)
 
-     (setq exwm-workspace-number 5
-           exwm-workspace-diplay-echo-area-timeout 5)
+     (setq exwm-workspace-number 5)
      ;; Make buffer name more meaningful
      (add-hook 'exwm-update-class-hook
                (lambda ()
@@ -150,6 +145,7 @@
        :config
        (xah-fly-keys-set-layout "dvorak")
        (define-key xah-fly-n-keymap (kbd "e") 'vterm)
+       (define-key xah-fly-command-map (kbd "b") 'swiper)
        (xah-fly-keys 1))
 
      (use-package all-the-icons)
@@ -159,18 +155,54 @@
      (use-package rainbow-delimiters
        :hook (prog-mode . rainbow-delimiters-mode))
 
-     (use-package vertico
+     (use-package helpful
        :custom
-       (vertico-cycle t)
-       :init
-       (vertico-mode))
+       (counsel-describe-function-function #'helpful-callable)
+       (counsel-describe-variable-function #'helpful-variable)
+       :bind
+       ([remap describe-function] . counsel-describe-function)
+       ([remap describe-command] . helpful-command)
+       ([remap describe-variable] . counsel-describe-variable)
+       ([remap describe-key] . helpful-key))
 
-     (use-package marginalia
-       :after vertico
-       :custom
-       (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+     (use-package ivy
+       :diminish ivy-mode
        :init
-       (marginalia-mode))
+       (ivy-mode 1))
+     (setq ivy-re-builders-alist
+           '((ivy-switch-buffer . ivy--regex-plus)
+             (t . ivy--regex-fuzzy)))
+     (setq ivy-initial-inputs-alist nil)
+
+     (use-package ivy-rich
+       :init
+       (ivy-rich-mode 1))
+
+     (use-package ligature
+       :load-path "~/ligature.el/"
+       :config
+       ;; Enable the "www" ligature in every possible major mode
+       (ligature-set-ligatures 't '("www"))
+       ;; Enable traditional ligature support in eww-mode, if the
+       ;; `variable-pitch' face supports it
+       (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+       ;; Enable all Cascadia Code ligatures in programming modes
+       (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                          ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                          "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                          "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                          "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                          "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                          "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                          "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                          ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                          "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                          "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                          "?=" "?." "??" ";;" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                          "\\\\" "://"))
+       ;; Enables ligature checks globally in all buffers. You can also do it
+       ;; per mode with `ligature-mode'.
+       (global-ligature-mode t))
 
      (use-package which-key
        :diminish which-key
@@ -211,75 +243,75 @@
 ** Org settings
 *** basic
     #+begin_src emacs-lisp
-      (use-package org
-	:custom
-	(org-agenda-start-with-log-mode t)
-	(org-log-done 'time)
-	(org-log-into-drawer t)
-	(org-agenda-files
-	 '("~/orgfile/Tasks.org")		; example
-	 '("~/orgfile/birthday.org")))
+        (use-package org
+      :custom
+      (org-agenda-start-with-log-mode t)
+      (org-log-done 'time)
+      (org-log-into-drawer t))
+      ;; (org-agenda-files
+      ;;  '("~/orgfile/Tasks.org")		; example
+      ;;  '("~/orgfile/birthday.org")))
 
-      (use-package org-bullets
-	:hook (org-mode . org-bullets-mode)
-	:custom
-	(org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+        (use-package org-bullets
+      :hook (org-mode . org-bullets-mode)
+      :custom
+      (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
-      ;; Replace list hyphen with dot
-      (font-lock-add-keywords 'org-mode
-			      '(("^ *\\([-]\\) "
-				 (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+        ;; Replace list hyphen with dot
+        (font-lock-add-keywords 'org-mode
+                    '(("^ *\\([-]\\) "
+                   (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
-      (dolist (face '((org-level-1 . 1.2)
-		      (org-level-2 . 1.1)
-		      (org-level-3 . 1.05)
-		      (org-level-4 . 1.0)
-		      (org-level-5 . 1.1)
-		      (org-level-6 . 1.1)
-		      (org-level-7 . 1.1)
-		      (org-level-8 . 1.1))))
+        (dolist (face '((org-level-1 . 1.2)
+                (org-level-2 . 1.1)
+                (org-level-3 . 1.05)
+                (org-level-4 . 1.0)
+                (org-level-5 . 1.1)
+                (org-level-6 . 1.1)
+                (org-level-7 . 1.1)
+                (org-level-8 . 1.1))))
 
-      ;; Make sure org-indent face is available
-      (require 'org-indent)
-      (require 'org-tempo)
-      (setq org-structure-template-alist
-	    '(("py" . "python")
-	      ("el" . "src emacs-lisp")
-	      ("a" . "export ascii\n")
-	      ("c" . "center\n")
-	      ("C" . "comment\n")
-	      ("e" . "example\n")
-	      ("E" . "export")
-	      ("h" . "export html\n")
-	      ("l" . "export latex\n")
-	      ("q" . "quote\n")
-	      ("s" . "src")
-	      ("v" . "verse\n")))
-      (progn
-	;; no need to warn
-	(put 'narrow-to-region 'disabled nil)
-	(put 'narrow-to-page 'disabled nil)
-	(put 'upcase-region 'disabled nil)
-	(put 'downcase-region 'disabled nil)
-	(put 'erase-buffer 'disabled nil)
-	(put 'scroll-left 'disabled nil)
-	(put 'dired-find-alternate-file 'disabled nil)
-	)
+        ;; Make sure org-indent face is available
+        (require 'org-indent)
+        (require 'org-tempo)
+        (setq org-structure-template-alist
+          '(("py" . "python")
+            ("el" . "src emacs-lisp")
+            ("a" . "export ascii\n")
+            ("c" . "center\n")
+            ("C" . "comment\n")
+            ("e" . "example\n")
+            ("E" . "export")
+            ("h" . "export html\n")
+            ("l" . "export latex\n")
+            ("q" . "quote\n")
+            ("s" . "src")
+            ("v" . "verse\n")))
+        (progn
+      ;; no need to warn
+      (put 'narrow-to-region 'disabled nil)
+      (put 'narrow-to-page 'disabled nil)
+      (put 'upcase-region 'disabled nil)
+      (put 'downcase-region 'disabled nil)
+      (put 'erase-buffer 'disabled nil)
+      (put 'scroll-left 'disabled nil)
+      (put 'dired-find-alternate-file 'disabled nil)
+      )
 
-      ;; Ensure that anything that should be fixed-pitch in Org files appears that way
-      (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
-      (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
-      (set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
-      (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
-      (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
-      (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-      (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-      (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-      (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+        ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+        (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+        (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+        (set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
+        (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+        (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+        (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+        (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+        (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+        (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
 
-      ;; Get rid of the background on column views
-      (set-face-attribute 'org-column nil :background nil)
-      (set-face-attribute 'org-column-title nil :background nil)
+        ;; Get rid of the background on column views
+        (set-face-attribute 'org-column nil :background nil)
+        (set-face-attribute 'org-column-title nil :background nil)
     #+end_src
 *** auto tangle
     #+begin_src emacs-lisp
@@ -294,7 +326,9 @@
 ** package without setting
    #+begin_src emacs-lisp
      (use-package vterm)
+     (use-package counsel)
      (use-package diminish)
+     (use-package flx)
      (use-package python-mode)
      (use-package rust-mode)
    #+end_src
