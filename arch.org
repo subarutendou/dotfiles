@@ -7,7 +7,6 @@
      ;; The default is 800 kilobytes.  Measured in bytes.
      (setq gc-cons-threshold (* 50 1000 1000))
 
-     ;; Profile emacs startup
      (add-hook 'emacs-startup-hook
 	       (lambda ()
 		 (message "*** Emacs loaded in %s with %d garbage collections."
@@ -65,16 +64,13 @@
      (require 'package)
      (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
-     ;; Package
      (package-initialize)
      (unless package-archive-contents
      (package-refresh-contents))
 
-     ;; Initialize use-package on non-Linux platforms
      (unless (package-installed-p 'use-package)
        (package-insall 'use-package))
      (require 'use-package)
-     ;; (setq use-package-verbose t)
      (setq use-package-always-ensure t)
    #+end_src
 ** Theme
@@ -95,6 +91,8 @@
 
      ;; (require 'exwm-randr)
      ;; (exwm-randr-enable)
+
+     (setq exwm-manage-configurations '((t char-mode t)))
 
      (setq exwm-input-prefix-keys
      '(?\C-x
