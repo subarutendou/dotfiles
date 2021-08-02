@@ -2,174 +2,24 @@
 #+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/init.el :mkdirp yes
 
 * Basic Settings
-** Check startup time
-   #+begin_src emacs-lisp
-     (setq gc-cons-threshold (* 50 1000 1000))
-
-     (add-hook 'emacs-startup-hook
-           (lambda ()
-         (message "*** Emacs loaded in %s with %d garbage collections."
-              (format "%.2f seconds"
-                  (float-time
-                   (time-subtract after-init-time before-init-time)))
-              gcs-done)))
-   #+end_src
-** Prerequest for package manager
-   #+begin_src emacs-lisp
-     (require 'package)
-     (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-
-     (package-initialize)
-
-     (unless package-archive-contents
-     (package-refresh-contents))
-
-     (unless (package-installed-p 'use-package)
-       (package-insall 'use-package))
-     (require 'use-package)
-     (setq use-package-always-ensure t)
-   #+end_src
-** Theme
-   #+begin_src emacs-lisp
-     (use-package nord-theme
-       :config
-       (load-theme 'nord t))
-   #+end_src
-** EXWM
-   #+begin_src emacs-lisp
-     (require 'exwm)
-
-     (require 'exwm-randr)
-     (start-process-shell-command "xrandr" nil "xrandr --output eDP-1 --off --output DP-1 --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI-1 --off --output HDMI-2 --off")
-     (exwm-randr-enable)
-
-     (Setq exwm-workspace-number 5)
-     (add-hook 'exwm-update-class-hook
-               (lambda ()
-                 (exwm-workspace-rename-buffer exwm-class-name)))
-
-     (setq exwm-manage-configurations '((t char-mode t)))
-
-     (setq exwm-input-prefix-keys
-     '(?\C-x
-       ?\C-u
-       ?\C-h
-       ?\M-x
-       ?\M-`
-       ?\M-&
-       ?\M-:
-       ?\C-\M-j  ;; Buffer list
-       ?\C-\ ))  ;; Ctrl+Space
-
-     (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
-
-     (setq exwm-input-global-keys
-         `(
-           ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
-           ([?\s-r] . exwm-reset)
-
-           ;; Move between windows
-           ([s-left] . windmove-left)
-           ([s-right] . windmove-right)
-           ([s-up] . windmove-up)
-           ([s-down] . windmove-down)
-
-           ;; Launch applications via shell command
-           ([?\s-&] . (lambda (command)
-                (interactive (list (read-shell-command "$ ")))
-                (start-process-shell-command command nil command)))
-
-           ;; Switch workspace
-           ([?\s-w] . exwm-workspace-switch)
-           ([?\s-`] . (lambda () (interactive) (exwm-workspace-switch-create 0)))
-
-           ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
-           ,@(mapcar (lambda (i)
-               `(,(kbd (format "s-%d" i)) .
-                 (lambda ()
-                   (interactive)
-                   (exwm-workspace-switch-create ,i))))
-             (number-sequence 0 9))))
-     (exwm-enable)
-   #+end_src
-** FrameWork
-   #+begin_src emacs-lisp
-     (use-package xah-fly-keys
-       :diminish xah-fly-keys
-       :config
-       (xah-fly-keys-set-layout "dvorak")
-       (define-key xah-fly-n-keymap (kbd "e") 'vterm)
-       (define-key xah-fly-command-map (kbd "b") 'swiper)
-       (xah-fly-keys 1))
-
-     (use-package all-the-icons)
-     (use-package all-the-icons-dired)
-     (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
-
-     (use-package rainbow-delimiters
-       :hook (prog-mode . rainbow-delimiters-mode))
-
-     (use-package helpful
-       :custom
-       (counsel-describe-function-function #'helpful-callable)
-       (counsel-describe-variable-function #'helpful-variable)
-       :bind
-       ([remap describe-function] . counsel-describe-function)
-       ([remap describe-command] . helpful-command)
-       ([remap describe-variable] . counsel-describe-variable)
-       ([remap describe-key] . helpful-key))
-
-     (use-package ivy
-       :diminish ivy-mode
-       :init
-       (ivy-mode 1))
-     (setq ivy-re-builders-alist
-           '((ivy-switch-buffer . ivy--regex-plus)
-             (t . ivy--regex-fuzzy)))
-     (setq ivy-initial-inputs-alist nil)
-
-     (use-package ivy-rich
-       :init
-       (ivy-rich-mode 1))
-
-     (use-package ligature
-       :load-path "~/ligature.el/"
-       :config
-       ;; Enable the "www" ligature in every possible major mode
-       (ligature-set-ligatures 't '("www"))
-       ;; Enable traditional ligature support in eww-mode, if the
-       ;; `variable-pitch' face supports it
-       (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
-       ;; Enable all Cascadia Code ligatures in programming modes
-       (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
-                          ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
-                          "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
-                          "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
-                          "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
-                          "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
-                          "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
-                          "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
-                          ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
-                          "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
-                          "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
-                          "?=" "?." "??" ";;" "/=" "/>" "//" "__" "~~" "(*" "*)"
-                          "\\\\" "://"))
-       ;; Enables ligature checks globally in all buffers. You can also do it
-       ;; per mode with `ligature-mode'.
-       (global-ligature-mode t))
-
-     (use-package which-key
-       :diminish which-key
-       :defer 0
-       :diminish which-key-mode
-       :config
-       (which-key-mode)
-       (setq which-key-idle-delay 1))
-   #+end_src
 ** Early Settings
    #+begin_src emacs-lisp
      (set-frame-parameter (selected-frame) 'alpha '(85 . 50))
      (add-to-list 'default-frame-alist '(alpha . (85 . 50)))
+
+     (defun toggle-transparency ()
+        (interactive)
+        (let ((alpha (frame-parameter nil 'alpha)))
+          (set-frame-parameter
+           nil 'alpha
+           (if (eql (cond ((numberp alpha) alpha)
+                          ((numberp (cdr alpha)) (cdr alpha))
+                          ;; Also handle undocumented (<active> <inactive>) form.
+                          ((numberp (cadr alpha)) (cadr alpha)))
+                    100)
+               '(85 . 50) '(100 . 100)))))
+     (global-set-key (kbd "C-c t") 'toggle-transparency)
+
      (set-language-environment "UTF-8")
      (set-default-coding-systems 'utf-8)
      (setq inhibit-startup-message t)
@@ -208,6 +58,158 @@
              vterm-mode-hook
              pdf-view-mode-hook))
        (add-hook mode (lambda () (display-line-numbers-mode 0))))
+   #+end_src
+** Prerequest for package manager
+   #+begin_src emacs-lisp
+     (require 'package)
+     (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+
+     (package-initialize)
+
+     (unless package-archive-contents
+     (package-refresh-contents))
+
+     (unless (package-installed-p 'use-package)
+       (package-insall 'use-package))
+     (require 'use-package)
+     (setq use-package-always-ensure t)
+   #+end_src
+** EXWM
+   #+begin_src emacs-lisp
+     (require 'exwm)
+
+     (require 'exwm-randr)
+     (add-hook 'exwm-randr-screen-change-hook
+               (lambda ()
+                 (start-process-shell-command "xrandr" nil "xrandr --output eDP-1 --off --output DP-1 --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI-1 --off --output HDMI-2 --off")))
+     (exwm-randr-enable)
+
+     (setq exwm-workspace-number 5)
+     (add-hook 'exwm-update-class-hook
+               (lambda ()
+                 (exwm-workspace-rename-buffer exwm-class-name)))
+
+     (setq exwm-manage-configurations '((t char-mode t)))
+
+     (setq exwm-input-prefix-keys
+           '(?\C-x
+             ?\C-u
+             ?\C-h
+             ?\M-x
+             ?\M-`
+             ?\M-&
+             ?\M-:
+             ?\C-\M-j  ;; Buffer list
+             ?\C-\ ))  ;; Ctrl+Space
+
+     (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+
+     (setq exwm-input-global-keys
+           `(
+             ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
+             ([?\s-r] . exwm-reset)
+
+             ;; Move between windows
+             ([s-left] . windmove-left)
+             ([s-right] . windmove-right)
+             ([s-up] . windmove-up)
+             ([s-down] . windmove-down)
+
+             ;; Launch applications via shell command
+             ([?\s-&] . (lambda (command)
+                          (interactive (list (read-shell-command "$ ")))
+                          (start-process-shell-command command nil command)))
+
+             ;; Switch workspace
+             ([?\s-w] . exwm-workspace-switch)
+             ([?\s-`] . (lambda () (interactive) (exwm-workspace-switch-create 0)))
+
+             ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
+             ,@(mapcar (lambda (i)
+                         `(,(kbd (format "s-%d" i)) .
+                           (lambda ()
+                             (interactive)
+                             (exwm-workspace-switch-create ,i))))
+                       (number-sequence 0 9))))
+     (exwm-enable)
+   #+end_src
+** Theme
+   #+begin_src emacs-lisp
+     (use-package gruvbox-theme
+       :config
+       (load-theme 'gruvbox-dark-medium t))
+   #+end_src
+** FrameWork
+   #+begin_src emacs-lisp
+     (use-package xah-fly-keys
+       :diminish xah-fly-keys
+       :config
+       (xah-fly-keys-set-layout "dvorak")
+       (define-key xah-fly-n-keymap (kbd "e") 'vterm)
+       (xah-fly-keys 1))
+
+     (use-package all-the-icons)
+     (use-package all-the-icons-dired)
+     (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+
+     (use-package rainbow-delimiters
+       :hook (prog-mode . rainbow-delimiters-mode))
+
+     (use-package which-key
+       :diminish which-key
+       :defer 0
+       :diminish which-key-mode
+       :config
+       (which-key-mode)
+       (setq which-key-idle-delay 1))
+
+     (use-package vertico
+       :init
+       (vertico-mode))
+
+     (use-package orderless
+       :init
+       (setq completion-styless '(orderless)
+             completion-category-defaults nil
+             completion-cotegory-overrides '((file (styles partial-completion)))))
+
+     (savehist-mode 1)
+
+     (defun crm-indicator (arg)
+       (cons (concat "[CRM] " (car args)) (cdr args)))
+     (advice-add #'comleting-read-multiple :filter-args #'crm-indicator)
+
+     (setq minibuffer-prompt-properties
+           '(read-only t cursor-intangible t face minibuffer-prompt))
+     (add-hook 'monobuffer-setup-hook #'cursor-intangible-mode)
+
+     (setq enable-recursive-minibuffers t)
+
+     (use-package ligature
+       :load-path "~/.emacs.d/github/ligature.el/"
+       :config
+       ;; Enable the "www" ligature in every possible major mode
+       (ligature-set-ligatures 't '("www"))
+       ;; Enable traditional ligature support in eww-mode, if the
+       ;; `variable-pitch' face supports it
+       (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+       ;; Enable all Cascadia Code ligatures in programming modes
+       (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                          ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                          "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                          "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                          "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                          "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                          "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                          "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                          ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                          "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                          "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                          "?=" "?." "??" ";;" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                          "\\\\" "://"))
+       ;; Enables ligature checks globally in all buffers. You can also do it
+       ;; per mode with `ligature-mode'.
+       (global-ligature-mode t))
    #+end_src
 * Package
 ** package
