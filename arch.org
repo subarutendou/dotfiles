@@ -4,60 +4,15 @@
 * Basic Settings
 ** Check startup time
    #+begin_src emacs-lisp
-     ;; The default is 800 kilobytes.  Measured in bytes.
      (setq gc-cons-threshold (* 50 1000 1000))
 
      (add-hook 'emacs-startup-hook
-	       (lambda ()
-		 (message "*** Emacs loaded in %s with %d garbage collections."
-			  (format "%.2f seconds"
-				  (float-time
-				   (time-subtract after-init-time before-init-time)))
-			  gcs-done)))
-   #+end_src
-** Early Settings
-   #+begin_src emacs-lisp
-     (set-language-environment "UTF-8")
-     (set-default-coding-systems 'utf-8)
-     (setq inhibit-startup-message t)
-     (scroll-bar-mode -1)
-     (tool-bar-mode -1)
-     (tooltip-mode -1)
-     (menu-bar-mode -1)
-     (set-fringe-mode 10)
-     (fset 'yes-or-no-p 'y-or-n-p)
-     (setq visible-bell t)
-     (setq use-dialog-box nil)
-     (setq native-comp-async-report-warnings-errors nil)
-     (blink-cursor-mode 0)
-     (global-hl-line-mode 1)
-     (column-number-mode 1)
-     (when (version<= "26.0.50" emacs-version )
-       (global-display-line-numbers-mode))
-
-     (setq-default tab-width 4)
-     (progn
-       (setq-default indent-tabs-mode nil))
-
-     (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-     (global-set-key (kbd "C-x k") 'kill-matching-buffers)
-     (global-set-key (kbd "C-x w") 'elfeed)
-     (setq xah-fly-use-meta-key nil)
-     (setq shift-select-mode nil)
-     (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
-
-     ;; Fonts
-     (set-face-attribute 'default nil :family "JetBrains Mono" :height 137)
-     (set-fontset-font t nil "Fira Code" nil 'append)
-
-     ;; Disable line numbers for some modes
-     (dolist (mode '(org-mode-hook
-		     term-mode-hook
-		     shell-mode-hook
-		     eshell-mode-hook
-		     vterm-mode-hook
-		     pdf-view-mode-hook))
-       (add-hook mode (lambda () (display-line-numbers-mode 0))))
+           (lambda ()
+         (message "*** Emacs loaded in %s with %d garbage collections."
+              (format "%.2f seconds"
+                  (float-time
+                   (time-subtract after-init-time before-init-time)))
+              gcs-done)))
    #+end_src
 ** Prerequest for package manager
    #+begin_src emacs-lisp
@@ -65,6 +20,7 @@
      (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
      (package-initialize)
+
      (unless package-archive-contents
      (package-refresh-contents))
 
@@ -83,14 +39,15 @@
    #+begin_src emacs-lisp
      (require 'exwm)
 
+     (require 'exwm-randr)
+     (start-process-shell-command "xrandr" nil "xrandr --output eDP-1 --off --output DP-1 --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI-1 --off --output HDMI-2 --off")
+     (exwm-randr-enable)
+
      (setq exwm-workspace-number 5)
      ;; Make buffer name more meaningful
      (add-hook 'exwm-update-class-hook
                (lambda ()
                  (exwm-workspace-rename-buffer exwm-class-name)))
-
-     ;; (require 'exwm-randr)
-     ;; (exwm-randr-enable)
 
      (setq exwm-manage-configurations '((t char-mode t)))
 
@@ -209,6 +166,49 @@
        :config
        (which-key-mode)
        (setq which-key-idle-delay 1))
+   #+end_src
+** Early Settings
+   #+begin_src emacs-lisp
+     (set-frame-parameter (selected-frame) 'alpha '(85 . 50))
+     (add-to-list 'default-frame-alist '(alpha . (85 . 50)))
+     (set-language-environment "UTF-8")
+     (set-default-coding-systems 'utf-8)
+     (setq inhibit-startup-message t)
+     (scroll-bar-mode -1)
+     (tool-bar-mode -1)
+     (tooltip-mode -1)
+     (menu-bar-mode -1)
+     (set-fringe-mode 10)
+     (fset 'yes-or-no-p 'y-or-n-p)
+     (setq visible-bell t)
+     (setq use-dialog-box nil)
+     (setq native-comp-async-report-warnings-errors nil)
+     (blink-cursor-mode 0)
+     (column-number-mode 1)
+     (when (version<= "26.0.50" emacs-version )
+       (global-display-line-numbers-mode))
+
+     (setq-default tab-width 4)
+     (progn
+       (setq-default indent-tabs-mode nil))
+
+     (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+     (global-set-key (kbd "C-x k") 'kill-matching-buffers)
+     (global-set-key (kbd "C-x w") 'elfeed)
+     (setq xah-fly-use-meta-key nil)
+     (setq shift-select-mode nil)
+     (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
+
+     (set-face-attribute 'default nil :family "JetBrains Mono" :height 137)
+     (set-fontset-font t nil "Fira Code" nil 'append)
+
+     (dolist (mode '(org-mode-hook
+             term-mode-hook
+             shell-mode-hook
+             eshell-mode-hook
+             vterm-mode-hook
+             pdf-view-mode-hook))
+       (add-hook mode (lambda () (display-line-numbers-mode 0))))
    #+end_src
 * Package
 ** package
@@ -360,7 +360,6 @@
 
      #!/bin/sh
 
-     # Fixing Java applications
      export _JAVA_AWT_WM_NONREPARENTING=1
 
      # fcitx input
@@ -369,8 +368,7 @@
      # export XMODIFIERS=@im=fcitx
      # fcitx5 -d -r
 
-     # # C
-     ursor and mouse behavier
+     # # Cursor and mouse behavier
      xset r rate 300 50 &
      xset s off &
      xset -dpms &
@@ -378,11 +376,9 @@
      udiskie &
      picom -CGb --vsync --backend glx &
      pcloud -b &
-     # nitrogen --restore &
+     nitrogen --restore &
 
-     xhost +SI:localuser:$USER
-
-     # EXWM settings
+     # xhost +SI:localuser:$USER
      exec dbus-launch --exit-with-session emacs -mm --debug-init
    #+end_src
 ** bashrc
