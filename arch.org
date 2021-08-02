@@ -43,8 +43,7 @@
      (start-process-shell-command "xrandr" nil "xrandr --output eDP-1 --off --output DP-1 --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI-1 --off --output HDMI-2 --off")
      (exwm-randr-enable)
 
-     (setq exwm-workspace-number 5)
-     ;; Make buffer name more meaningful
+     (Setq exwm-workspace-number 5)
      (add-hook 'exwm-update-class-hook
                (lambda ()
                  (exwm-workspace-rename-buffer exwm-class-name)))
