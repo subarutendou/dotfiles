@@ -20,6 +20,7 @@
    #+end_src
 * Normal emacs
 #+begin_src emacs-lisp
+  (setq xah-fly-use-meta-key nil)
   (electric-pair-mode 1)
   (use-package diminish)
   (use-package counsel)
