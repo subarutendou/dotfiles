@@ -41,6 +41,7 @@
      (progn
        (setq-default indent-tabs-mode nil))
 
+     (setq xah-fly-use-meta-key nil)
      (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
      (global-set-key (kbd "C-x k") 'kill-matching-buffers)
      (global-set-key (kbd "C-x w") 'elfeed)
