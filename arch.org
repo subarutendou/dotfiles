@@ -80,7 +80,8 @@
      (require 'exwm-randr)
      (add-hook 'exwm-randr-screen-change-hook
                (lambda ()
-                 (start-process-shell-command "xrandr" nil "xrandr --output eDP-1 --off --output DP-1 --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI-1 --off --output HDMI-2 --off")))
+                 (start-process-shell-command
+                  "xrandr" nil "xrandr --output eDP-1 --off --output DP-1 --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI-1 --off --output HDMI-2 --off")))
      (exwm-randr-enable)
 
      (setq exwm-workspace-number 5)
@@ -143,8 +144,8 @@
      (use-package xah-fly-keys
        :diminish xah-fly-keys
        :config
-       (xah-fly-keys-set-layout "dvorak")
-       (define-key xah-fly-n-keymap (kbd "e") 'vterm)
+       (xah-fly-keys-set-layout "colemak-mod-dh")
+       (define-key xah-fly-n-keymap (kbd "s") 'vterm)
        (xah-fly-keys 1))
 
      (use-package all-the-icons)
