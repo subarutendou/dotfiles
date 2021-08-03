@@ -275,3 +275,18 @@
   #+begin_src emacs-lisp
     (define-key xah-fly-command-map (kbd "b") 'swiper)
   #+end_src
+
+* setting not test yet
+  #+begin_src emacs-lisp
+    (when (get-buffer "*window-manager*")
+      (kill-buffer "*window-manager*"))
+    (when (get-buffer "*window-manager-error*")
+      (kill-buffer "*window-manager-error*"))
+    (when (executable-find "wmctrl")
+      (shell-command "wmctrl -m ; echo $?" "*window-manager*" "*window-manager-error*"))
+
+    (when (and (get-buffer "*window-manager-error*")
+               (eq window-system 'x))
+      ;; exwm startup goes here
+      )
+  #+end_src
