@@ -4,6 +4,22 @@
 * Basic Settings
 ** Early Settings
    #+begin_src emacs-lisp
+     (set-frame-parameter (selected-frame) 'alpha '(83 . 50))
+     (add-to-list 'default-frame-alist '(alpha . (83 . 50)))
+
+     (defun toggle-transparency ()
+        (interactive)
+        (let ((alpha (frame-parameter nil 'alpha)))
+          (set-frame-parameter
+           nil 'alpha
+           (if (eql (cond ((numberp alpha) alpha)
+                          ((numberp (cdr alpha)) (cdr alpha))
+                          ;; Also handle undocumented (<active> <inactive>) form.
+                          ((numberp (cadr alpha)) (cadr alpha)))
+                    100)
+               '(83 . 50) '(100 . 100)))))
+     (global-set-key (kbd "C-c t") 'toggle-transparency)
+
      (set-language-environment "UTF-8")
      (set-default-coding-systems 'utf-8)
      (setq inhibit-startup-message t)
@@ -60,23 +76,6 @@
    #+end_src
 ** EXWM
    #+begin_src emacs-lisp
-     (defun exwm-change-screen-hook ()
-       (let ((xrandr-output-regexp "\n\\([^ ]+\\) connected ")
-             default-output)
-         (with-temp-buffer
-           (call-process "xrandr" nil t nil)
-           (goto-char (point-min))
-           (re-search-forward xrandr-output-regexp nil 'noerror)
-           (setq default-output (match-string 1))
-           (forward-line)
-           (if (not (re-search-forward xrandr-output-regexp nil 'noerror))
-               (call-process "xrandr" nil nil nil "--output" default-output "--auto")
-             (call-process
-              "xrandr" nil nil nil
-              "--output" (match-string 1) "--primary" "--auto"
-              "--output" default-output "--off")
-             (setq exwm-randr-workspace-output-plist (list 0 (match-string 1)))))))
-
      (require 'exwm)
 
      (require 'exwm-randr)
@@ -137,17 +136,19 @@
    #+end_src
 ** Theme
    #+begin_src emacs-lisp
-     (use-package nord-theme
+     (use-package gruvbox-theme
        :config
-       (load-theme 'nord t))
+       (load-theme 'gruvbox-dark-hard t))
    #+end_src
 ** FrameWork
    #+begin_src emacs-lisp
      (use-package xah-fly-keys
        :diminish xah-fly-keys
        :config
-       (xah-fly-keys-set-layout "dvorak")
-       (define-key xah-fly-n-keymap (kbd "e") 'vterm)
+       ;; (xah-fly-keys-set-layout "dvorak")
+       ;; (define-key xah-fly-n-keymap (kbd "e") 'vterm)
+       (xah-fly-keys-set-layout "colemak-mod-dh")
+       (define-key xah-fly-n-keymap (kbd "s") 'vterm)
        (xah-fly-keys 1))
 
      (use-package all-the-icons)
@@ -380,7 +381,7 @@
      udiskie &
      picom -CGb --vsync --backend glx &
      pcloud -b &
-     # nitrogen --restore &
+     nitrogen --restore &
 
      # xhost +SI:localuser:$USER
      exec dbus-launch --exit-with-session emacs -mm --debug-init
@@ -434,7 +435,9 @@
 
      [[ -f ~/.bashrc ]] && . ~/.bashrc
 
+     PATH=$PATH:~/.local/bin
+
      if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
-	 startx
+     startx
      fi
    #+end_src
