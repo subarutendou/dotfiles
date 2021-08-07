@@ -8,16 +8,16 @@
      (add-to-list 'default-frame-alist '(alpha . (83 . 50)))
 
      (defun toggle-transparency ()
-        (interactive)
-        (let ((alpha (frame-parameter nil 'alpha)))
-          (set-frame-parameter
-           nil 'alpha
-           (if (eql (cond ((numberp alpha) alpha)
-                          ((numberp (cdr alpha)) (cdr alpha))
-                          ;; Also handle undocumented (<active> <inactive>) form.
-                          ((numberp (cadr alpha)) (cadr alpha)))
-                    100)
-               '(83 . 50) '(100 . 100)))))
+       (interactive)
+       (let ((alpha (frame-parameter nil 'alpha)))
+         (set-frame-parameter
+          nil 'alpha
+          (if (eql (cond ((numberp alpha) alpha)
+                         ((numberp (cdr alpha)) (cdr alpha))
+                         ;; Also handle undocumented (<active> <inactive>) form.
+                         ((numberp (cadr alpha)) (cadr alpha)))
+                   100)
+              '(83 . 50) '(100 . 100)))))
      (global-set-key (kbd "C-c t") 'toggle-transparency)
 
      (set-language-environment "UTF-8")
@@ -52,11 +52,11 @@
      (set-fontset-font t nil "Fira Code" nil 'append)
 
      (dolist (mode '(org-mode-hook
-             term-mode-hook
-             shell-mode-hook
-             eshell-mode-hook
-             vterm-mode-hook
-             pdf-view-mode-hook))
+                     term-mode-hook
+                     shell-mode-hook
+                     eshell-mode-hook
+                     vterm-mode-hook
+                     pdf-view-mode-hook))
        (add-hook mode (lambda () (display-line-numbers-mode 0))))
    #+end_src
 ** Prerequest for package manager
@@ -67,7 +67,7 @@
      (package-initialize)
 
      (unless package-archive-contents
-     (package-refresh-contents))
+       (package-refresh-contents))
 
      (unless (package-installed-p 'use-package)
        (package-insall 'use-package))
@@ -89,7 +89,7 @@
        (add-hook 'exwm-update-class-hook
                  (lambda ()
                    (exwm-workspace-rename-buffer exwm-class-name)))
-  
+
        (setq exwm-manage-configurations '((t char-mode t)))
   
        (setq exwm-input-prefix-keys
@@ -198,18 +198,18 @@
        (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
        ;; Enable all Cascadia Code ligatures in programming modes
        (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
-                          ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
-                          "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
-                          "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
-                          "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
-                          "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
-                          "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
-                          "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
-                          ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
-                          "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
-                          "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
-                          "?=" "?." "??" ";;" "/=" "/>" "//" "__" "~~" "(*" "*)"
-                          "\\\\" "://"))
+                                            ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                                            "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                                            "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                                            "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                                            "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                                            "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                                            "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                                            ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                                            "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                                            "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                                            "?=" "?." "??" ";;" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                                            "\\\\" "://"))
        ;; Enables ligature checks globally in all buffers. You can also do it
        ;; per mode with `ligature-mode'.
        (global-ligature-mode t))
@@ -233,96 +233,96 @@
 
      (use-package elfeed)
      (setq elfeed-feeds
-	   '("http://lukesmith.xyz/rss.xml"
-	     "https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA"
-	     "https://www.youtube.com/feeds/videos.xml?channel_id=UCPf-EnX70UM7jqjKwhDmS8g"
-	     "http://www.youtube.com/feeds/videos.xml?channel_id=UCyl1z3jo3XHR1riLFKG5UAg"
-	     "http://www.youtube.com/feeds/videos.xml?channel_id=UC1CfXB_kRs3C-zaeTG3oGyg"))
+           '("http://lukesmith.xyz/rss.xml"
+             "https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA"
+             "https://www.youtube.com/feeds/videos.xml?channel_id=UCPf-EnX70UM7jqjKwhDmS8g"
+             "http://www.youtube.com/feeds/videos.xml?channel_id=UCyl1z3jo3XHR1riLFKG5UAg"
+             "http://www.youtube.com/feeds/videos.xml?channel_id=UC1CfXB_kRs3C-zaeTG3oGyg"))
      (add-hook 'elfeed-new-entry-hook
-	       (elfeed-make-tagger :before "2 weeks ago"
-				   :remove 'unread))
+               (elfeed-make-tagger :before "2 weeks ago"
+                                   :remove 'unread))
    #+end_src
 ** Org settings
 *** basic
     #+begin_src emacs-lisp
-        (use-package org
-      :custom
-      (org-agenda-start-with-log-mode t)
-      (org-log-done 'time)
-      (org-log-into-drawer t))
+      (use-package org
+        :custom
+        (org-agenda-start-with-log-mode t)
+        (org-log-done 'time)
+        (org-log-into-drawer t))
       ;; (org-agenda-files
       ;;  '("~/orgfile/Tasks.org")		; example
       ;;  '("~/orgfile/birthday.org")))
 
-        (use-package org-bullets
-      :hook (org-mode . org-bullets-mode)
-      :custom
-      (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+      (use-package org-bullets
+        :hook (org-mode . org-bullets-mode)
+        :custom
+        (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
-        ;; Replace list hyphen with dot
-        (font-lock-add-keywords 'org-mode
-                    '(("^ *\\([-]\\) "
-                   (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+      ;; Replace list hyphen with dot
+      (font-lock-add-keywords 'org-mode
+                              '(("^ *\\([-]\\) "
+                                 (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
-        (dolist (face '((org-level-1 . 1.2)
-                (org-level-2 . 1.1)
-                (org-level-3 . 1.05)
-                (org-level-4 . 1.0)
-                (org-level-5 . 1.1)
-                (org-level-6 . 1.1)
-                (org-level-7 . 1.1)
-                (org-level-8 . 1.1))))
+      (dolist (face '((org-level-1 . 1.2)
+                      (org-level-2 . 1.1)
+                      (org-level-3 . 1.05)
+                      (org-level-4 . 1.0)
+                      (org-level-5 . 1.1)
+                      (org-level-6 . 1.1)
+                      (org-level-7 . 1.1)
+                      (org-level-8 . 1.1))))
 
-        ;; Make sure org-indent face is available
-        (require 'org-indent)
-        (require 'org-tempo)
-        (setq org-structure-template-alist
-          '(("py" . "python")
-            ("el" . "src emacs-lisp")
-            ("rs" . "rust")
-            ("a" . "export ascii\n")
-            ("c" . "center\n")
-            ("C" . "comment\n")
-            ("e" . "example\n")
-            ("E" . "export")
-            ("h" . "export html\n")
-            ("l" . "export latex\n")
-            ("q" . "quote\n")
-            ("s" . "src")
-            ("v" . "verse\n")))
-        (progn
-      ;; no need to warn
-      (put 'narrow-to-region 'disabled nil)
-      (put 'narrow-to-page 'disabled nil)
-      (put 'upcase-region 'disabled nil)
-      (put 'downcase-region 'disabled nil)
-      (put 'erase-buffer 'disabled nil)
-      (put 'scroll-left 'disabled nil)
-      (put 'dired-find-alternate-file 'disabled nil)
-      )
+      ;; Make sure org-indent face is available
+      (require 'org-indent)
+      (require 'org-tempo)
+      (setq org-structure-template-alist
+            '(("py" . "python")
+              ("el" . "src emacs-lisp")
+              ("rs" . "rust")
+              ("a" . "export ascii\n")
+              ("c" . "center\n")
+              ("C" . "comment\n")
+              ("e" . "example\n")
+              ("E" . "export")
+              ("h" . "export html\n")
+              ("l" . "export latex\n")
+              ("q" . "quote\n")
+              ("s" . "src")
+              ("v" . "verse\n")))
+      (progn
+        ;; no need to warn
+        (put 'narrow-to-region 'disabled nil)
+        (put 'narrow-to-page 'disabled nil)
+        (put 'upcase-region 'disabled nil)
+        (put 'downcase-region 'disabled nil)
+        (put 'erase-buffer 'disabled nil)
+        (put 'scroll-left 'disabled nil)
+        (put 'dired-find-alternate-file 'disabled nil)
+        )
 
-        ;; Ensure that anything that should be fixed-pitch in Org files appears that way
-        (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
-        (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
-        (set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
-        (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
-        (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
-        (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-        (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-        (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-        (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+      ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+      (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+      (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+      (set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
+      (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+      (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+      (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+      (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+      (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+      (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
 
-        ;; Get rid of the background on column views
-        (set-face-attribute 'org-column nil :background nil)
-        (set-face-attribute 'org-column-title nil :background nil)
+      ;; Get rid of the background on column views
+      (set-face-attribute 'org-column nil :background nil)
+      (set-face-attribute 'org-column-title nil :background nil)
     #+end_src
 *** auto tangle
     #+begin_src emacs-lisp
       (defun efs/org-babel-tangle-config()
-	(when (string-equal (buffer-file-name)
-			   (expand-file-name "~/dotfiles/arch.org"))
-	(let ((org-confirm-babel-evaluate nil))
-	  (org-babel-tangle))))
+        (when (string-equal (buffer-file-name)
+                            (expand-file-name "~/dotfiles/arch.org"))
+          (let ((org-confirm-babel-evaluate nil))
+            (org-babel-tangle))))
 
       (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
     #+end_src
@@ -337,27 +337,27 @@
 * ERC
   #+begin_src emacs-lisp
     (setq erc-server "irc.libera.chat"
-	  erc-nick "subaru"
-	  erc-user-full-name "subaru tendou"
-	  erc-track-shorten-start 8
-	  erc-autojoin-channels-alist '(("irc.libera.chat" "#systemcrafters" "#emacs"))
-	  erc-kill-buffer-on-part t
-	  erc-auto-query 'bury)
+          erc-nick "subaru"
+          erc-user-full-name "subaru tendou"
+          erc-track-shorten-start 8
+          erc-autojoin-channels-alist '(("irc.libera.chat" "#systemcrafters" "#emacs"))
+          erc-kill-buffer-on-part t
+          erc-auto-query 'bury)
   #+end_src
 * Keep .emacs.d Clean
   #+begin_src emacs-lisp
     ;; Change the user-emacs-directory to keep unwanted thing out of ~/.emacs.d
     (setq user-emacs-directory (expand-file-name "~/.cache/emacs/")
-	  url-history-file (expand-file-name "url/history" user-emacs-directory))
+          url-history-file (expand-file-name "url/history" user-emacs-directory))
 
     ;; Use no-littering to automatically set common path to the new user-emacs-directory
     (use-package no-littering)
 
     ;; Keep customization settings in a temperary file
     (setq custom-file
-	  (if (boundp 'server-socket-dir)
-	      (expand-file-name "custom.el" server-socket-dir)
-	    (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
+          (if (boundp 'server-socket-dir)
+              (expand-file-name "custom.el" server-socket-dir)
+            (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
   #+end_src
 * System configuration
 ** xinitrc
