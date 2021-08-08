@@ -415,8 +415,8 @@
      ques=${bldblu}?${txtrst}
 
      # my settings
-     alias ll='ls -l'
-     alias la='ls -lA'
+     alias ll='ls -lah'
+     alias la='ls -a'
      alias gpgl='gpg --list-secret-keys --keyid-format LONG'
      alias cl='sudo pacman -Rns $(pacman -Qdtq)'
      alias cpu='sudo auto-cpufreq --stats'
