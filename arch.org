@@ -4,8 +4,8 @@
 * Basic Settings
 ** Early Settings
    #+begin_src emacs-lisp
-     (set-frame-parameter (selected-frame) 'alpha '(83 . 50))
-     (add-to-list 'default-frame-alist '(alpha . (83 . 50)))
+     (set-frame-parameter (selected-frame) 'alpha '(93 . 50))
+     (add-to-list 'default-frame-alist '(alpha . (93 . 50)))
 
      (defun toggle-transparency ()
        (interactive)
@@ -43,7 +43,6 @@
 
      (setq xah-fly-use-meta-key nil)
      (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-     (global-set-key (kbd "C-x k") 'kill-matching-buffers)
      (global-set-key (kbd "C-x w") 'elfeed)
      (setq shift-select-mode nil)
      (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
@@ -79,19 +78,22 @@
      (use-package exwm
        :config
        (require 'exwm-randr)
+       ;; (setq exwm-randr-workspace-output-plist '(2 "eDP-1"))
        (add-hook 'exwm-randr-screen-change-hook
                  (lambda ()
                    (start-process-shell-command
-                    "xrandr" nil "xrandr --output eDP-1 --off --output DP-1 --primary --mode 1920x1080 --auto")))
+                    "xrandr" nil "xrandr --output eDP-1 --off --output DP-1 --primary --mode 1920x1080 --auto"
+                    ;; "xrandr" nil "xrandr --output eDP-1 --mode 1920x1080 --pos 0x0 --rotate normal --output DP-1 --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI-1 --off --output HDMI-2 --off"
+                    )))
        (exwm-randr-enable)
-  
+
        (setq exwm-workspace-number 5)
        (add-hook 'exwm-update-class-hook
                  (lambda ()
                    (exwm-workspace-rename-buffer exwm-class-name)))
 
        (setq exwm-manage-configurations '((t char-mode t)))
-  
+
        (setq exwm-input-prefix-keys
              '(?\C-x
                ?\C-u
@@ -102,29 +104,29 @@
                ?\M-:
                ?\C-\M-j  ;; Buffer list
                ?\C-\ ))  ;; Ctrl+Space
-  
+
        (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
-  
+
        (setq exwm-input-global-keys
              `(
                ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
                ([?\s-r] . exwm-reset)
-          
+
                ;; Move between windows
                ([s-left] . windmove-left)
                ([s-right] . windmove-right)
                ([s-up] . windmove-up)
                ([s-down] . windmove-down)
-          
+
                ;; Launch applications via shell command
                ([?\s-&] . (lambda (command)
                             (interactive (list (read-shell-command "$ ")))
                             (start-process-shell-command command nil command)))
-          
+
                ;; Switch workspace
                ([?\s-w] . exwm-workspace-switch)
                ([?\s-`] . (lambda () (interactive) (exwm-workspace-switch-create 0)))
-          
+
                ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
                ,@(mapcar (lambda (i)
                            `(,(kbd (format "s-%d" i)) .
@@ -136,19 +138,19 @@
    #+end_src
 ** Theme
    #+begin_src emacs-lisp
-     (use-package gruvbox-theme
+     (use-package doom-themes
        :config
-       (load-theme 'gruvbox-dark-hard t))
+       (load-theme 'doom-zenburn t))
    #+end_src
 ** FrameWork
    #+begin_src emacs-lisp
      (use-package xah-fly-keys
        :diminish xah-fly-keys
        :config
-       ;; (xah-fly-keys-set-layout "dvorak")
-       ;; (define-key xah-fly-n-keymap (kbd "e") 'vterm)
-       (xah-fly-keys-set-layout "colemak-mod-dh")
-       (define-key xah-fly-n-keymap (kbd "s") 'vterm)
+       (xah-fly-keys-set-layout "dvorak")
+       (define-key xah-fly-n-keymap (kbd "e") 'vterm)
+       ;; (xah-fly-keys-set-layout "colemak-mod-dh")
+       ;; (define-key xah-fly-n-keymap (kbd "s") 'vterm)
        (xah-fly-keys 1))
 
      (use-package vterm)
@@ -397,7 +399,6 @@
      pcloud -b &
      nitrogen --restore &
 
-     # xhost +SI:localuser:$USER
      exec dbus-launch --exit-with-session emacs -mm --debug-init
    #+end_src
 ** bashrc
