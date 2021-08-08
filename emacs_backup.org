@@ -303,3 +303,28 @@
       ;; exwm startup goes here
       )
   #+end_src
+
+* vertico
+  #+begin_src emacs-lisp
+    (use-package vertico
+      :init
+      (vertico-mode))
+
+    (use-package orderless
+      :init
+      (setq completion-styless '(orderless)
+            completion-category-defaults nil
+            completion-cotegory-overrides '((file (styles partial-completion)))))
+
+    (savehist-mode 1)
+
+    (defun crm-indicator (arg)
+      (cons (concat "[CRM] " (car args)) (cdr args)))
+    (advice-add #'comleting-read-multiple :filter-args #'crm-indicator)
+
+    (setq minibuffer-prompt-properties
+          '(read-only t cursor-intangible t face minibuffer-prompt))
+    (add-hook 'monobuffer-setup-hook #'cursor-intangible-mode)
+
+    (setq enable-recursive-minibuffers t)
+  #+end_src

@@ -151,6 +151,12 @@
        (define-key xah-fly-n-keymap (kbd "s") 'vterm)
        (xah-fly-keys 1))
 
+     (use-package vterm)
+     (use-package diminish)
+     (use-package counsel)
+     (use-package flx)
+     (use-package python-mode)
+     (use-package rust-mode)
      (use-package all-the-icons)
      (use-package all-the-icons-dired)
      (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
@@ -166,27 +172,40 @@
        (which-key-mode)
        (setq which-key-idle-delay 1))
 
-     (use-package vertico
+     (use-package perspective
+       :demand t
+       :bind (("C-M-k" . persp-switch)
+              ("C-M-n" . persp-next)
+              ("C-x k" . persp-kill-buffer*))
+       :custom
+       (persp-initial-frame-name "Main")
+       :config
+       ;; Running `persp-mode' multiple times resets the perspective list...
+       (unless (equal persp-mode t)
+         (persp-mode)))
+     (use-package helpful
+       :custom
+       (counsel-describe-function-function #'helpful-callable)
+       (counsel-describe-variable-function #'helpful-variable)
+       :bind
+       ([remap describe-function] . counsel-describe-function)
+       ([remap describe-command] . helpful-command)
+       ([remap describe-variable] . counsel-describe-variable)
+       ([remap describe-key] . helpful-key))
+
+     (use-package ivy
+       :diminish ivy-mode
        :init
-       (vertico-mode))
+       (ivy-mode 1))
 
-     (use-package orderless
+     (setq ivy-re-builders-alist
+           '((ivy-switch-buffer . ivy--regex-plus)
+             (t . ivy--regex-fuzzy)))
+     (setq ivy-initial-inputs-alist nil)
+
+     (use-package ivy-rich
        :init
-       (setq completion-styless '(orderless)
-             completion-category-defaults nil
-             completion-cotegory-overrides '((file (styles partial-completion)))))
-
-     (savehist-mode 1)
-
-     (defun crm-indicator (arg)
-       (cons (concat "[CRM] " (car args)) (cdr args)))
-     (advice-add #'comleting-read-multiple :filter-args #'crm-indicator)
-
-     (setq minibuffer-prompt-properties
-           '(read-only t cursor-intangible t face minibuffer-prompt))
-     (add-hook 'monobuffer-setup-hook #'cursor-intangible-mode)
-
-     (setq enable-recursive-minibuffers t)
+       (ivy-rich-mode 1))
 
      (use-package ligature
        :load-path "~/.emacs.d/github/ligature.el/"
@@ -328,11 +347,6 @@
     #+end_src
 ** package without setting
    #+begin_src emacs-lisp
-     (use-package vterm)
-     (use-package diminish)
-     (use-package flx)
-     (use-package python-mode)
-     (use-package rust-mode)
    #+end_src
 * ERC
   #+begin_src emacs-lisp
