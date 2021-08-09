@@ -45,6 +45,7 @@
      (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
      (global-set-key (kbd "C-x w") 'elfeed)
      (setq shift-select-mode nil)
+     (delete-selection-mode 1)
      (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
 
      (set-face-attribute 'default nil :family "JetBrains Mono" :height 137)
@@ -149,6 +150,7 @@
        :config
        (xah-fly-keys-set-layout "dvorak")
        (define-key xah-fly-n-keymap (kbd "e") 'vterm)
+       (define-key xah-fly-command-map (kbd "b") 'swiper)
        ;; (xah-fly-keys-set-layout "colemak-mod-dh")
        ;; (define-key xah-fly-n-keymap (kbd "s") 'vterm)
        (xah-fly-keys 1))
