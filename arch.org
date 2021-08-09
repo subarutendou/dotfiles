@@ -151,8 +151,6 @@
        (xah-fly-keys-set-layout "dvorak")
        (define-key xah-fly-n-keymap (kbd "e") 'vterm)
        (define-key xah-fly-command-map (kbd "b") 'swiper)
-       ;; (xah-fly-keys-set-layout "colemak-mod-dh")
-       ;; (define-key xah-fly-n-keymap (kbd "s") 'vterm)
        (xah-fly-keys 1))
 
      (use-package vterm)
@@ -176,17 +174,6 @@
        (which-key-mode)
        (setq which-key-idle-delay 1))
 
-     (use-package perspective
-       :demand t
-       :bind (("C-M-k" . persp-switch)
-              ("C-M-n" . persp-next)
-              ("C-x k" . persp-kill-buffer*))
-       :custom
-       (persp-initial-frame-name "Main")
-       :config
-       ;; Running `persp-mode' multiple times resets the perspective list...
-       (unless (equal persp-mode t)
-         (persp-mode)))
      (use-package helpful
        :custom
        (counsel-describe-function-function #'helpful-callable)
@@ -349,9 +336,6 @@
 
       (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
     #+end_src
-** package without setting
-   #+begin_src emacs-lisp
-   #+end_src
 * ERC
   #+begin_src emacs-lisp
     (setq erc-server "irc.libera.chat"
