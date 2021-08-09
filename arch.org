@@ -227,9 +227,6 @@
 * Package
 ** package
    #+begin_src emacs-lisp
-     (use-package emojify
-       :hook (after-init . global-emojify-mode))
-
      (use-package magit
        :custom
        (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
@@ -364,7 +361,6 @@
 * System configuration
 ** xinitrc
    #+begin_src conf :tangle ~/.xinitrc
-
      #!/bin/sh
 
      export _JAVA_AWT_WM_NONREPARENTING=1
@@ -389,7 +385,6 @@
    #+end_src
 ** bashrc
    #+begin_src conf :tangle ~/.bashrc
-
      #!/bin/bash
      #
      # ~/.bashrc

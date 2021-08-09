@@ -328,3 +328,9 @@
 
     (setq enable-recursive-minibuffers t)
   #+end_src
+
+* package
+  #+begin_src emacs-lisp
+    (use-package emojify
+      :hook (after-init . global-emojify-mode))
+  #+end_src
