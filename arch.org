@@ -139,9 +139,9 @@
    #+end_src
 ** Theme
    #+begin_src emacs-lisp
-     (use-package doom-themes
+     (use-package gruvbox-theme
        :config
-       (load-theme 'doom-zenburn t))
+       (load-theme 'gruvbox-dark-hard t))
    #+end_src
 ** FrameWork
    #+begin_src emacs-lisp
