@@ -36,20 +36,7 @@
      (column-number-mode 1)
      (when (version<= "26.0.50" emacs-version )
        (global-display-line-numbers-mode))
-
-     (setq-default tab-width 4)
-     (progn
-       (setq-default indent-tabs-mode nil))
-
-     (setq xah-fly-use-meta-key nil)
-     (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-     (global-set-key (kbd "C-x w") 'elfeed)
-     (setq shift-select-mode nil)
-     (delete-selection-mode 1)
      (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
-
-     (set-face-attribute 'default nil :family "JetBrains Mono" :height 137)
-     (set-fontset-font t nil "Fira Code" nil 'append)
 
      (dolist (mode '(org-mode-hook
                      term-mode-hook
@@ -58,6 +45,9 @@
                      vterm-mode-hook
                      pdf-view-mode-hook))
        (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+     (set-face-attribute 'default nil :family "JetBrains Mono" :height 137)
+     (set-fontset-font t nil "Fira Code" nil 'append)
    #+end_src
 ** Prerequest for package manager
    #+begin_src emacs-lisp
@@ -76,66 +66,76 @@
    #+end_src
 ** EXWM
    #+begin_src emacs-lisp
-     (use-package exwm
-       :config
-       (require 'exwm-randr)
-       ;; (setq exwm-randr-workspace-output-plist '(2 "eDP-1"))
-       (add-hook 'exwm-randr-screen-change-hook
-                 (lambda ()
-                   (start-process-shell-command
-                    "xrandr" nil "xrandr --output eDP-1 --off --output DP-1 --primary --mode 1920x1080 --auto"
-                    ;; "xrandr" nil "xrandr --output eDP-1 --mode 1920x1080 --pos 0x0 --rotate normal --output DP-1 --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI-1 --off --output HDMI-2 --off"
-                    )))
-       (exwm-randr-enable)
+     (when (get-buffer "*window-manager*")
+       (kill-buffer "*window-manager*"))
+     (when (get-buffer "*window-manager-error*")
+       (kill-buffer "*window-manager-error*"))
+     (when (executable-find "wmctrl")
+       (shell-command "wmctrl -m ; echo $?" "*window-manager*" "*window-manager-error*"))
 
-       (setq exwm-workspace-number 5)
-       (add-hook 'exwm-update-class-hook
-                 (lambda ()
-                   (exwm-workspace-rename-buffer exwm-class-name)))
-
-       (setq exwm-manage-configurations '((t char-mode t)))
-
-       (setq exwm-input-prefix-keys
-             '(?\C-x
-               ?\C-u
-               ?\C-h
-               ?\M-x
-               ?\M-`
-               ?\M-&
-               ?\M-:
-               ?\C-\M-j  ;; Buffer list
-               ?\C-\ ))  ;; Ctrl+Space
-
-       (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
-
-       (setq exwm-input-global-keys
-             `(
-               ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
-               ([?\s-r] . exwm-reset)
-
-               ;; Move between windows
-               ([s-left] . windmove-left)
-               ([s-right] . windmove-right)
-               ([s-up] . windmove-up)
-               ([s-down] . windmove-down)
-
-               ;; Launch applications via shell command
-               ([?\s-&] . (lambda (command)
-                            (interactive (list (read-shell-command "$ ")))
-                            (start-process-shell-command command nil command)))
-
-               ;; Switch workspace
-               ([?\s-w] . exwm-workspace-switch)
-               ([?\s-`] . (lambda () (interactive) (exwm-workspace-switch-create 0)))
-
-               ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
-               ,@(mapcar (lambda (i)
-                           `(,(kbd (format "s-%d" i)) .
-                             (lambda ()
-                               (interactive)
-                               (exwm-workspace-switch-create ,i))))
-                         (number-sequence 0 9))))
-       (exwm-enable))
+     (when (and (get-buffer "*window-manager-error*")
+                (eq window-system 'x))
+       ;; exwm startup goes here
+       (use-package exwm
+         :config
+         (require 'exwm-randr)
+         ;; (setq exwm-randr-workspace-output-plist '(2 "eDP-1"))
+         (add-hook 'exwm-randr-screen-change-hook
+                   (lambda ()
+                     (start-process-shell-command
+                      "xrandr" nil "xrandr --output eDP-1 --off --output DP-1 --primary --mode 1920x1080 --auto"
+                      ;; "xrandr" nil "xrandr --output eDP-1 --mode 1920x1080 --pos 0x0 --rotate normal --output DP-1 --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI-1 --off --output HDMI-2 --off"
+                      )))
+         (exwm-randr-enable)
+    
+         (setq exwm-workspace-number 5)
+         (add-hook 'exwm-update-class-hook
+                   (lambda ()
+                     (exwm-workspace-rename-buffer exwm-class-name)))
+    
+         (setq exwm-manage-configurations '((t char-mode t)))
+    
+         (setq exwm-input-prefix-keys
+               '(?\C-x
+                 ?\C-u
+                 ?\C-h
+                 ?\M-x
+                 ?\M-`
+                 ?\M-&
+                 ?\M-:
+                 ?\C-\M-j  ;; Buffer list
+                 ?\C-\ ))  ;; Ctrl+Space
+    
+         (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+    
+         (setq exwm-input-global-keys
+               `(
+                 ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
+                 ([?\s-r] . exwm-reset)
+            
+                 ;; Move between windows
+                 ([s-left] . windmove-left)
+                 ([s-right] . windmove-right)
+                 ([s-up] . windmove-up)
+                 ([s-down] . windmove-down)
+            
+                 ;; Launch applications via shell command
+                 ([?\s-&] . (lambda (command)
+                              (interactive (list (read-shell-command "$ ")))
+                              (start-process-shell-command command nil command)))
+            
+                 ;; Switch workspace
+                 ([?\s-w] . exwm-workspace-switch)
+                 ([?\s-`] . (lambda () (interactive) (exwm-workspace-switch-create 0)))
+            
+                 ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
+                 ,@(mapcar (lambda (i)
+                             `(,(kbd (format "s-%d" i)) .
+                               (lambda ()
+                                 (interactive)
+                                 (exwm-workspace-switch-create ,i))))
+                           (number-sequence 0 9))))
+         (exwm-enable))
    #+end_src
 ** Theme
    #+begin_src emacs-lisp
@@ -223,6 +223,17 @@
        ;; Enables ligature checks globally in all buffers. You can also do it
        ;; per mode with `ligature-mode'.
        (global-ligature-mode t))
+   #+end_src
+** keybind
+      #+begin_src emacs-lisp
+        (setq-default tab-width 4)
+        (progn
+          (setq-default indent-tabs-mode nil))
+        (setq xah-fly-use-meta-key nil)
+        (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+        (global-set-key (kbd "C-x w") 'elfeed)
+        (setq shift-select-mode nil)
+        (delete-selection-mode 1)
    #+end_src
 * Package
 ** package
