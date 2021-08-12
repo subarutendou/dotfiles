@@ -1,0 +1,33 @@
+{
+	"name": "Vimium C",
+	"@time": "8/12/2021, 5:40:30 AM",
+	"time": 1628761230817,
+	"environment": {
+		"extension": "1.92.0",
+		"platform": "linux",
+		"firefox": 91
+	},
+	"exclusionRules": [
+		{
+			"pattern": ":https://mail.google.com/",
+			"passKeys": ""
+		},
+		{
+			"pattern": ":https://keyboardchecker.com/",
+			"passKeys": ""
+		},
+		{
+			"pattern": ":https://www.keybr.com/",
+			"passKeys": ""
+		},
+		{
+			"pattern": ":https://config.qmk.fm/",
+			"passKeys": ""
+		},
+		{
+			"pattern": ":https://configure.zsa.io/",
+			"passKeys": ""
+		}
+	],
+	"searchUrl": "https://duckduckgo.com/?q=$s DuckDuckGo"
+}
