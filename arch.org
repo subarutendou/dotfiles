@@ -216,7 +216,7 @@
        ;; per mode with `ligature-mode'.
        (global-ligature-mode t))
    #+end_src
-** keybind
+** Keybind
       #+begin_src emacs-lisp
         (setq-default tab-width 4)
         (progn
