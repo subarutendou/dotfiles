@@ -3,7 +3,7 @@
 
 * Basic Settings
 ** Early Settings
-   #+begin_src emacs-lisp
+   #+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
      (set-frame-parameter (selected-frame) 'alpha '(93 . 50))
      (add-to-list 'default-frame-alist '(alpha . (93 . 50)))
 
@@ -32,7 +32,6 @@
      (setq visible-bell t)
      (setq use-dialog-box nil)
      (setq native-comp-async-report-warnings-errors nil)
-     (blink-cursor-mode 0)
      (column-number-mode 1)
      (when (version<= "26.0.50" emacs-version )
        (global-display-line-numbers-mode))
@@ -136,6 +135,8 @@
    #+end_src
 ** FrameWork
    #+begin_src emacs-lisp
+     (blink-cursor-mode 0)
+
      (use-package xah-fly-keys
        :diminish xah-fly-keys
        :config
