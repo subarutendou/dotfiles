@@ -63,23 +63,17 @@
      (require 'use-package)
      (setq use-package-always-ensure t)
    #+end_src
-** Theme
-   #+begin_src emacs-lisp
-     (use-package gruvbox-theme
-       :config
-       (load-theme 'gruvbox-dark-hard t))
-   #+end_src
 ** EXWM
    #+begin_src emacs-lisp
-     (require 'exwm-randr)
+     ;; (require 'exwm-randr)
      ;; (setq exwm-randr-workspace-output-plist '(2 "eDP-1"))
-     (add-hook 'exwm-randr-screen-change-hook
-               (lambda ()
-                 (start-process-shell-command
-                  "xrandr" nil "xrandr --output eDP-1 --off --output DP-1 --primary --mode 1920x1080 --auto"
+     ;; (add-hook 'exwm-randr-screen-change-hook
+               ;; (lambda ()
+                 ;; (start-process-shell-command
+                  ;; "xrandr" nil "xrandr --output eDP-1 --off --output DP-1 --primary --mode 1920x1080 --auto"
                   ;; "xrandr" nil "xrandr --output eDP-1 --mode 1920x1080 --pos 0x0 --rotate normal --output DP-1 --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI-1 --off --output HDMI-2 --off"
-                  )))
-     (exwm-randr-enable)
+                  ;; )))
+     ;; (exwm-randr-enable)
 
      (use-package exwm
        :config
@@ -132,6 +126,12 @@
                                (exwm-workspace-switch-create ,i))))
                          (number-sequence 0 9))))
        (exwm-enable))
+   #+end_src
+** Theme
+   #+begin_src emacs-lisp
+     (use-package gruvbox-theme
+       :config
+       (load-theme 'gruvbox-dark-hard t))
    #+end_src
 ** FrameWork
    #+begin_src emacs-lisp
@@ -364,7 +364,7 @@
 * System configuration
 ** xinitrc
    #+begin_src conf :tangle ~/.xinitrc
-     #!/bin/sh
+     #!/bin/bash
 
      export _JAVA_AWT_WM_NONREPARENTING=1
 
@@ -373,6 +373,14 @@
      # export QT_IM_MODULE=fcitx
      # export XMODIFIERS=@im=fcitx
      # fcitx5 -d -r
+     intern=eDP-1
+     extern=DP-1
+
+     if xrandr | grep "$extern disconneted"; then
+        xrandr --output "$extern" --off --output "$intern" --auto
+     else
+         xrandr --output "$intern" --off --output "$extern" --auto
+     fi
 
      # # Cursor and mouse behavier
      xset r rate 300 50 &
@@ -384,6 +392,7 @@
      pcloud -b &
      nitrogen --restore &
 
+     # exec dwm
      exec dbus-launch --exit-with-session emacs -mm --debug-init
    #+end_src
 ** bashrc
