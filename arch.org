@@ -381,7 +381,6 @@
      pcloud -b &
      nitrogen --restore &
 
-     # exec dwm
      exec dbus-launch --exit-with-session emacs -mm --debug-init
    #+end_src
 ** bashrc
