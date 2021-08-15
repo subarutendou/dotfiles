@@ -24,12 +24,12 @@
 
      ;; Profile emacs startup
      (add-hook 'emacs-startup-hook
-	       (lambda ()
-		 (message "*** Emacs loaded in %s with %d garbage collections."
-			  (format "%.2f seconds"
-				  (float-time
-				   (time-subtract after-init-time before-init-time)))
-			  gcs-done)))
+               (lambda ()
+                 (message "*** Emacs loaded in %s with %d garbage collections."
+                          (format "%.2f seconds"
+                                  (float-time
+                                   (time-subtract after-init-time before-init-time)))
+                          gcs-done)))
    #+end_src
 * Normal emacs
 #+begin_src emacs-lisp
@@ -84,18 +84,18 @@
     (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
     ;; Enable all Cascadia Code ligatures in programming modes
     (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
-                       ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
-                       "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
-                       "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
-                       "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
-                       "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
-                       "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
-                       "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
-                       ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
-                       "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
-                       "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
-                       "?=" "?." "??" ";;" "/=" "/>" "//" "__" "~~" "(*" "*)"
-                       "\\\\" "://"))
+                                         ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                                         "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                                         "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                                         "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                                         "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                                         "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                                         "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                                         ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                                         "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                                         "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                                         "?=" "?." "??" ";;" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                                         "\\\\" "://"))
     ;; Enables ligature checks globally in all buffers. You can also do it
     ;; per mode with `ligature-mode'.
     (global-ligature-mode t))
@@ -106,8 +106,8 @@
   (use-package perspective
     :demand t
     :bind (("C-M-k" . persp-switch)
-       ("C-M-n" . persp-next)
-       ("C-x k" . persp-kill-buffer*))
+           ("C-M-n" . persp-next)
+           ("C-x k" . persp-kill-buffer*))
     :custom
     (persp-initial-frame-name "Main")
     :config
@@ -137,7 +137,6 @@
   (use-package ivy-rich
     :init
     (ivy-rich-mode 1))
-
 #+end_src
 * Org Mode
   #+begin_src emacs-lisp
