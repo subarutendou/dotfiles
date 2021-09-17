@@ -47,17 +47,6 @@
      (require 'use-package)
      (setq use-package-always-ensure t)
    #+end_src
-** Keybind
-      #+begin_src emacs-lisp
-        (setq-default tab-width 4)
-        (progn
-          (setq-default indent-tabs-mode nil))
-        (setq xah-fly-use-meta-key nil)
-        (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-        (global-set-key (kbd "C-x w") 'elfeed)
-        (setq shift-select-mode nil)
-        (delete-selection-mode 1)
-   #+end_src
 ** EXWM
    #+begin_src emacs-lisp
      (use-package exwm
@@ -225,6 +214,17 @@
                 (elfeed-make-tagger :before "2 weeks ago"
                                     :remove 'unread))
     #+end_src
+** Keybind
+      #+begin_src emacs-lisp
+        (setq-default tab-width 4)
+        (progn
+          (setq-default indent-tabs-mode nil))
+        (setq xah-fly-use-meta-key nil)
+        (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+        (global-set-key (kbd "C-x w") 'elfeed)
+        (setq shift-select-mode nil)
+        (delete-selection-mode 1)
+   #+end_src
 ** Org settings
 *** basic
     #+begin_src emacs-lisp
