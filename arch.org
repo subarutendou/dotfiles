@@ -47,6 +47,17 @@
      (require 'use-package)
      (setq use-package-always-ensure t)
    #+end_src
+** Keybind
+      #+begin_src emacs-lisp
+        (setq-default tab-width 4)
+        (progn
+          (setq-default indent-tabs-mode nil))
+        (setq xah-fly-use-meta-key nil)
+        (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+        (global-set-key (kbd "C-x w") 'elfeed)
+        (setq shift-select-mode nil)
+        (delete-selection-mode 1)
+   #+end_src
 ** EXWM
    #+begin_src emacs-lisp
      (use-package exwm
@@ -106,125 +117,114 @@
        :config
        (load-theme 'gruvbox-dark-hard t))
    #+end_src
-** FrameWork
-   #+begin_src emacs-lisp
-     (blink-cursor-mode 0)
+** Package
+*** Intergrate
+    #+begin_src emacs-lisp
+      (blink-cursor-mode 0)
 
-     (use-package xah-fly-keys
-       :diminish xah-fly-keys
-       :config
-       (xah-fly-keys-set-layout "dvorak")
-       (define-key xah-fly-n-keymap (kbd "e") 'vterm)
-       (define-key xah-fly-command-map (kbd "b") 'swiper)
-       (xah-fly-keys 1))
+      (use-package xah-fly-keys
+        :diminish xah-fly-keys
+        :config
+        (xah-fly-keys-set-layout "dvorak")
+        (define-key xah-fly-n-keymap (kbd "e") 'vterm)
+        (define-key xah-fly-command-map (kbd "b") 'swiper)
+        (xah-fly-keys 1))
 
-     (use-package vterm)
-     (use-package diminish)
-     (use-package counsel)
-     (use-package flx)
-     (use-package python-mode)
-     (use-package rust-mode)
-     (use-package all-the-icons)
-     (use-package all-the-icons-dired)
-     (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+      (use-package vterm)
+      (use-package diminish)
+      (use-package counsel)
+      (use-package flx)
+      (use-package python-mode)
+      (use-package rust-mode)
+      (use-package all-the-icons)
+      (use-package all-the-icons-dired)
+      (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
 
-     (use-package rainbow-delimiters
-       :hook (prog-mode . rainbow-delimiters-mode))
+      (use-package rainbow-delimiters
+        :hook (prog-mode . rainbow-delimiters-mode))
 
-     (use-package which-key
-       :diminish which-key
-       :defer 0
-       :diminish which-key-mode
-       :config
-       (which-key-mode)
-       (setq which-key-idle-delay 1))
+      (use-package which-key
+        :diminish which-key
+        :defer 0
+        :diminish which-key-mode
+        :config
+        (which-key-mode)
+        (setq which-key-idle-delay 1))
 
-     (use-package helpful
-       :custom
-       (counsel-describe-function-function #'helpful-callable)
-       (counsel-describe-variable-function #'helpful-variable)
-       :bind
-       ([remap describe-function] . counsel-describe-function)
-       ([remap describe-command] . helpful-command)
-       ([remap describe-variable] . counsel-describe-variable)
-       ([remap describe-key] . helpful-key))
+      (use-package helpful
+        :custom
+        (counsel-describe-function-function #'helpful-callable)
+        (counsel-describe-variable-function #'helpful-variable)
+        :bind
+        ([remap describe-function] . counsel-describe-function)
+        ([remap describe-command] . helpful-command)
+        ([remap describe-variable] . counsel-describe-variable)
+        ([remap describe-key] . helpful-key))
 
-     (use-package ivy
-       :diminish ivy-mode
-       :init
-       (ivy-mode 1))
+      (use-package ivy
+        :diminish ivy-mode
+        :init
+        (ivy-mode 1))
 
-     (setq ivy-re-builders-alist
-           '((ivy-switch-buffer . ivy--regex-plus)
-             (t . ivy--regex-fuzzy)))
-     (setq ivy-initial-inputs-alist nil)
+      (setq ivy-re-builders-alist
+            '((ivy-switch-buffer . ivy--regex-plus)
+              (t . ivy--regex-fuzzy)))
+      (setq ivy-initial-inputs-alist nil)
 
-     (use-package ivy-rich
-       :init
-       (ivy-rich-mode 1))
+      (use-package ivy-rich
+        :init
+        (ivy-rich-mode 1))
 
-     (use-package ligature
-       :load-path "~/.emacs.d/github/ligature.el/"
-       :config
-       ;; Enable the "www" ligature in every possible major mode
-       (ligature-set-ligatures 't '("www"))
-       ;; Enable traditional ligature support in eww-mode, if the
-       ;; `variable-pitch' face supports it
-       (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
-       ;; Enable all Cascadia Code ligatures in programming modes
-       (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
-                                            ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
-                                            "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
-                                            "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
-                                            "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
-                                            "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
-                                            "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
-                                            "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
-                                            ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
-                                            "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
-                                            "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
-                                            "?=" "?." "??" ";;" "/=" "/>" "//" "__" "~~" "(*" "*)"
-                                            "\\\\" "://"))
-       ;; Enables ligature checks globally in all buffers. You can also do it
-       ;; per mode with `ligature-mode'.
-       (global-ligature-mode t))
-   #+end_src
-** Keybind
-      #+begin_src emacs-lisp
-        (setq-default tab-width 4)
-        (progn
-          (setq-default indent-tabs-mode nil))
-        (setq xah-fly-use-meta-key nil)
-        (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-        (global-set-key (kbd "C-x w") 'elfeed)
-        (setq shift-select-mode nil)
-        (delete-selection-mode 1)
-   #+end_src
-* Package
-** package
-   #+begin_src emacs-lisp
-     (use-package magit
-       :custom
-       (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+      (use-package ligature
+        :load-path "~/.emacs.d/github/ligature.el/"
+        :config
+        ;; Enable the "www" ligature in every possible major mode
+        (ligature-set-ligatures 't '("www"))
+        ;; Enable traditional ligature support in eww-mode, if the
+        ;; `variable-pitch' face supports it
+        (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+        ;; Enable all Cascadia Code ligatures in programming modes
+        (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                                             ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                                             "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                                             "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                                             "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                                             "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                                             "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                                             "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                                             ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                                             "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                                             "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                                             "?=" "?." "??" ";;" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                                             "\\\\" "://"))
+        ;; Enables ligature checks globally in all buffers. You can also do it
+        ;; per mode with `ligature-mode'.
+        (global-ligature-mode t))
+    #+end_src
+*** Application
+    #+begin_src emacs-lisp
+      (use-package magit
+        :custom
+        (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-     (use-package pdf-tools
-       :config
-       (pdf-tools-install)
-       (setq-default pdf-view-display-size 'fit-width)
-       :custom
-       (pdf-annot-activate-created-annotations t "automatically annotate Highlights"))
+      (use-package pdf-tools
+        :config
+        (pdf-tools-install)
+        (setq-default pdf-view-display-size 'fit-width)
+        :custom
+        (pdf-annot-activate-created-annotations t "automatically annotate Highlights"))
 
-     (use-package elfeed)
-     (setq elfeed-feeds
-           '("http://lukesmith.xyz/rss.xml"
-             "https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA"
-             "https://www.youtube.com/feeds/videos.xml?channel_id=UCPf-EnX70UM7jqjKwhDmS8g"
-             "http://www.youtube.com/feeds/videos.xml?channel_id=UCyl1z3jo3XHR1riLFKG5UAg"
-             "http://www.youtube.com/feeds/videos.xml?channel_id=UC1CfXB_kRs3C-zaeTG3oGyg"))
-     (add-hook 'elfeed-new-entry-hook
-               (elfeed-make-tagger :before "2 weeks ago"
-                                   :remove 'unread))
-   #+end_src
+      (use-package elfeed)
+      (setq elfeed-feeds
+            '("http://lukesmith.xyz/rss.xml"
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA"
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCPf-EnX70UM7jqjKwhDmS8g"
+              "http://www.youtube.com/feeds/videos.xml?channel_id=UCyl1z3jo3XHR1riLFKG5UAg"
+              "http://www.youtube.com/feeds/videos.xml?channel_id=UC1CfXB_kRs3C-zaeTG3oGyg"))
+      (add-hook 'elfeed-new-entry-hook
+                (elfeed-make-tagger :before "2 weeks ago"
+                                    :remove 'unread))
+    #+end_src
 ** Org settings
 *** basic
     #+begin_src emacs-lisp
