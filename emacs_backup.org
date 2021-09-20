@@ -138,18 +138,24 @@
     :init
     (ivy-rich-mode 1))
 #+end_src
-* bash
-  #+begin_src conf
-    export PATH=$HOME/.local/bin:$PATH
-    export EDITOR='emacsclient -c'
-    export VISUAL='emacsclient -c'
-  #+end_src
-
 * settings
   #+begin_src emacs-lisp
     (define-key xah-fly-command-map (kbd "b") 'swiper)
   #+end_src
-
+** bash
+   #+begin_src conf
+     export PATH=$HOME/.local/bin:$PATH
+     export EDITOR='emacsclient -c'
+     export VISUAL='emacsclient -c'
+   #+end_src
+** xinintrc
+   #+begin_src conf
+     export DefaultIMModule=fcitx
+     export GTK_IM_MODULE=fcitx
+     export QT_IM_MODULE=fcitx
+     export XMODIFIERS=@im=fcitx
+     fcitx5 &
+   #+end_src
 * vertico
   #+begin_src emacs-lisp
     (use-package vertico
