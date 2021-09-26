@@ -121,7 +121,6 @@
 
       (use-package vterm)
       (use-package diminish)
-      (use-package counsel)
       (use-package flx)
       (use-package python-mode)
       (use-package rust-mode)
@@ -140,29 +139,9 @@
         (which-key-mode)
         (setq which-key-idle-delay 1))
 
-      (use-package helpful
-        :custom
-        (counsel-describe-function-function #'helpful-callable)
-        (counsel-describe-variable-function #'helpful-variable)
-        :bind
-        ([remap describe-function] . counsel-describe-function)
-        ([remap describe-command] . helpful-command)
-        ([remap describe-variable] . counsel-describe-variable)
-        ([remap describe-key] . helpful-key))
-
-      (use-package ivy
-        :diminish ivy-mode
+      (use-package vertico
         :init
-        (ivy-mode 1))
-
-      (setq ivy-re-builders-alist
-            '((ivy-switch-buffer . ivy--regex-plus)
-              (t . ivy--regex-fuzzy)))
-      (setq ivy-initial-inputs-alist nil)
-
-      (use-package ivy-rich
-        :init
-        (ivy-rich-mode 1))
+        (vertico-mode))
 
       (use-package ligature
         :load-path "~/.emacs.d/github/ligature.el/"

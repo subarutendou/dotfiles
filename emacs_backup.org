@@ -36,7 +36,6 @@
   (setq xah-fly-use-meta-key nil)
   (electric-pair-mode 1)
   (use-package diminish)
-  (use-package counsel)
   (use-package guix)
 
   (use-package doom-modeline
@@ -114,29 +113,6 @@
     ;; Running `persp-mode' multiple times resets the perspective list...
     (unless (equal persp-mode t)
       (persp-mode)))
-  (use-package helpful
-    :custom
-    (counsel-describe-function-function #'helpful-callable)
-    (counsel-describe-variable-function #'helpful-variable)
-    :bind
-    ([remap describe-function] . counsel-describe-function)
-    ([remap describe-command] . helpful-command)
-    ([remap describe-variable] . counsel-describe-variable)
-    ([remap describe-key] . helpful-key))
-
-  (use-package ivy
-    :diminish ivy-mode
-    :init
-    (ivy-mode 1))
-
-  (setq ivy-re-builders-alist
-        '((ivy-switch-buffer . ivy--regex-plus)
-          (t . ivy--regex-fuzzy)))
-  (setq ivy-initial-inputs-alist nil)
-
-  (use-package ivy-rich
-    :init
-    (ivy-rich-mode 1))
 #+end_src
 * settings
   #+begin_src emacs-lisp
@@ -184,4 +160,42 @@
   #+begin_src emacs-lisp
     (use-package emojify
       :hook (after-init . global-emojify-mode))
+  #+end_src
+* ivy
+  #+begin_src emacs-lisp
+    (use-package counsel)
+
+    (use-package helpful
+      :custom
+      (counsel-describe-function-function #'helpful-callable)
+      (counsel-describe-variable-function #'helpful-variable)
+      :bind
+      ([remap describe-function] . counsel-describe-function)
+      ([remap describe-command] . helpful-command)
+      ([remap describe-variable] . counsel-describe-variable)
+      ([remap describe-key] . helpful-key))
+
+    (use-package ivy
+      :diminish ivy-mode
+      :init
+      (ivy-mode 1))
+
+    (setq ivy-re-builders-alist
+          '((ivy-switch-buffer . ivy--regex-plus)
+            (t . ivy--regex-fuzzy)))
+    (setq ivy-initial-inputs-alist nil)
+
+    (use-package ivy-rich
+      :init
+      (ivy-rich-mode 1))
+
+    (use-package helpful
+      :custom
+      (counsel-describe-function-function #'helpful-callable)
+      (counsel-describe-variable-function #'helpful-variable)
+      :bind
+      ([remap describe-function] . counsel-describe-function)
+      ([remap describe-command] . helpful-command)
+      ([remap describe-variable] . counsel-describe-variable)
+      ([remap describe-key] . helpful-key))
   #+end_src
