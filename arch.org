@@ -139,10 +139,6 @@
         (which-key-mode)
         (setq which-key-idle-delay 1))
 
-      (use-package vertico
-        :init
-        (vertico-mode))
-
       (use-package ligature
         :load-path "~/.emacs.d/github/ligature.el/"
         :config
@@ -168,6 +164,32 @@
         ;; Enables ligature checks globally in all buffers. You can also do it
         ;; per mode with `ligature-mode'.
         (global-ligature-mode t))
+
+      (use-package counsel)
+
+      (use-package ivy
+        :diminish ivy-mode
+        :init
+        (ivy-mode 1))
+
+      (setq ivy-re-builders-alist
+            '((ivy-switch-buffer . ivy--regex-plus)
+              (t . ivy--regex-fuzzy)))
+      (setq ivy-initial-inputs-alist nil)
+
+      (use-package ivy-rich
+        :init
+        (ivy-rich-mode 1))
+
+      (use-package helpful
+        :custom
+        (counsel-describe-function-function #'helpful-callable)
+        (counsel-describe-variable-function #'helpful-variable)
+        :bind
+        ([remap describe-function] . counsel-describe-function)
+        ([remap describe-command] . helpful-command)
+        ([remap describe-variable] . counsel-describe-variable)
+        ([remap describe-key] . helpful-key))
     #+end_src
 *** Application
     #+begin_src emacs-lisp
