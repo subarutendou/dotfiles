@@ -31,6 +31,11 @@
 
      (set-face-attribute 'default nil :family "JetBrainsMono Nerd Font" :height 137)
      (set-fontset-font t nil "Fira Code" nil 'append)
+
+     (setq ido-enable-flex-matching t)
+     (setq ido-everywhere t)
+     (ido-mode 1)
+     (setq ido-use-filename-at-point 'guess)
    #+end_src
 ** Prerequest for package manager
    #+begin_src emacs-lisp
@@ -116,7 +121,6 @@
         :config
         (xah-fly-keys-set-layout "dvorak")
         (define-key xah-fly-n-keymap (kbd "e") 'vterm)
-        (define-key xah-fly-command-map (kbd "b") 'swiper)
         (xah-fly-keys 1))
 
       (use-package vterm)
@@ -161,32 +165,6 @@
         ;; Enables ligature checks globally in all buffers. You can also do it
         ;; per mode with `ligature-mode'.
         (global-ligature-mode t))
-
-      (use-package counsel)
-
-      (use-package ivy
-        :diminish ivy-mode
-        :init
-        (ivy-mode 1))
-
-      (setq ivy-re-builders-alist
-            '((ivy-switch-buffer . ivy--regex-plus)
-              (t . ivy--regex-fuzzy)))
-      (setq ivy-initial-inputs-alist nil)
-
-      (use-package ivy-rich
-        :init
-        (ivy-rich-mode 1))
-
-      (use-package helpful
-        :custom
-        (counsel-describe-function-function #'helpful-callable)
-        (counsel-describe-variable-function #'helpful-variable)
-        :bind
-        ([remap describe-function] . counsel-describe-function)
-        ([remap describe-command] . helpful-command)
-        ([remap describe-variable] . counsel-describe-variable)
-        ([remap describe-key] . helpful-key))
     #+end_src
 *** Application
     #+begin_src emacs-lisp
