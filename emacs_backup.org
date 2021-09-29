@@ -16,6 +16,13 @@
               '(85 . 50) '(100 . 100)))))
     (global-set-key (kbd "C-c t") 'toggle-transparency)
   #+end_src
+* Theme setting
+  #+begin_src emacs-lisp
+    ;; Use `nord4` from Nord's "Snow Storm" palette as background color.
+    (setq nord-region-highlight "frost")
+    (setq nord-region-highlight "snowstorm")
+
+  #+end_src
 * early-init
 ** Check startup time
    #+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
