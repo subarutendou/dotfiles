@@ -107,14 +107,21 @@
    #+end_src
 ** Theme
    #+begin_src emacs-lisp
-     (use-package gruvbox-theme
+     (use-package nord-theme
        :config
-       (load-theme 'gruvbox-dark-hard t))
+       (load-theme 'nord t))
    #+end_src
 ** Package
 *** Intergrate
     #+begin_src emacs-lisp
       (blink-cursor-mode 0)
+
+      (use-package xah-fly-keys
+        :diminish xah-fly-keys
+        :config
+        (xah-fly-keys-set-layout "dvorak")
+        (define-key xah-fly-n-keymap (kbd "e") 'vterm)
+        (xah-fly-keys 1))
 
       (use-package vterm)
       (use-package diminish)
