@@ -66,8 +66,8 @@
       (use-package xah-fly-keys
         :diminish xah-fly-keys
         :config
-        (xah-fly-keys-set-layout "qwerty")
-        (define-key xah-fly-n-keymap (kbd "d") 'vterm)
+        (xah-fly-keys-set-layout "dvorak")
+        (define-key xah-fly-n-keymap (kbd "e") 'vterm)
         (xah-fly-keys 1))
 
       (use-package vterm)
