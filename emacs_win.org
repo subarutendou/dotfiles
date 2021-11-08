@@ -1,0 +1,241 @@
+#+title Emacs settings
+#+PROPERTY: header-args:emacs-lisp :tangle C:/Users/tendou/AppData/Roaming/.emacs.d/init.el :mkdirp yes
+
+* Basic Settings
+** Early Settings
+   #+begin_src emacs-lisp :tangle C:/Users/tendou/AppData/Roaming/.emacs.d/early-init.el
+     (set-language-environment "UTF-8")
+     (set-default-coding-systems 'utf-8)
+     (setq inhibit-startup-message t)
+     (scroll-bar-mode -1)
+     (tool-bar-mode -1)
+     (tooltip-mode -1)
+     (menu-bar-mode -1)
+     (set-fringe-mode 10)
+     (fset 'yes-or-no-p 'y-or-n-p)
+     (setq visible-bell t)
+     (setq use-dialog-box nil)
+     (setq native-comp-async-report-warnings-errors nil)
+     (column-number-mode 1)
+     (when (version<= "26.0.50" emacs-version )
+       (global-display-line-numbers-mode))
+     (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
+
+     (dolist (mode '(org-mode-hook
+                     term-mode-hook
+                     shell-mode-hook
+                     eshell-mode-hook
+                     vterm-mode-hook
+                     pdf-view-mode-hook))
+       (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+     (set-face-attribute 'default nil :family "JetBrains Mono" :height 137)
+
+     (setq ido-enable-flex-matching t)
+     (setq ido-everywhere t)
+     (ido-mode 1)
+     (setq ido-use-filename-at-point 'guess)
+   #+end_src
+** Prerequest for package manager
+   #+begin_src emacs-lisp
+     (require 'package)
+     (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+
+     (package-initialize)
+
+     (unless package-archive-contents
+       (package-refresh-contents))
+
+     (unless (package-installed-p 'use-package)
+       (package-install 'use-package))
+     (require 'use-package)
+     (setq use-package-always-ensure t)
+   #+end_src
+** Theme
+   #+begin_src emacs-lisp
+     (use-package gruvbox-theme
+       :config
+       (load-theme 'gruvbox t))
+   #+end_src
+** Package
+*** Intergrate
+    #+begin_src emacs-lisp
+        (blink-cursor-mode 0)
+
+        (use-package xah-fly-keys
+      :diminish xah-fly-keys
+      :config
+      (xah-fly-keys-set-layout "colemak-mod-dh")
+      (define-key xah-fly-command-map (kbd "k") 'isearch-forward)
+      (define-key xah-fly-command-map (kbd "m") 'xah-beginning-of-line-or-block)
+      (xah-fly-keys 1))
+
+        (use-package diminish)
+        (use-package flx)
+        (use-package python-mode)
+        (use-package rust-mode)
+
+        (use-package rainbow-delimiters
+      :hook (prog-mode . rainbow-delimiters-mode))
+
+        (use-package which-key
+      :diminish which-key
+      :defer 0
+      :diminish which-key-mode
+      :config
+      (which-key-mode)
+      (setq which-key-idle-delay 1))
+
+        (use-package vertico
+      :init
+      (vertico-mode))
+
+        (use-package orderless
+      :init
+      (setq completion-styless '(orderless)
+            completion-category-defaults nil
+            completion-cotegory-overrides '((file (styles partial-completion)))))
+
+        (savehist-mode 1)
+
+        (defun crm-indicator (arg)
+      (cons (concat "[CRM] " (car args)) (cdr args)))
+        (advice-add #'comleting-read-multiple :filter-args #'crm-indicator)
+
+        (setq minibuffer-prompt-properties
+          '(read-only t cursor-intangible t face minibuffer-prompt))
+        (add-hook 'monobuffer-setup-hook #'cursor-intangible-mode)
+
+        (setq enable-recursive-minibuffers t)
+    #+end_src
+*** Application
+    #+begin_src emacs-lisp
+      (use-package elfeed)
+      (setq elfeed-feeds
+            '("http://lukesmith.xyz/rss.xml"
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA"
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCPf-EnX70UM7jqjKwhDmS8g"
+              "http://www.youtube.com/feeds/videos.xml?channel_id=UCyl1z3jo3XHR1riLFKG5UAg"
+              "http://www.youtube.com/feeds/videos.xml?channel_id=UC1CfXB_kRs3C-zaeTG3oGyg"))
+      (add-hook 'elfeed-new-entry-hook
+                (elfeed-make-tagger :before "2 weeks ago"
+                                    :remove 'unread))
+    #+end_src
+** Keybind
+      #+begin_src emacs-lisp
+        (setq-default tab-width 4)
+        (progn
+          (setq-default indent-tabs-mode nil))
+        (setq xah-fly-use-meta-key nil)
+        (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+        (global-set-key (kbd "C-x w") 'elfeed)
+   #+end_src
+** Org settings
+*** basic
+    #+begin_src emacs-lisp
+      (use-package org
+        :custom
+        (org-agenda-start-with-log-mode t)
+        (org-log-done 'time)
+        (org-log-into-drawer t))
+      ;; (org-agenda-files
+      ;;  '("~/orgfile/Tasks.org")		; example
+      ;;  '("~/orgfile/birthday.org")))
+
+      (use-package org-bullets
+        :hook (org-mode . org-bullets-mode)
+        :custom
+        (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+
+      ;; Replace list hyphen with dot
+      (font-lock-add-keywords 'org-mode
+                              '(("^ *\\([-]\\) "
+                                 (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+      (dolist (face '((org-level-1 . 1.2)
+                      (org-level-2 . 1.1)
+                      (org-level-3 . 1.05)
+                      (org-level-4 . 1.0)
+                      (org-level-5 . 1.1)
+                      (org-level-6 . 1.1)
+                      (org-level-7 . 1.1)
+                      (org-level-8 . 1.1))))
+
+      ;; Make sure org-indent face is available
+      (require 'org-indent)
+      (require 'org-tempo)
+      (setq org-structure-template-alist
+            '(("py" . "python")
+              ("el" . "src emacs-lisp")
+              ("rs" . "rust")
+              ("a" . "export ascii\n")
+              ("c" . "center\n")
+              ("C" . "comment\n")
+              ("e" . "example\n")
+              ("E" . "export")
+              ("h" . "export html\n")
+              ("l" . "export latex\n")
+              ("q" . "quote\n")
+              ("s" . "src")
+              ("v" . "verse\n")))
+      (progn
+        ;; no need to warn
+        (put 'narrow-to-region 'disabled nil)
+        (put 'narrow-to-page 'disabled nil)
+        (put 'upcase-region 'disabled nil)
+        (put 'downcase-region 'disabled nil)
+        (put 'erase-buffer 'disabled nil)
+        (put 'scroll-left 'disabled nil)
+        (put 'dired-find-alternate-file 'disabled nil)
+        )
+
+      ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+      (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+      (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+      (set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
+      (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+      (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+      (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+      (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+      (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+      (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+
+      ;; Get rid of the background on column views
+      (set-face-attribute 'org-column nil :background nil)
+      (set-face-attribute 'org-column-title nil :background nil)
+    #+end_src
+*** auto tangle
+    #+begin_src emacs-lisp
+      (defun efs/org-babel-tangle-config()
+        (when (string-equal (buffer-file-name)
+                            (expand-file-name "C:/Users/tendou/AppData/Roaming/.emacs.d/emacs_win.org"))
+          (let ((org-confirm-babel-evaluate nil))
+            (org-babel-tangle))))
+
+      (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
+    #+end_src
+* ERC
+  #+begin_src emacs-lisp
+    (setq erc-server "irc.libera.chat"
+          erc-nick "subaru"
+          erc-user-full-name "subaru tendou"
+          erc-track-shorten-start 8
+          erc-autojoin-channels-alist '(("irc.libera.chat" "#systemcrafters" "#emacs"))
+          erc-kill-buffer-on-part t
+          erc-auto-query 'bury)
+  #+end_src
+* Keep .emacs.d Clean
+  #+begin_src emacs-lisp
+    ;; Change the user-emacs-directory to keep unwanted thing out of ~/.emacs.d
+    (setq user-emacs-directory (expand-file-name "~/.cache/emacs/")
+          url-history-file (expand-file-name "url/history" user-emacs-directory))
+
+    ;; Use no-littering to automatically set common path to the new user-emacs-directory
+    (use-package no-littering)
+
+    ;; Keep customization settings in a temperary file
+    (setq custom-file
+          (if (boundp 'server-socket-dir)
+              (expand-file-name "custom.el" server-socket-dir)
+            (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
+  #+end_src
