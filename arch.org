@@ -68,11 +68,11 @@
       :config
       ;; (xah-fly-keys-set-layout "qwerty")
       ;; (xah-fly-keys-set-layout "dvorak")
-      (xah-fly-keys-set-layout "colemak-mod-dh")
+      (xah-fly-keys-set-layout "colemak-mod-dh-new")
       (define-key xah-fly-n-keymap (kbd "s") 'vterm)
       ;; (define-key xah-fly-n-keymap (kbd "d") 'vterm)
-      (define-key xah-fly-command-map (kbd "k") 'isearch-forward)
-      (define-key xah-fly-command-map (kbd "m") 'xah-beginning-of-line-or-block)
+      ;; (define-key xah-fly-command-map (kbd "k") 'isearch-forward)
+      ;; (define-key xah-fly-command-map (kbd "m") 'xah-beginning-of-line-or-block)
       ;; (define-key xah-fly-n-keymap (kbd "e") 'vterm)
       (xah-fly-keys 1))
 
