@@ -1,9 +1,9 @@
 #+title Emacs settings
-#+PROPERTY: header-args:emacs-lisp :tangle C:/Users/tendou/AppData/Roaming/.emacs.d/init.el :mkdirp yes
+#+PROPERTY: header-args:emacs-lisp :tangle C:/Users/subaru/AppData/Roaming/.emacs.d/init.el :mkdirp yes
 
 * Basic Settings
 ** Early Settings
-   #+begin_src emacs-lisp :tangle C:/Users/tendou/AppData/Roaming/.emacs.d/early-init.el
+   #+begin_src emacs-lisp :tangle C:/Users/subaru/AppData/Roaming/.emacs.d/early-init.el
      (set-language-environment "UTF-8")
      (set-default-coding-systems 'utf-8)
      (setq inhibit-startup-message t)
@@ -61,14 +61,11 @@
 *** Intergrate
     #+begin_src emacs-lisp
         (blink-cursor-mode 0)
-
-        (use-package xah-fly-keys
-      :diminish xah-fly-keys
-      :config
-      (xah-fly-keys-set-layout "colemak-mod-dh")
-      (define-key xah-fly-command-map (kbd "k") 'isearch-forward)
-      (define-key xah-fly-command-map (kbd "m") 'xah-beginning-of-line-or-block)
-      (xah-fly-keys 1))
+        (add-to-list 'load-path "~/.emacs.d/lisp/")
+        (require 'xah-fly-keys)
+        ;; specify a layout
+        (xah-fly-keys-set-layout "colemak-mod-dh")
+        (xah-fly-keys 1)
 
         (use-package diminish)
         (use-package flx)
@@ -137,7 +134,7 @@
         :custom
         (org-agenda-start-with-log-mode t)
         (org-log-done 'time)
-        (org-log-into-drawer t))
+        (Org-log-into-drawer t))
       ;; (org-agenda-files
       ;;  '("~/orgfile/Tasks.org")		; example
       ;;  '("~/orgfile/birthday.org")))
@@ -208,7 +205,7 @@
     #+begin_src emacs-lisp
       (defun efs/org-babel-tangle-config()
         (when (string-equal (buffer-file-name)
-                            (expand-file-name "C:/Users/tendou/AppData/Roaming/.emacs.d/emacs_win.org"))
+                            (expand-file-name "C:/Users/subaru/AppData/Roaming/.emacs.d/emacs_win.org"))
           (let ((org-confirm-babel-evaluate nil))
             (org-babel-tangle))))
 
