@@ -4,6 +4,7 @@
 * Basic Settings
 ** Early Settings
    #+begin_src emacs-lisp :tangle C:/Users/subaru/AppData/Roaming/.emacs.d/early-init.el
+     (add-hook 'emacs-startup-hook 'toggle-frame-maximized)
      (set-language-environment "UTF-8")
      (set-default-coding-systems 'utf-8)
      (setq inhibit-startup-message t)
