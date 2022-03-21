@@ -64,17 +64,17 @@
       (blink-cursor-mode 0)
 
       (use-package xah-fly-keys
-      :diminish xah-fly-keys
-      :config
-      ;; (xah-fly-keys-set-layout "qwerty")
-      ;; (xah-fly-keys-set-layout "dvorak")
-      (xah-fly-keys-set-layout "colemak-mod-dh-new")
-      (define-key xah-fly-n-keymap (kbd "s") 'vterm)
-      ;; (define-key xah-fly-n-keymap (kbd "d") 'vterm)
-      ;; (define-key xah-fly-command-map (kbd "k") 'isearch-forward)
-      ;; (define-key xah-fly-command-map (kbd "m") 'xah-beginning-of-line-or-block)
-      ;; (define-key xah-fly-n-keymap (kbd "e") 'vterm)
-      (xah-fly-keys 1))
+        :diminish xah-fly-keys
+        :config
+        ;; (xah-fly-keys-set-layout "qwerty")
+        ;; (xah-fly-keys-set-layout "dvorak")
+        (xah-fly-keys-set-layout "colemak-mod-dh-new")
+        (define-key xah-fly-n-keymap (kbd "s") 'vterm)
+        ;; (define-key xah-fly-n-keymap (kbd "d") 'vterm)
+        ;; (define-key xah-fly-command-map (kbd "k") 'isearch-forward)
+        ;; (define-key xah-fly-command-map (kbd "m") 'xah-beginning-of-line-or-block)
+        ;; (define-key xah-fly-n-keymap (kbd "e") 'vterm)
+        (xah-fly-keys 1))
 
       (use-package vterm)
       (use-package diminish)
@@ -84,60 +84,60 @@
       (use-package csharp-mode)
 
       (use-package rainbow-delimiters
-      :hook (prog-mode . rainbow-delimiters-mode))
+        :hook (prog-mode . rainbow-delimiters-mode))
 
       (use-package which-key
-      :diminish which-key
-      :defer 0
-      :diminish which-key-mode
-      :config
-      (which-key-mode)
-      (setq which-key-idle-delay 1))
+        :diminish which-key
+        :defer 0
+        :diminish which-key-mode
+        :config
+        (which-key-mode)
+        (setq which-key-idle-delay 1))
 
       (use-package ligature
-      :load-path "~/.emacs.d/github/ligature.el/"
-      :config
-      ;; Enable the "www" ligature in every possible major mode
-      (ligature-set-ligatures 't '("www"))
-      ;; Enable traditional ligature support in eww-mode, if the
-      ;; `variable-pitch' face supports it
-      (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
-      ;; Enable all Cascadia Code ligatures in programming modes
-      (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
-                           ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
-                           "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
-                           "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
-                           "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
-                           "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
-                           "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
-                           "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
-                           ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
-                           "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
-                           "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
-                           "?=" "?." "??" ";;" "/=" "/>" "//" "__" "~~" "(*" "*)"
-                           "\\\\" "://"))
-      ;; Enables ligature checks globally in all buffers. You can also do it
-      ;; per mode with `ligature-mode'.
-      (global-ligature-mode t))
+        :load-path "~/.emacs.d/github/ligature.el/"
+        :config
+        ;; Enable the "www" ligature in every possible major mode
+        (ligature-set-ligatures 't '("www"))
+        ;; Enable traditional ligature support in eww-mode, if the
+        ;; `variable-pitch' face supports it
+        (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+        ;; Enable all Cascadia Code ligatures in programming modes
+        (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                                             ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                                             "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                                             "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                                             "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                                             "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                                             "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                                             "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                                             ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                                             "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                                             "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                                             "?=" "?." "??" ";;" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                                             "\\\\" "://"))
+        ;; Enables ligature checks globally in all buffers. You can also do it
+        ;; per mode with `ligature-mode'.
+        (global-ligature-mode t))
 
       (use-package vertico
-      :init
-      (vertico-mode))
+        :init
+        (vertico-mode))
 
       (use-package orderless
-      :init
-      (setq completion-styless '(orderless)
-            completion-category-defaults nil
-            completion-cotegory-overrides '((file (styles partial-completion)))))
+        :init
+        (setq completion-styless '(orderless)
+              completion-category-defaults nil
+              completion-cotegory-overrides '((file (styles partial-completion)))))
 
       (savehist-mode 1)
 
       (defun crm-indicator (arg)
-      (cons (concat "[CRM] " (car args)) (cdr args)))
+        (cons (concat "[CRM] " (car args)) (cdr args)))
       (advice-add #'comleting-read-multiple :filter-args #'crm-indicator)
 
       (setq minibuffer-prompt-properties
-        '(read-only t cursor-intangible t face minibuffer-prompt))
+            '(read-only t cursor-intangible t face minibuffer-prompt))
       (add-hook 'monobuffer-setup-hook #'cursor-intangible-mode)
 
       (setq enable-recursive-minibuffers t)

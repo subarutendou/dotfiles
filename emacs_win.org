@@ -60,51 +60,51 @@
 ** Package
 *** Intergrate
     #+begin_src emacs-lisp
-        (blink-cursor-mode 0)
-        (add-to-list 'load-path "~/.emacs.d/lisp/")
-        (require 'xah-fly-keys)
-        ;; specify a layout
-        (xah-fly-keys-set-layout "colemak-mod-dh-new")
-        (xah-fly-keys 1)
+       (blink-cursor-mode 0)
+      (add-to-list 'load-path "~/.emacs.d/lisp/")
+      (require 'xah-fly-keys)
+      ;; specify a layout
+      (xah-fly-keys-set-layout "colemak-mod-dh-new")
+      (xah-fly-keys 1)
 
-        (use-package diminish)
-        (use-package flx)
-        (use-package python-mode)
+      (use-package diminish)
+      (use-package flx)
+      (use-package python-mode)
       (use-package rust-mode)
       (use-package csharp-mode)
 
-        (use-package rainbow-delimiters
-      :hook (prog-mode . rainbow-delimiters-mode))
+      (use-package rainbow-delimiters
+        :hook (prog-mode . rainbow-delimiters-mode))
 
-        (use-package which-key
-      :diminish which-key
-      :defer 0
-      :diminish which-key-mode
-      :config
-      (which-key-mode)
-      (setq which-key-idle-delay 1))
+      (use-package which-key
+        :diminish which-key
+        :defer 0
+        :diminish which-key-mode
+        :config
+        (which-key-mode)
+        (setq which-key-idle-delay 1))
 
-        (use-package vertico
-      :init
-      (vertico-mode))
+      (use-package vertico
+        :init
+        (vertico-mode))
 
-        (use-package orderless
-      :init
-      (setq completion-styless '(orderless)
-            completion-category-defaults nil
-            completion-cotegory-overrides '((file (styles partial-completion)))))
+      (use-package orderless
+        :init
+        (setq completion-styless '(orderless)
+              completion-category-defaults nil
+              completion-cotegory-overrides '((file (styles partial-completion)))))
 
-        (savehist-mode 1)
+      (savehist-mode 1)
 
-        (defun crm-indicator (arg)
-      (cons (concat "[CRM] " (car args)) (cdr args)))
-        (advice-add #'comleting-read-multiple :filter-args #'crm-indicator)
+      (defun crm-indicator (arg)
+        (cons (concat "[CRM] " (car args)) (cdr args)))
+      (advice-add #'comleting-read-multiple :filter-args #'crm-indicator)
 
-        (setq minibuffer-prompt-properties
-          '(read-only t cursor-intangible t face minibuffer-prompt))
-        (add-hook 'monobuffer-setup-hook #'cursor-intangible-mode)
+      (setq minibuffer-prompt-properties
+            '(read-only t cursor-intangible t face minibuffer-prompt))
+      (add-hook 'monobuffer-setup-hook #'cursor-intangible-mode)
 
-        (setq enable-recursive-minibuffers t)
+      (setq enable-recursive-minibuffers t)
     #+end_src
 *** Application
     #+begin_src emacs-lisp
