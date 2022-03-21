@@ -64,13 +64,14 @@
         (add-to-list 'load-path "~/.emacs.d/lisp/")
         (require 'xah-fly-keys)
         ;; specify a layout
-        (xah-fly-keys-set-layout "colemak-mod-dh")
+        (xah-fly-keys-set-layout "colemak-mod-dh-new")
         (xah-fly-keys 1)
 
         (use-package diminish)
         (use-package flx)
         (use-package python-mode)
-        (use-package rust-mode)
+      (use-package rust-mode)
+      (use-package csharp-mode)
 
         (use-package rainbow-delimiters
       :hook (prog-mode . rainbow-delimiters-mode))
