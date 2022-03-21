@@ -68,7 +68,7 @@
       :config
       ;; (xah-fly-keys-set-layout "qwerty")
       ;; (xah-fly-keys-set-layout "dvorak")
-      (xah-fly-keys-set-layout "colemak-mod-dh")
+      (xah-fly-keys-set-layout "colemak-mod-dh-new")
       (define-key xah-fly-n-keymap (kbd "s") 'vterm)
       ;; (define-key xah-fly-n-keymap (kbd "d") 'vterm)
       ;; (define-key xah-fly-command-map (kbd "k") 'isearch-forward)
@@ -76,17 +76,17 @@
       ;; (define-key xah-fly-n-keymap (kbd "e") 'vterm)
       (xah-fly-keys 1))
 
-        (use-package vterm)
-        (use-package diminish)
-        (use-package flx)
-        (use-package python-mode)
+      (use-package vterm)
+      (use-package diminish)
+      (use-package flx)
+      (use-package python-mode)
       (use-package rust-mode)
       (use-package csharp-mode)
 
-        (use-package rainbow-delimiters
+      (use-package rainbow-delimiters
       :hook (prog-mode . rainbow-delimiters-mode))
 
-        (use-package which-key
+      (use-package which-key
       :diminish which-key
       :defer 0
       :diminish which-key-mode
@@ -94,7 +94,7 @@
       (which-key-mode)
       (setq which-key-idle-delay 1))
 
-        (use-package ligature
+      (use-package ligature
       :load-path "~/.emacs.d/github/ligature.el/"
       :config
       ;; Enable the "www" ligature in every possible major mode
@@ -120,27 +120,27 @@
       ;; per mode with `ligature-mode'.
       (global-ligature-mode t))
 
-        (use-package vertico
+      (use-package vertico
       :init
       (vertico-mode))
 
-        (use-package orderless
+      (use-package orderless
       :init
       (setq completion-styless '(orderless)
             completion-category-defaults nil
             completion-cotegory-overrides '((file (styles partial-completion)))))
 
-        (savehist-mode 1)
+      (savehist-mode 1)
 
-        (defun crm-indicator (arg)
+      (defun crm-indicator (arg)
       (cons (concat "[CRM] " (car args)) (cdr args)))
-        (advice-add #'comleting-read-multiple :filter-args #'crm-indicator)
+      (advice-add #'comleting-read-multiple :filter-args #'crm-indicator)
 
-        (setq minibuffer-prompt-properties
-          '(read-only t cursor-intangible t face minibuffer-prompt))
-        (add-hook 'monobuffer-setup-hook #'cursor-intangible-mode)
+      (setq minibuffer-prompt-properties
+        '(read-only t cursor-intangible t face minibuffer-prompt))
+      (add-hook 'monobuffer-setup-hook #'cursor-intangible-mode)
 
-        (setq enable-recursive-minibuffers t)
+      (setq enable-recursive-minibuffers t)
     #+end_src
 *** Application
     #+begin_src emacs-lisp
