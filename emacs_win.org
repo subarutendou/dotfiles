@@ -74,6 +74,7 @@
       (use-package python-mode)
       (use-package rust-mode)
       (use-package csharp-mode)
+      (use-package magit)
 
       (use-package rainbow-delimiters
         :hook (prog-mode . rainbow-delimiters-mode))
