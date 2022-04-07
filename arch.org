@@ -29,8 +29,7 @@
                      pdf-view-mode-hook))
        (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
-     (set-face-attribute 'default nil :family "JetBrainsMono Nerd Font" :height 137)
-     (set-fontset-font t nil "JetBrainsMono Nerd Font Mono" nil 'append)
+     (set-face-attribute 'default nil :family "JetBrainsMono Nerd Font Mono" :height 137)
      (set-fontset-font t nil "JetBrains Mono" nil 'append)
      (set-fontset-font t nil "Fira Code" nil 'append)
      (setq ido-enable-flex-matching t)
