@@ -68,7 +68,7 @@
       (require 'xah-fly-keys)
       ;; specify a layout
       ;; (xah-fly-keys-set-layout "qwerty")
-      (xah-fly-keys-set-layout "colemak-mod-dh-new")
+      (xah-fly-keys-set-layout "colemak")
       (xah-fly-keys 1)
       (diminish 'xah-fly-keys)
 
