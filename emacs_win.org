@@ -69,7 +69,7 @@
       ;; specify a layout
       ;; (xah-fly-keys-set-layout "qwerty")
       ;; (xah-fly-keys-set-layout "colemak")
-      (xah-fly-keys-set-layout "devorak")
+      (xah-fly-keys-set-layout "dvorak")
       (xah-fly-keys 1)
       (diminish 'xah-fly-keys)
 
