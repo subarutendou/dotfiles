@@ -340,8 +340,8 @@
      alias cl='sudo pacman -Rns $(pacman -Qdtq)'
      alias cpu='sudo auto-cpufreq --stats'
      alias te='tar -xvzf'
-     alias sudo='doas'
-     complete -cf doas
+     # alias sudo='doas'
+     # complete -cf doas
 
      # custom function
      dlweb() {
