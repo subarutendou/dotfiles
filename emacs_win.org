@@ -64,14 +64,12 @@
 *** Intergrate
     #+begin_src emacs-lisp
       (blink-cursor-mode 0)
-      (add-to-list 'load-path "~/.emacs.d/lisp/")
-      (require 'xah-fly-keys)
-      ;; specify a layout
-      ;; (xah-fly-keys-set-layout "qwerty")
-      ;; (xah-fly-keys-set-layout "colemak")
-      (xah-fly-keys-set-layout "dvorak")
-      (xah-fly-keys 1)
-      (diminish 'xah-fly-keys)
+
+      (use-package xah-fly-keys
+        :diminish xah-fly-keys
+        :config
+        (xah-fly-keys-set-layout "dvorak")
+        (xah-fly-keys 1))
 
       (use-package diminish)
       (use-package flx)
