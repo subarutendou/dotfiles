@@ -77,6 +77,9 @@
       (use-package rust-mode)
       (use-package csharp-mode)
       (use-package magit)
+      (use-package vertico
+        :init
+        (vertico-mode))
 
       (use-package rainbow-delimiters
         :hook (prog-mode . rainbow-delimiters-mode))
@@ -88,18 +91,6 @@
         :config
         (which-key-mode)
         (setq which-key-idle-delay 1))
-
-      (use-package vertico
-        :init
-        (vertico-mode))
-
-      (use-package orderless
-        :init
-        (setq completion-styless '(orderless)
-              completion-category-defaults nil
-              completion-cotegory-overrides '((file (styles partial-completion)))))
-
-      (savehist-mode 1)
 
       (defun crm-indicator (arg)
         (cons (concat "[CRM] " (car args)) (cdr args)))
@@ -137,19 +128,6 @@
         ;; per mode with `ligature-mode'.
         (global-ligature-mode t))
     #+end_src
-*** Application
-    #+begin_src emacs-lisp
-      (use-package elfeed)
-      (setq elfeed-feeds
-            '("http://lukesmith.xyz/rss.xml"
-              "https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA"
-              "https://www.youtube.com/feeds/videos.xml?channel_id=UCPf-EnX70UM7jqjKwhDmS8g"
-              "http://www.youtube.com/feeds/videos.xml?channel_id=UCyl1z3jo3XHR1riLFKG5UAg"
-              "http://www.youtube.com/feeds/videos.xml?channel_id=UC1CfXB_kRs3C-zaeTG3oGyg"))
-      (add-hook 'elfeed-new-entry-hook
-                (elfeed-make-tagger :before "2 weeks ago"
-                                    :remove 'unread))
-    #+end_src
 ** Keybind
       #+begin_src emacs-lisp
         (setq-default tab-width 4)
@@ -157,7 +135,6 @@
           (setq-default indent-tabs-mode nil))
         (setq xah-fly-use-meta-key nil)
         (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-        (global-set-key (kbd "C-x w") 'elfeed)
    #+end_src
 ** Org settings
 *** basic

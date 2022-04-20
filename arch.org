@@ -68,11 +68,7 @@
         :config
         ;; (xah-fly-keys-set-layout "qwerty")
         (xah-fly-keys-set-layout "dvorak")
-        ;; (xah-fly-keys-set-layout "colemak")
         (define-key xah-fly-n-keymap (kbd "e") 'vterm)
-        ;; (define-key xah-fly-n-keymap (kbd "d") 'vterm)
-        ;; (define-key xah-fly-command-map (kbd "k") 'isearch-forward)
-        ;; (define-key xah-fly-command-map (kbd "m") 'xah-beginning-of-line-or-block)
         ;; (define-key xah-fly-n-keymap (kbd "e") 'vterm)
         (xah-fly-keys 1))
 
@@ -147,13 +143,6 @@
       (use-package magit
         :custom
         (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
-
-      (use-package pdf-tools
-        :config
-        (pdf-tools-install)
-        (setq-default pdf-view-display-size 'fit-width)
-        :custom
-        (pdf-annot-activate-created-annotations t "automatically annotate Highlights"))
 
       (use-package elfeed)
       (setq elfeed-feeds
