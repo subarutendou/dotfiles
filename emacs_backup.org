@@ -261,3 +261,60 @@
 			 (number-sequence 0 9))))
        (exwm-enable))
    #+end_src
+* bash
+** bashrc
+   #+begin_src conf :tangle ~/.bashrc
+     #!/bin/bash
+     #
+     # ~/.bashrc
+     #
+
+     # If not running interactively, don't do anything
+     [[ $- != *i* ]] && return
+
+     alias ls='ls --color=auto'
+     PS1='[\u@\h \W]\$ '
+
+     # scriptname - description of script
+
+     # Text color variables
+     txtund=$(tput sgr 0 1)          # Underline
+     txtbld=$(tput bold)             # Bold
+     bldred=${txtbld}$(tput setaf 1) #  red
+     bldblu=${txtbld}$(tput setaf 4) #  blue
+     bldwht=${txtbld}$(tput setaf 7) #  white
+     txtrst=$(tput sgr0)             # Reset
+     info=${bldwht}*${txtrst}        # Feedback
+     pass=${bldblu}*${txtrst}
+     warn=${bldred}*${txtrst}
+     ques=${bldblu}?${txtrst}
+
+     # my settings
+     alias ll='ls -lah'
+     alias la='ls -a'
+     alias gpgl='gpg --list-secret-keys --keyid-format LONG'
+     alias cl='sudo pacman -Rns $(pacman -Qdtq)'
+     alias cpu='sudo auto-cpufreq --stats'
+     alias te='tar -xvzf'
+     # alias sudo='doas'
+     # complete -cf doas
+
+     # custom function
+     dlweb() {
+     wget --recursive --no-clobber --page-requisites --html-extension --convert-links --domains "$1" --no-parent "$2"	 
+     }
+   #+end_src
+** bash_profile
+   #+begin_src conf :tangle ~/.bash_profile
+     #
+     # ~/.bash_profile
+     #
+
+     [[ -f ~/.bashrc ]] && . ~/.bashrc
+
+     PATH=$PATH:~/.local/bin
+
+     if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+     startx
+     fi
+   #+end_src
