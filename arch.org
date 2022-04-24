@@ -67,7 +67,7 @@
         :diminish xah-fly-keys
         :config
         ;; (xah-fly-keys-set-layout "qwerty")
-        (xah-fly-keys-set-layout "dvorak")
+        (xah-fly-keys-set-layout "colemak")
         (define-key xah-fly-n-keymap (kbd "e") 'vterm)
         ;; (define-key xah-fly-n-keymap (kbd "e") 'vterm)
         (xah-fly-keys 1))
