@@ -29,9 +29,10 @@
                      pdf-view-mode-hook))
        (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
-     (set-face-attribute 'default nil :family "JetBrainsMono Nerd Font Mono" :height 137)
-     (set-fontset-font t nil "JetBrains Mono" nil 'append)
-     (set-fontset-font t nil "Fira Code" nil 'append)
+     ;; (set-face-attribute 'default nil :family "JetBrainsMono Nerd Font Mono" :height 137)
+     (set-face-attribute 'default nil :family "Comic Code Ligatures" :height 137)
+     ;; (set-fontset-font t nil "JetBrains Mono" nil 'append)
+     ;; (set-fontset-font t nil "Fira Code" nil 'append)
      (setq ido-enable-flex-matching t)
      (setq ido-everywhere t)
      (ido-mode 1)
@@ -68,7 +69,7 @@
         :config
         ;; (xah-fly-keys-set-layout "qwerty")
         (xah-fly-keys-set-layout "colemak")
-        (define-key xah-fly-n-keymap (kbd "e") 'vterm)
+        (define-key xah-fly-n-keymap (kbd "s") 'vterm)
         ;; (define-key xah-fly-n-keymap (kbd "e") 'vterm)
         (xah-fly-keys 1))
 
