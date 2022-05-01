@@ -291,6 +291,11 @@
      pcloud -b &
      nitrogen --restore &
      emacs &
+     # export GTK_IM_MODULE=fcitx
+     # export QT_IM_MODULE=fcitx
+     # export XMODIFIERS=fcitx
+     # eval `dbus-launch --sh-syntax --exit-with-session`
+     # exe --no-startup-id fcitx5 -d
      # st&
 
      # exec dbus-launch --exit-with-session emacs -mm --debug-init
