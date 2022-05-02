@@ -302,11 +302,11 @@
      exec dwm
    #+end_src
 ** zsh
-   #+begin_src conf :tangle ~/.zshrc
+   #+begin_src conf :tangle ~/.config/zsh/.zshrc
      export PATH=$PATH:/home/tendou/.local/bin
 
      # zsh config
-     for f in /home/tendou/.shellConfig/*; do source "$f"; done
+     for f in /home/tendou/.config/zsh/.shellConfig/*; do source "$f"; done
 
      # Enable colors and change prompt:
      autoload -U colors && colors # Load colors
@@ -329,7 +329,7 @@
      bindkey -e
 
      # The following lines were added by compinstall
-     zstyle :compinstall filename '/home/tendou/.zshrc'
+     zstyle :compinstall filename '/home/tendou/.config/zsh/.zshrc'
 
      autoload -Uz compinit && compinit
      # End of lines added by compinstall
@@ -351,7 +351,7 @@
      # setopt autocd  # Automatically cd into typed directory.
    #+end_src
 ** zsh alias
-   #+begin_src conf :tangle ~/.shellConfig/aliases
+   #+begin_src conf :tangle ~/.config/zsh/.shellConfig/aliases
      # Alias
      alias ls='ls -CF --color=auto'
      alias la='ls -A'
@@ -370,7 +370,7 @@
      alias te='tar -xvzf'
    #+end_src
 ** zsh profile
-   #+begin_src conf :tangle ~/.zprofile
+   #+begin_src conf :tangle ~/.config/zsh/.zprofile
      export PATH=$PATH"$HOME/.local/bin"
      export PATH="$HOME/.cargo/bin:$PATH"
      # export VISUAL="emacsclient -c -a emacs" # $VISUAL opens in GUI mode
