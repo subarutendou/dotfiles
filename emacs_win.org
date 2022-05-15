@@ -74,6 +74,7 @@
       (use-package python-mode)
       (use-package rust-mode)
       (use-package csharp-mode)
+      (use-package ca65-mode)
       (use-package magit)
       (use-package vertico
         :init
