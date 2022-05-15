@@ -80,9 +80,7 @@
       (use-package python-mode)
       (use-package rust-mode)
       (use-package csharp-mode)
-      (use-package all-the-icons)
-      (use-package all-the-icons-dired)
-      (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+      (use-package swift-mode)
 
       (use-package rainbow-delimiters
         :hook (prog-mode . rainbow-delimiters-mode))
