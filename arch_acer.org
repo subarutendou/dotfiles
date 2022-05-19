@@ -81,7 +81,7 @@
       (use-package rust-mode)
       (use-package csharp-mode)
       (use-package swift-mode)
-
+      (use-package ca65-mode)
       (use-package rainbow-delimiters
         :hook (prog-mode . rainbow-delimiters-mode))
 
