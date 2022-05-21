@@ -59,8 +59,8 @@
      (use-package gruvbox-theme
        :config
        (if (display-graphic-p) 
-         (enable-theme 'solarized) 
-       (enable-theme 'wheatgrass)))
+         (enable-theme 'gruvbox-theme) 
+       (enable-theme 'wombat)))
    #+end_src
 ** Package
 *** Intergrate
