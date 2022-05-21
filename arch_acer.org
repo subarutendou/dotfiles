@@ -56,9 +56,11 @@
    #+end_src
 ** Theme
    #+begin_src emacs-lisp
-     (use-package nord-theme
+     (use-package gruvbox-theme
        :config
-       (load-theme 'nord t))
+       (if (display-graphic-p) 
+         (enable-theme 'solarized) 
+       (enable-theme 'wheatgrass)))
    #+end_src
 ** Package
 *** Intergrate

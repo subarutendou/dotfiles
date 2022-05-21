@@ -54,9 +54,9 @@
    #+end_src
 ** Theme
    #+begin_src emacs-lisp
-     (use-package nord-theme
+     (use-package gruvbox-theme
        :config
-       (load-theme 'nord t))
+       (load-theme 'gruvbox t))
    #+end_src
 ** Package
 *** Intergrate
