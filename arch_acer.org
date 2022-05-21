@@ -58,9 +58,7 @@
    #+begin_src emacs-lisp
      (use-package gruvbox-theme
        :config
-       (if (display-graphic-p) 
-         (enable-theme 'gruvbox-dark-medium) 
-       (enable-theme 'wombat)))
+       (load-theme 'gruvbox-dark-medium t))
    #+end_src
 ** Package
 *** Intergrate

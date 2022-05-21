@@ -21,7 +21,9 @@
     ;; Use `nord4` from Nord's "Snow Storm" palette as background color.
     (setq nord-region-highlight "frost")
     (setq nord-region-highlight "snowstorm")
-
+      (if (display-graphic-p)
+          (load-theme 'gruvbox-dark-medium t)
+        (load-theme 'wombat t))
   #+end_src
 * early-init
 ** Check startup time
