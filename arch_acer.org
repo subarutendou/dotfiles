@@ -59,7 +59,7 @@
      (use-package gruvbox-theme
        :config
        (if (display-graphic-p) 
-         (enable-theme 'gruvbox-theme) 
+         (enable-theme 'gruvbox-dark-medium) 
        (enable-theme 'wombat)))
    #+end_src
 ** Package
