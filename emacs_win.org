@@ -23,11 +23,11 @@
      (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
 
      (dolist (mode '(org-mode-hook
-                     term-mode-hook
-                     shell-mode-hook
-                     eshell-mode-hook
-                     vterm-mode-hook
-                     pdf-view-mode-hook))
+		     term-mode-hook
+		     shell-mode-hook
+		     eshell-mode-hook
+		     vterm-mode-hook
+		     pdf-view-mode-hook))
        (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
      (set-face-attribute 'default nil :family "Comic Code Ligatures" :height 137)
