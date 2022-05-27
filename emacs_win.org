@@ -23,15 +23,16 @@
      (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
 
      (dolist (mode '(org-mode-hook
-		     term-mode-hook
-		     shell-mode-hook
-		     eshell-mode-hook
-		     vterm-mode-hook
-		     pdf-view-mode-hook))
+             term-mode-hook
+             shell-mode-hook
+             eshell-mode-hook
+             vterm-mode-hook
+             pdf-view-mode-hook))
        (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
      (set-face-attribute 'default nil :family "Comic Code Ligatures" :height 137)
-
+     (add-hook 'rust-mode-hook
+               (lambda () (setq indent-tabs-mode nil)))
      (setq ido-enable-flex-matching t)
      (setq ido-everywhere t)
      (ido-mode 1)
@@ -66,7 +67,7 @@
       (use-package xah-fly-keys
         :diminish xah-fly-keys
         :config
-        (xah-fly-keys-set-layout "colemak-mod-dh-new")
+        (xah-fly-keys-set-layout "qwerty")
         (xah-fly-keys 1))
 
       (use-package diminish)
