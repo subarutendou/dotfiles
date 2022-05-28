@@ -68,10 +68,8 @@
       (use-package xah-fly-keys
         :diminish xah-fly-keys
         :config
-        ;; (xah-fly-keys-set-layout "qwerty")
-        (xah-fly-keys-set-layout "colemak-mod-dh-new")
-        (define-key xah-fly-n-keymap (kbd "s") 'vterm)
-        ;; (define-key xah-fly-n-keymap (kbd "e") 'vterm)
+        (xah-fly-keys-set-layout "qwerty")
+        (define-key xah-fly-n-keymap (kbd "d") 'vterm)
         (xah-fly-keys 1))
 
       (use-package vterm)
@@ -451,11 +449,10 @@
 
      " color_schemes
      Plug 'gruvbox-community/gruvbox'
-     Plug 'arcticicestudio/nord-vim'
 
      call plug#end()
 
-     colorscheme nord
+     colorscheme gruvbox
      highlight Normal guibg=none
 
      if executable('rg')
