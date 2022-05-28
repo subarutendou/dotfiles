@@ -29,10 +29,10 @@
                      pdf-view-mode-hook))
        (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
-     (set-face-attribute 'default nil :family "Comic Code Ligatures" :height 137)
-     ;; (set-face-attribute 'default nil :family "MonoLisa" :height 120)
+     ;; (set-face-attribute 'default nil :family "Comic Code Ligatures" :height 137)
+     (set-face-attribute 'default nil :family "MonoLisa" :height 120)
      ;; (set-fontset-font t nil "JetBrains Mono" nil 'append)
-     (set-fontset-font t nil "MonoLisa" nil 'append)
+     (set-fontset-font t nil "Comic Code Ligatures" nil 'append)
      ;; (set-fontset-font t nil "Fira Code" nil 'append)
      (setq ido-enable-flex-matching t)
      (setq ido-everywhere t)
