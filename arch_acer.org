@@ -29,10 +29,10 @@
                      pdf-view-mode-hook))
        (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
-     (set-face-attribute 'default nil :family "Comic Code Ligatures" :height 137)
-     ;; (set-face-attribute 'default nil :family "MonoLisa" :height 120)
+     ;; (set-face-attribute 'default nil :family "Comic Code Ligatures" :height 137)
+     (set-face-attribute 'default nil :family "MonoLisa" :height 130)
      ;; (set-fontset-font t nil "JetBrains Mono" nil 'append)
-     (set-fontset-font t nil "MonoLisa" nil 'append)
+     (set-fontset-font t nil "Comic Code Ligatures" nil 'append)
      ;; (set-fontset-font t nil "Fira Code" nil 'append)
      (setq ido-enable-flex-matching t)
      (setq ido-everywhere t)
@@ -68,10 +68,8 @@
       (use-package xah-fly-keys
         :diminish xah-fly-keys
         :config
-        ;; (xah-fly-keys-set-layout "qwerty")
-        (xah-fly-keys-set-layout "colemak-mod-dh-new")
-        (define-key xah-fly-n-keymap (kbd "s") 'vterm)
-        ;; (define-key xah-fly-n-keymap (kbd "e") 'vterm)
+        (xah-fly-keys-set-layout "qwerty")
+        (define-key xah-fly-n-keymap (kbd "d") 'vterm)
         (xah-fly-keys 1))
 
       (use-package vterm)
@@ -451,11 +449,10 @@
 
      " color_schemes
      Plug 'gruvbox-community/gruvbox'
-     Plug 'arcticicestudio/nord-vim'
 
      call plug#end()
 
-     colorscheme nord
+     colorscheme gruvbox
      highlight Normal guibg=none
 
      if executable('rg')
