@@ -30,7 +30,7 @@
              pdf-view-mode-hook))
        (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
-     (set-face-attribute 'default nil :family "Comic Code Ligatures" :height 137)
+     (set-face-attribute 'default nil :family "MonoLisa" :height 137)
      (add-hook 'rust-mode-hook
                (lambda () (setq indent-tabs-mode nil)))
      (setq ido-enable-flex-matching t)
