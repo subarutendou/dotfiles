@@ -1,9 +1,9 @@
 #+title Emacs settings
-#+PROPERTY: header-args:emacs-lisp :tangle C:/Users/subaru/AppData/Roaming/.emacs.d/init.el :mkdirp yes
+#+PROPERTY: header-args:emacs-lisp :tangle C:/Users/tendou/AppData/Roaming/.emacs.d/init.el :mkdirp yes
 
 * Basic Settings
 ** Early Settings
-   #+begin_src emacs-lisp :tangle C:/Users/subaru/AppData/Roaming/.emacs.d/early-init.el
+   #+begin_src emacs-lisp :tangle C:/Users/tendou/AppData/Roaming/.emacs.d/early-init.el
      (add-hook 'emacs-startup-hook 'toggle-frame-maximized)
      (set-language-environment "UTF-8")
      (set-default-coding-systems 'utf-8)
@@ -223,7 +223,7 @@
             (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
   #+end_src
 * nvim
-   #+begin_src conf :tangle C:/Users/subaru/AppData/Local/nvim/init.vim :mkdirp yes
+   #+begin_src conf :tangle C:/Users/tendou/AppData/Local/nvim/init.vim :mkdirp yes
      syntax enable
      set nohlsearch
      set encoding=utf-8
