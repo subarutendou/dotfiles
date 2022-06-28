@@ -56,9 +56,9 @@
    #+end_src
 ** Theme
    #+begin_src emacs-lisp
-     (use-package gruvbox-theme
+     (use-package monokai-pro-theme
        :config
-       (load-theme 'gruvbox-dark-medium t))
+       (load-theme 'monokai-pro t))
    #+end_src
 ** Package
 *** Intergrate
@@ -448,12 +448,11 @@
      Plug 'tpope/vim-fugitive'
 
      " color_schemes
-     Plug 'gruvbox-community/gruvbox'
+     Plug 'phanviet/vim-monokai-pro'
 
      call plug#end()
 
-     colorscheme gruvbox
-     highlight Normal guibg=none
+     colorscheme monokai_pro
 
      if executable('rg')
          let g:rg_derive_root = 'true'
