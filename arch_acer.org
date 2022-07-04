@@ -370,6 +370,10 @@
      alias cl='sudo pacman -Rns $(pacman -Qdtq)'
      alias cpu='sudo auto-cpufreq --stats'
      alias te='tar -xvzf'
+
+     dlweb() {
+     wget --recursive --no-clobber --page-requisites --html-extension --convert-links --domains "$1" --no-parent "$2"	 
+     }
    #+end_src
 ** zsh profile
    #+begin_src conf :tangle ~/.config/zsh/.zprofile
