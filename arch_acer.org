@@ -80,6 +80,7 @@
       (use-package csharp-mode)
       (use-package swift-mode)
       (use-package ca65-mode)
+      (use-package lua-mode)
       (use-package rainbow-delimiters
         :hook (prog-mode . rainbow-delimiters-mode))
 
@@ -249,6 +250,58 @@
 
       (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
     #+end_src
+** EXWM without use-package
+   #+begin_src emacs-lisp
+     (defun efs/exwm-update-class ()
+       (exwm-workspace-rename-buffer exwm-class-name))
+
+     (require 'exwm)
+
+     (setq exwm-workspace-number 5)
+     (add-hook 'exwm-update-class-hook #'efs/exwm-update-class)
+
+     (setq exwm-input-prefix-keys
+	 '(?\C-x
+	   ?\C-u
+	   ?\C-h
+	   ?\M-x
+	   ?\M-`
+	   ?\M-&
+	   ?\M-:
+	   ?\C-\M-j  ;; Buffer list
+	   ?\C-\ ))  ;; Ctrl+Space
+
+     (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+
+     (setq exwm-input-global-keys
+	     `(
+	       ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
+	       ([?\s-r] . exwm-reset)
+
+	       ;; Move between windows
+	       ([s-left] . windmove-left)
+	       ([s-right] . windmove-right)
+	       ([s-up] . windmove-up)
+	       ([s-down] . windmove-down)
+
+	       ;; Launch applications via shell command
+	       ([?\s-&] . (lambda (command)
+			    (interactive (list (read-shell-command "$ ")))
+			    (start-process-shell-command command nil command)))
+
+	       ;; Switch workspace
+	       ([?\s-w] . exwm-workspace-switch)
+	       ([?\s-`] . (lambda () (interactive) (exwm-workspace-switch-create 0)))
+
+	       ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
+	       ,@(mapcar (lambda (i)
+			   `(,(kbd (format "s-%d" i)) .
+			     (lambda ()
+			       (interactive)
+			       (exwm-workspace-switch-create ,i))))
+			 (number-sequence 0 9))))
+     (exwm-enable)
+   #+end_src
 * ERC
   #+begin_src emacs-lisp
     (setq erc-server "irc.libera.chat"
@@ -290,7 +343,7 @@
      picom -CGb --vsync --backend glx &
      pcloud -b &
      nitrogen --restore &
-     emacs &
+     # emacs &
      export GTK_IM_MODULE=fcitx
      export QT_IM_MODULE=fcitx
      export XMODIFIERS=fcitx
@@ -300,8 +353,8 @@
      # exe --no-startup-id fcitx5 -d
      # st&
 
-     # exec dbus-launch --exit-with-session emacs -mm --debug-init
-     exec dwm
+     exec dbus-launch --exit-with-session emacs -mm --debug-init
+     # exec dwm
    #+end_src
 ** zsh
    #+begin_src conf :tangle ~/.config/zsh/.zshrc
