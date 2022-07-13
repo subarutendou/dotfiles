@@ -72,6 +72,7 @@
         (define-key xah-fly-n-keymap (kbd "d") 'vterm)
         (xah-fly-keys 1))
 
+      (use-package exwm)
       (use-package vterm)
       (use-package diminish)
       (use-package flx)
