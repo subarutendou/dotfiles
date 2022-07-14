@@ -343,7 +343,7 @@
      udiskie &
      picom -CGb --vsync --backend glx &
      pcloud -b &
-     nitrogen --restore &
+     # nitrogen --restore &
      # emacs &
      export GTK_IM_MODULE=fcitx
      export QT_IM_MODULE=fcitx
