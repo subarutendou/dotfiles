@@ -343,8 +343,8 @@
      udiskie &
      picom -CGb --vsync --backend glx &
      pcloud -b &
-     # nitrogen --restore &
-     # emacs &
+     nitrogen --restore &
+     emacs &
      export GTK_IM_MODULE=fcitx
      export QT_IM_MODULE=fcitx
      export XMODIFIERS=fcitx
@@ -354,8 +354,8 @@
      # exe --no-startup-id fcitx5 -d
      # st&
 
-     exec dbus-launch --exit-with-session emacs -mm --debug-init
-     # exec dwm
+     # exec dbus-launch --exit-with-session emacs -mm --debug-init
+     exec dwm
    #+end_src
 ** zsh
    #+begin_src conf :tangle ~/.config/zsh/.zshrc
