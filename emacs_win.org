@@ -69,6 +69,7 @@
         (define-key xah-fly-command-map (kbd "c") 'xah-copy-line-or-region)
         (define-key xah-fly-command-map (kbd "d") 'xah-paste-or-paste-previous)
         (define-key xah-fly-command-map (kbd "v") 'xah-comment-dwim)
+        (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
         (xah-fly-keys 1))
 
       (use-package diminish)
