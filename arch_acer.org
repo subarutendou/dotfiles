@@ -358,6 +358,19 @@
 
      # Don't want the auto cd anymore but put it here in cast I want it back
      # setopt autocd  # Automatically cd into typed directory.
+
+     # vterm config
+     vterm_printf(){
+         if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ] ); then
+             # Tell tmux to pass the escape sequences through
+             printf "\ePtmux;\e\e]%s\007\e\\" "$1"
+         elif [ "${TERM%%-*}" = "screen" ]; then
+             # GNU screen (screen, screen-256color, screen-256color-bce)
+             printf "\eP\e]%s\007\e\\" "$1"
+         else
+             printf "\e]%s\e\\" "$1"
+         fi
+     }
    #+end_src
 ** zsh alias
    #+begin_src conf :tangle ~/.config/zsh/.shellConfig/aliases
