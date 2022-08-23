@@ -73,11 +73,12 @@
         (define-key xah-fly-command-map (kbd "c") 'xah-copy-line-or-region)
         (define-key xah-fly-command-map (kbd "d") 'xah-paste-or-paste-previous)
         (define-key xah-fly-command-map (kbd "v") 'xah-comment-dwim)
-        (define-key xah-fly-n-keymap (kbd "s") 'vterm)
+        (define-key xah-fly-n-keymap (kbd "s") 'multi-vterm)
         (xah-fly-keys 1))
 
       (use-package exwm)
       (use-package vterm)
+      (use-package multi-vterm)
       (use-package diminish)
       (use-package flx)
       (use-package python-mode)
