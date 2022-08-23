@@ -377,8 +377,8 @@
      alias cpu='sudo auto-cpufreq --stats'
      alias te='tar -xvzf'
 
-     compile_c() {
-     gcc "$1" -o "$2"
+     co() {
+     gcc "$1" -o ../Debug/"$2"
      }
 
      dlweb() {
