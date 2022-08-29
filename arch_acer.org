@@ -61,7 +61,7 @@
        (load-theme 'monokai t))
    #+end_src
 ** Package
-*** Intergrate
+*** COMMENT Intergrate
     #+begin_src emacs-lisp
       (blink-cursor-mode 0)
 
@@ -69,11 +69,7 @@
         :diminish xah-fly-keys
         :config
         (xah-fly-keys-set-layout "colemak-mod-dh-new")
-        (define-key xah-fly-command-map (kbd "x") 'xah-cut-line-or-region)
-        (define-key xah-fly-command-map (kbd "c") 'xah-copy-line-or-region)
-        (define-key xah-fly-command-map (kbd "d") 'xah-paste-or-paste-previous)
-        (define-key xah-fly-command-map (kbd "v") 'xah-comment-dwim)
-        (define-key xah-fly-n-keymap (kbd "s") 'multi-vterm)
+        (define-key xah-fly-n-keymap (kbd "d") 'multi-vterm)
         (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
         (xah-fly-keys 1))
 
