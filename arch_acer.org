@@ -61,15 +61,16 @@
        (load-theme 'monokai t))
    #+end_src
 ** Package
-*** COMMENT Intergrate
+*** Intergrate
     #+begin_src emacs-lisp
       (blink-cursor-mode 0)
 
       (use-package xah-fly-keys
         :diminish xah-fly-keys
         :config
-        (xah-fly-keys-set-layout "colemak-mod-dh-new")
+        (xah-fly-keys-set-layout "qwerty")
         (define-key xah-fly-n-keymap (kbd "d") 'multi-vterm)
+        (global-set-key (kbd "<f4>") 'xah-fly-command-mode-activate)
         (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
         (xah-fly-keys 1))
 
