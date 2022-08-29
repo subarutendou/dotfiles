@@ -290,6 +290,7 @@
      xset r rate 300 50 &
      xset s off &
      xset -dpms &
+     setxkbmap -option ctrl:nocaps &
      unclutter &
      udiskie &
      picom -CGb --vsync --backend glx &
