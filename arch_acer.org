@@ -54,6 +54,20 @@
      (require 'use-package)
      (setq use-package-always-ensure t)
    #+end_src
+** Keybind
+      #+begin_src emacs-lisp
+        (setq-default tab-width 4)
+        (progn
+          (setq-default indent-tabs-mode nil))
+        (setq xah-fly-use-meta-key nil)
+        ;; (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+        (global-set-key (kbd "C-x w") 'elfeed)
+        (define-key key-translation-map (kbd "<f6>") (kbd "<menu>"))
+        (define-key key-translation-map (kbd "<f8>") (kbd "<menu> x"))
+        (global-set-key (kbd "<menu> h") help-map)
+        (global-set-key (kbd "<menu> x") ctl-x-map)
+        (global-set-key (kbd "<menu> <return>") 'execute-extended-command)
+   #+end_src
 ** Theme
    #+begin_src emacs-lisp
      (use-package monokai-theme
@@ -160,15 +174,6 @@
                 (elfeed-make-tagger :before "2 weeks ago"
                                     :remove 'unread))
     #+end_src
-** Keybind
-      #+begin_src emacs-lisp
-        (setq-default tab-width 4)
-        (progn
-          (setq-default indent-tabs-mode nil))
-        (setq xah-fly-use-meta-key nil)
-        ;; (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-        (global-set-key (kbd "C-x w") 'elfeed)
-   #+end_src
 ** Org settings
 *** basic
     #+begin_src emacs-lisp
