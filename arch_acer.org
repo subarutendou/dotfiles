@@ -62,11 +62,12 @@
         (setq xah-fly-use-meta-key nil)
         ;; (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
         (global-set-key (kbd "C-x w") 'elfeed)
+        ;;(define-key key-translation-map (kbd "<apps>") (kbd "<menu>"))
         (define-key key-translation-map (kbd "<f6>") (kbd "<menu>"))
-        (define-key key-translation-map (kbd "<f8>") (kbd "<menu> x"))
-        (global-set-key (kbd "<menu> h") help-map)
-        (global-set-key (kbd "<menu> x") ctl-x-map)
-        (global-set-key (kbd "<menu> <return>") 'execute-extended-command)
+        ;;(define-key key-translation-map (kbd "<f8>") (kbd "<menu> x"))
+        ;;(global-set-key (kbd "<menu> h") help-map)
+        ;;(global-set-key (kbd "<menu> x") ctl-x-map)
+        ;;(global-set-key (kbd "<menu> <return>") 'execute-extended-command)
    #+end_src
 ** Theme
    #+begin_src emacs-lisp
@@ -294,7 +295,6 @@
      xset r rate 300 50 &
      xset s off &
      xset -dpms &
-     # setxkbmap -option ctrl:nocaps &
      unclutter &
      udiskie &
      picom -CGb --vsync --backend glx &
@@ -422,64 +422,41 @@
 ** system keymap
 *** x11
 #+begin_src conf :tangle ~/.Xmodmap
+  keycode 20 = bracketleft braceleft
+  keycode 21 = bracketright braceright
+  keycode 24 = apostrophe quotedbl
+  keycode 25 = comma less
+  keycode 26 = period greater
+  keycode 27 = p P
+  keycode 28 = y Y
+  keycode 29 = f F
+  keycode 30 = g G
+  keycode 31 = c C
+  keycode 32 = r R
+  keycode 33 = l L
+  keycode 34 = slash question
+  keycode 35 = equal plus
+  keycode 38 = a A
+  keycode 39 = o O
+  keycode 40 = e E
+  keycode 41 = u U
+  keycode 42 = i I
+  keycode 43 = d D
+  keycode 44 = h H
+  keycode 45 = t T
+  keycode 46 = n N
+  keycode 47 = s S
+  keycode 48 = minus underscore
+  keycode 52 = semicolon colon
+  keycode 53 = q Q
+  keycode 54 = j J
+  keycode 55 = k K
+  keycode 56 = x X
+  keycode 57 = b B
+  keycode 58 = m M
+  keycode 59 = w W
+  keycode 60 = v V
+  keycode 61 = z Z
   clear lock
-  keycode  66 = Home NoSymbol Home
-#+end_src
-*** tty
-#+begin_src conf :tangle ~/.local/custom.map
-  # us.map
-  keymaps 0-2,4-6,8-9,12
-  alt_is_meta
-  include "qwerty-layout"
-  include "linux-with-alt-and-altgr"
-  include "compose.latin1"
-  include "euro1.map"
-  strings as usual
-
-  keycode   1 = Escape
-  keycode   2 = one              exclam
-  keycode   3 = two              at               at               nul              nul
-  keycode   4 = three            numbersign
-      control	keycode   4 = Escape
-  keycode   5 = four             dollar           dollar           Control_backslash
-  keycode   6 = five             percent
-      control	keycode   6 = Control_bracketright
-  keycode   7 = six              asciicircum
-      control	keycode   7 = Control_asciicircum
-  keycode   8 = seven            ampersand        braceleft        Control_underscore
-  keycode   9 = eight            asterisk         bracketleft      Delete
-  keycode  10 = nine             parenleft        bracketright
-  keycode  11 = zero             parenright       braceright
-  keycode  12 = minus            underscore       backslash        Control_underscore Control_underscore
-  keycode  13 = equal            plus
-  keycode  14 = Delete
-  keycode  15 = Tab
-      shift	keycode  15 = Meta_Tab
-  keycode  26 = bracketleft      braceleft
-      control	keycode  26 = Escape
-  keycode  27 = bracketright     braceright       asciitilde       Control_bracketright
-  keycode  28 = Return
-      alt	keycode  28 = Meta_Control_m
-  keycode  29 = Control
-  keycode  39 = semicolon        colon
-  keycode  40 = apostrophe       quotedbl
-      control	keycode  40 = Control_g
-  keycode  41 = grave            asciitilde
-      control	keycode  41 = nul
-  keycode  42 = Shift
-  keycode  43 = backslash        bar
-      control	keycode  43 = Control_backslash
-  keycode  51 = comma            less
-  keycode  52 = period           greater
-  keycode  53 = slash            question
-      control keycode  53 = Control_underscore
-      control shift keycode  53 = Delete
-  keycode  54 = Shift
-  keycode  56 = Alt
-  keycode  57 = space
-      control	keycode  57 = nul
-  keycode  58 = Home
-  keycode  86 = less             greater          bar
-  keycode  97 = Control
-
+  keycode 66 = Home NoSymbol Home
 #+end_src
