@@ -62,12 +62,6 @@
         (setq xah-fly-use-meta-key nil)
         ;; (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
         (global-set-key (kbd "C-x w") 'elfeed)
-        ;;(define-key key-translation-map (kbd "<apps>") (kbd "<menu>"))
-        (define-key key-translation-map (kbd "<f6>") (kbd "<menu>"))
-        ;;(define-key key-translation-map (kbd "<f8>") (kbd "<menu> x"))
-        ;;(global-set-key (kbd "<menu> h") help-map)
-        ;;(global-set-key (kbd "<menu> x") ctl-x-map)
-        ;;(global-set-key (kbd "<menu> <return>") 'execute-extended-command)
    #+end_src
 ** Theme
    #+begin_src emacs-lisp
