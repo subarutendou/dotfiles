@@ -56,13 +56,14 @@
         (progn
           (setq-default indent-tabs-mode nil))
         (setq xah-fly-use-meta-key nil)
+        (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
         ;; (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
         (define-key key-translation-map (kbd "<apps>") (kbd "<menu>"))
-        (define-key key-translation-map (kbd "<f6>") (kbd "<apps>"))
-        (define-key key-translation-map (kbd "<f8>") (kbd "<apps> x"))
-        (global-set-key (kbd "<apps> h") help-map)
-        (global-set-key (kbd "<apps> x") ctl-x-map)
-        (global-set-key (kbd "<apps> <return>") 'execute-extended-command)
+        ;; (define-key key-translation-map (kbd "<f6>") (kbd "<apps>"))
+        ;; (define-key key-translation-map (kbd "<f8>") (kbd "<apps> x"))
+        ;; (global-set-key (kbd "<apps> h") help-map)
+        ;; (global-set-key (kbd "<apps> x") ctl-x-map)
+        ;; (global-set-key (kbd "<apps> <return>") 'execute-extended-command)
    #+end_src
 ** Theme
    #+begin_src emacs-lisp
@@ -78,8 +79,7 @@
       (use-package xah-fly-keys
         :diminish xah-fly-keys
         :config
-        (xah-fly-keys-set-layout "dvorak")
-        (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+        (xah-fly-keys-set-layout "qwerty")
         (xah-fly-keys 1))
 
       (use-package diminish)
