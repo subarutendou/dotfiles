@@ -414,8 +414,8 @@
      # eval "$(gh completion -s zsh)"
    #+end_src
 ** system keymap
-*** x11
-#+begin_src conf :tangle ~/.Xmodmap
+*** x11_dvorak
+;;#+begin_src conf :tangle ~/.Xmodmap
   keycode 20 = bracketleft braceleft
   keycode 21 = bracketright braceright
   keycode 24 = apostrophe quotedbl
@@ -451,6 +451,12 @@
   keycode 59 = w W
   keycode 60 = v V
   keycode 61 = z Z
+  clear lock
+  keycode 66 = Home NoSymbol Home
+;;#+end_src
+
+*** x11_dvorak
+#+begin_src conf :tangle ~/.Xmodmap
   clear lock
   keycode 66 = Home NoSymbol Home
 #+end_src
