@@ -60,6 +60,7 @@
         (progn
           (setq-default indent-tabs-mode nil))
         (setq xah-fly-use-meta-key nil)
+        (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
         ;; (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
         (global-set-key (kbd "C-x w") 'elfeed)
    #+end_src
@@ -77,9 +78,8 @@
       (use-package xah-fly-keys
         :diminish xah-fly-keys
         :config
-        (xah-fly-keys-set-layout "dvorak")
+        (xah-fly-keys-set-layout "qwerty")
         (define-key xah-fly-n-keymap (kbd "e") 'multi-vterm)
-        (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
         (xah-fly-keys 1))
 
       (use-package exwm)
