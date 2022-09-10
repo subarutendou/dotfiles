@@ -294,7 +294,7 @@
      picom -CGb --vsync --backend glx &
      pcloud -b &
      nitrogen --restore &
-     emacs &
+     # emacs &
      export GTK_IM_MODULE=fcitx
      export QT_IM_MODULE=fcitx
      export XMODIFIERS=fcitx
@@ -302,7 +302,7 @@
      fcitx5 &
      # eval `dbus-launch --sh-syntax --exit-with-session`
      # exe --no-startup-id fcitx5 -d
-     # st&
+     st&
 
      # exec dbus-launch --exit-with-session emacs -mm --debug-init
      exec dwm
