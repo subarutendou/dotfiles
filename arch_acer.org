@@ -332,7 +332,7 @@
      HISTFILE=/home/tendou/.config/.histfile
      HISTSIZE=50000
      SAVEHIST=50000
-     bindkey -e
+     bindkey -v
 
      # The following lines were added by compinstall
      zstyle :compinstall filename '/home/tendou/.config/zsh/.zshrc'
