@@ -387,6 +387,7 @@
      alias cl='sudo pacman -Rns $(pacman -Qdtq)'
      alias cpu='sudo auto-cpufreq --stats'
      alias te='tar -xvzf'
+     alias install_grub='sudo grub-install --target=x86_64-efi --efi-directory=uefi --bootloader-id=grub'
 
      co() {
      gcc "$1" -o ../Debug/"$2"
