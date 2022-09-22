@@ -67,9 +67,9 @@
    #+end_src
 ** Theme
    #+begin_src emacs-lisp
-     (use-package monokai-theme
+     (use-package gruvbox-theme
        :config
-       (load-theme 'monokai t))
+       (load-theme 'gruvbox t))
    #+end_src
 ** Package
 *** Intergrate
