@@ -79,7 +79,7 @@
       (use-package xah-fly-keys
         :diminish xah-fly-keys
         :config
-        (xah-fly-keys-set-layout "qwerty")
+        (xah-fly-keys-set-layout "dvorak")
         (xah-fly-keys 1))
 
       (use-package diminish)
