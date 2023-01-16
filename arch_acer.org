@@ -68,9 +68,12 @@
    #+end_src
 ** Theme
    #+begin_src emacs-lisp
-     (use-package gruvbox-theme
+     ;; (use-package gruvbox-theme
+     ;;   :config
+     ;;   (load-theme 'gruvbox t))
+     (use-package solarized-theme
        :config
-       (load-theme 'gruvbox t))
+       (load-theme 'solarized-dark t))
    #+end_src
 ** Package
 *** Intergrate
