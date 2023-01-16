@@ -38,6 +38,8 @@
      (setq ido-everywhere t)
      (ido-mode 1)
      (setq ido-use-filename-at-point 'guess)
+     (when (fboundp 'electric-pair-mode)
+       (electric-pair-mode t))
    #+end_src
 ** Prerequest for package manager
    #+begin_src emacs-lisp
@@ -87,6 +89,7 @@
       (use-package multi-vterm)
       (use-package diminish)
       (use-package flx)
+      (use-package lua-mode)
       (use-package python-mode)
       (use-package rust-mode)
       (use-package csharp-mode)
