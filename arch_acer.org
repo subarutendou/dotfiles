@@ -68,12 +68,12 @@
    #+end_src
 ** Theme
    #+begin_src emacs-lisp
-     ;; (use-package gruvbox-theme
-     ;;   :config
-     ;;   (load-theme 'gruvbox t))
-     (use-package solarized-theme
+     (use-package gruvbox-theme
        :config
-       (load-theme 'solarized-dark t))
+       (load-theme 'gruvbox t))
+     ;; (use-package solarized-theme
+     ;;   :config
+     ;;   (load-theme 'solarized-dark t))
    #+end_src
 ** Package
 *** Intergrate
@@ -85,6 +85,9 @@
         :config
         (xah-fly-keys-set-layout "dvorak")
         (define-key xah-fly-n-keymap (kbd "e") 'multi-vterm)
+        (define-key xah-fly-command-map (kbd "b") 'swiper)
+        (define-key xah-fly-command-map (kbd "a") 'counsel-M-x)
+        (define-key xah-fly-leader-key-map (kbd "c .") 'counsel-find-file)
         (xah-fly-keys 1))
 
       (use-package exwm)
@@ -135,29 +138,34 @@
         ;; Enables ligature checks globally in all buffers. You can also do it
         ;; per mode with `ligature-mode'.
         (global-ligature-mode t))
-
-      (use-package vertico
-        :init
-        (vertico-mode))
-
-      (use-package orderless
-        :init
-        (setq completion-styless '(orderless)
-              completion-category-defaults nil
-              completion-cotegory-overrides '((file (styles partial-completion)))))
-
-      (savehist-mode 1)
-
-      (defun crm-indicator (arg)
-        (cons (concat "[CRM] " (car args)) (cdr args)))
-      (advice-add #'comleting-read-multiple :filter-args #'crm-indicator)
-
-      (setq minibuffer-prompt-properties
-            '(read-only t cursor-intangible t face minibuffer-prompt))
-      (add-hook 'monobuffer-setup-hook #'cursor-intangible-mode)
-
-      (setq enable-recursive-minibuffers t)
     #+end_src
+*** ivy
+#+begin_src emacs-lisp
+  (use-package counsel)
+  (use-package swiper)
+
+  (use-package ivy
+    :diminish ivy-mode
+    :init
+    (ivy-mode 1))
+
+  (setq ivy-re-builders-alist
+        '((ivy-switch-buffer . ivy--regex-plus)
+          (t . ivy--regex-fuzzy)))
+  (setq ivy-initial-inputs-alist nil)
+
+  (use-package ivy-rich
+    :init
+    (ivy-rich-mode 1))
+
+  (setq ivy-use-virtual-buffers t)
+  (setq enable-recursive-minibuffers t)
+  (global-set-key (kbd "C-c g") 'counsel-git)
+  (global-set-key (kbd "C-c j") 'counsel-git-grep)
+  (global-set-key (kbd "C-c k") 'counsel-ag)
+  (global-set-key (kbd "C-x l") 'counsel-locate)
+  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
+#+end_src
 *** Application
     #+begin_src emacs-lisp
       (use-package magit
