@@ -88,6 +88,9 @@
         (define-key xah-fly-command-map (kbd "b") 'swiper)
         (define-key xah-fly-command-map (kbd "a") 'counsel-M-x)
         (define-key xah-fly-leader-key-map (kbd "c .") 'counsel-find-file)
+        (define-key xah-fly-leader-key-map (kbd "h h") 'counsel-describe-function)
+        (define-key xah-fly-leader-key-map (kbd "h n") 'counsel-describe-variable)
+        (define-key xah-fly-leader-key-map (kbd "h g") 'counsel-info-lookup-symbol
         (xah-fly-keys 1))
 
       (use-package exwm)
