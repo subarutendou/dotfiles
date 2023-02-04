@@ -16,6 +16,7 @@
      (setq visible-bell t)
      (setq use-dialog-box nil)
      (setq native-comp-async-report-warnings-errors nil)
+     (setq dired-listing-switches "-alk")
      (column-number-mode 1)
      (when (version<= "26.0.50" emacs-version )
        (global-display-line-numbers-mode))
