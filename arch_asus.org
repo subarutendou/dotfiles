@@ -133,10 +133,9 @@
         :diminish xah-fly-keys
         :config
         (xah-fly-keys-set-layout "dvorak")
-        ;;(define-key xah-fly-n-keymap (kbd "e") 'multi-vterm)
-        ;;(define-key xah-fly-command-map (kbd "n e") 'multi-vterm)
         (define-key xah-fly-command-map (kbd "b") 'swiper)
         (define-key xah-fly-command-map (kbd "a") 'counsel-M-x)
+        (define-key xah-fly-leader-key-map (kbd "n e") 'multi-vterm)
         (define-key xah-fly-leader-key-map (kbd "c .") 'counsel-find-file)
         (define-key xah-fly-leader-key-map (kbd "h h") 'counsel-describe-function)
         (define-key xah-fly-leader-key-map (kbd "h n") 'counsel-describe-variable)
