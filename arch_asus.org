@@ -80,19 +80,6 @@
     #+begin_src emacs-lisp
       (blink-cursor-mode 0)
 
-      (use-package xah-fly-keys
-        :diminish xah-fly-keys
-        :config
-        (xah-fly-keys-set-layout "dvorak")
-        (define-key xah-fly-n-keymap (kbd "e") 'multi-vterm)
-        (define-key xah-fly-command-map (kbd "b") 'swiper)
-        (define-key xah-fly-command-map (kbd "a") 'counsel-M-x)
-        (define-key xah-fly-leader-key-map (kbd "c .") 'counsel-find-file)
-        (define-key xah-fly-leader-key-map (kbd "h h") 'counsel-describe-function)
-        (define-key xah-fly-leader-key-map (kbd "h n") 'counsel-describe-variable)
-        (define-key xah-fly-leader-key-map (kbd "h g") 'counsel-info-lookup-symbol
-        (xah-fly-keys 1))
-
       (use-package exwm)
       (use-package vterm)
       (use-package multi-vterm)
@@ -116,31 +103,45 @@
         (which-key-mode)
         (setq which-key-idle-delay 1))
 
-      (use-package ligature
-        :load-path "~/.emacs.d/github/ligature.el/"
+      ;; (use-package ligature
+      ;;   :load-path "~/.emacs.d/github/ligature.el/"
+      ;;   :config
+      ;;   ;; Enable the "www" ligature in every possible major mode
+      ;;   (ligature-set-ligatures 't '("www"))
+      ;;   ;; Enable traditional ligature support in eww-mode, if the
+      ;;   ;; `variable-pitch' face supports it
+      ;;   (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+      ;;   ;; Enable all Cascadia Code ligatures in programming modes
+      ;;   (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+      ;;                                        ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+      ;;                                        "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+      ;;                                        "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+      ;;                                        "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+      ;;                                        "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+      ;;                                        "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+      ;;                                        "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+      ;;                                        ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+      ;;                                        "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+      ;;                                        "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+      ;;                                        "?=" "?." "??" ";;" "/=" "/>" "//" "__" "~~" "(*" "*)"
+      ;;                                        "\\\\" "://"))
+      ;;   ;; Enables ligature checks globally in all buffers. You can also do it
+      ;;   ;; per mode with `ligature-mode'.
+      ;;   (global-ligature-mode t))
+
+      (use-package xah-fly-keys
+        :diminish xah-fly-keys
         :config
-        ;; Enable the "www" ligature in every possible major mode
-        (ligature-set-ligatures 't '("www"))
-        ;; Enable traditional ligature support in eww-mode, if the
-        ;; `variable-pitch' face supports it
-        (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
-        ;; Enable all Cascadia Code ligatures in programming modes
-        (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
-                                             ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
-                                             "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
-                                             "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
-                                             "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
-                                             "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
-                                             "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
-                                             "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
-                                             ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
-                                             "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
-                                             "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
-                                             "?=" "?." "??" ";;" "/=" "/>" "//" "__" "~~" "(*" "*)"
-                                             "\\\\" "://"))
-        ;; Enables ligature checks globally in all buffers. You can also do it
-        ;; per mode with `ligature-mode'.
-        (global-ligature-mode t))
+        (xah-fly-keys-set-layout "dvorak")
+        ;;(define-key xah-fly-n-keymap (kbd "e") 'multi-vterm)
+        ;;(define-key xah-fly-command-map (kbd "n e") 'multi-vterm)
+        (define-key xah-fly-command-map (kbd "b") 'swiper)
+        (define-key xah-fly-command-map (kbd "a") 'counsel-M-x)
+        (define-key xah-fly-leader-key-map (kbd "c .") 'counsel-find-file)
+        (define-key xah-fly-leader-key-map (kbd "h h") 'counsel-describe-function)
+        (define-key xah-fly-leader-key-map (kbd "h n") 'counsel-describe-variable)
+        (define-key xah-fly-leader-key-map (kbd "h g") 'counsel-info-lookup-symbol)
+        (xah-fly-keys 1))
     #+end_src
 *** ivy
 #+begin_src emacs-lisp
