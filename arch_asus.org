@@ -311,7 +311,6 @@
      picom -CGb --vsync --backend glx &
      pcloud -b &
      nitrogen --restore &
-     # emacs &
      export GTK_IM_MODULE=fcitx
      export QT_IM_MODULE=fcitx
      export XMODIFIERS=fcitx
@@ -319,7 +318,8 @@
      fcitx5 &
      # eval `dbus-launch --sh-syntax --exit-with-session`
      # exe --no-startup-id fcitx5 -d
-     st&
+     emacs &
+     # st&
 
      # exec dbus-launch --exit-with-session emacs -mm --debug-init
      exec dwm
@@ -431,7 +431,7 @@
      export LESS_TERMCAP_us=$'\e[1;4;31m'
      export TERM=xterm-256color
      # eval "$(gh completion -s zsh)"
-     if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
-       exec sway
-     fi
+     # if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+       # exec sway
+     # fi
    #+end_src
