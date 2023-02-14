@@ -93,6 +93,8 @@
         (define-key xah-fly-leader-key-map (kbd "h g") 'counsel-info-lookup-symbol)
         (xah-fly-keys 1))
 
+      (use-package tree-sitter)
+      (use-package tree-sitter-langs)
       (use-package diminish)
       (use-package flx)
       (use-package lua-mode)
