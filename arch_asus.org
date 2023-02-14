@@ -80,7 +80,11 @@
 *** Intergrate
     #+begin_src emacs-lisp
       (blink-cursor-mode 0)
-      (use-package tree-sitter)
+      (use-package tree-sitter
+        :diminish tree-sitter-mode
+        :config
+        (global-tree-sitter-mode)
+        (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
       (use-package tree-sitter-langs)
       (use-package vterm)
       (use-package multi-vterm)

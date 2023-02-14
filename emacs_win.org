@@ -93,7 +93,11 @@
         (define-key xah-fly-leader-key-map (kbd "h g") 'counsel-info-lookup-symbol)
         (xah-fly-keys 1))
 
-      (use-package tree-sitter)
+      (use-package tree-sitter
+        :diminish tree-sitter-mode
+        :config
+        (global-tree-sitter-mode)
+        (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
       (use-package tree-sitter-langs)
       (use-package diminish)
       (use-package flx)
