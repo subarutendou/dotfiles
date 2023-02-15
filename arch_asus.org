@@ -30,9 +30,9 @@
                      pdf-view-mode-hook))
        (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
-     ;; (set-face-attribute 'default nil :family "MonoLisa" :height 137)
-     (set-face-attribute 'default nil :family "Comic Code Ligatures" :height 130)
-     (set-fontset-font t nil "JetBrains Mono" nil 'append)
+     (set-face-attribute 'default nil :family "MonoLisa" :height 137)
+     ;; (set-face-attribute 'default nil :family "Comic Code Ligatures" :height 130)
+     ;; (set-fontset-font t nil "JetBrains Mono" nil 'append)
      ;; (set-fontset-font t nil "Comic Code Ligatures" nil 'append)
      ;; (set-fontset-font t nil "Fira Code" nil 'append)
      (setq ido-enable-flex-matching t)
@@ -108,31 +108,31 @@
         (which-key-mode)
         (setq which-key-idle-delay 1))
 
-      ;; (use-package ligature
-      ;;   :load-path "~/.emacs.d/github/ligature.el/"
-      ;;   :config
-      ;;   ;; Enable the "www" ligature in every possible major mode
-      ;;   (ligature-set-ligatures 't '("www"))
-      ;;   ;; Enable traditional ligature support in eww-mode, if the
-      ;;   ;; `variable-pitch' face supports it
-      ;;   (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
-      ;;   ;; Enable all Cascadia Code ligatures in programming modes
-      ;;   (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
-      ;;                                        ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
-      ;;                                        "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
-      ;;                                        "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
-      ;;                                        "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
-      ;;                                        "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
-      ;;                                        "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
-      ;;                                        "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
-      ;;                                        ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
-      ;;                                        "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
-      ;;                                        "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
-      ;;                                        "?=" "?." "??" ";;" "/=" "/>" "//" "__" "~~" "(*" "*)"
-      ;;                                        "\\\\" "://"))
-      ;;   ;; Enables ligature checks globally in all buffers. You can also do it
-      ;;   ;; per mode with `ligature-mode'.
-      ;;   (global-ligature-mode t))
+      (use-package ligature
+        :load-path "~/.emacs.d/github/ligature.el/"
+        :config
+        ;; Enable the "www" ligature in every possible major mode
+        (ligature-set-ligatures 't '("www"))
+        ;; Enable traditional ligature support in eww-mode, if the
+        ;; `variable-pitch' face supports it
+        (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+        ;; Enable all Cascadia Code ligatures in programming modes
+        (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                                             ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                                             "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                                             "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                                             "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                                             "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                                             "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                                             "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                                             ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                                             "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                                             "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                                             "?=" "?." "??" ";;" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                                             "\\\\" "://"))
+        ;; Enables ligature checks globally in all buffers. You can also do it
+        ;; per mode with `ligature-mode'.
+        (global-ligature-mode t))
 
       (use-package xah-fly-keys
         :diminish xah-fly-keys
