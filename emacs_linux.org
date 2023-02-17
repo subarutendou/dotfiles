@@ -1,142 +1,141 @@
-
 #+title Emacs settings
 #+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/init.el :mkdirp yes
 
 * Early Settings
-   #+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
-     (set-language-environment "UTF-8")
-     (set-default-coding-systems 'utf-8)
-     (setq inhibit-startup-message t)
-     (scroll-bar-mode -1)
-     (tool-bar-mode -1)
-     (tooltip-mode -1)
-     (menu-bar-mode -1)
-     (set-fringe-mode 10)
-     (fset 'yes-or-no-p 'y-or-n-p)
-     (setq visible-bell t)
-     (setq use-dialog-box nil)
-     (setq native-comp-async-report-warnings-errors nil)
-     (column-number-mode 1)
-     (when (version<= "26.0.50" emacs-version )
-       (global-display-line-numbers-mode))
-     (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
+#+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
+  (set-language-environment "UTF-8")
+  (set-default-coding-systems 'utf-8)
+  (setq inhibit-startup-message t)
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
+  (tooltip-mode -1)
+  (menu-bar-mode -1)
+  (set-fringe-mode 10)
+  (fset 'yes-or-no-p 'y-or-n-p)
+  (setq visible-bell t)
+  (setq use-dialog-box nil)
+  (setq native-comp-async-report-warnings-errors nil)
+  (column-number-mode 1)
+  (when (version<= "26.0.50" emacs-version )
+    (global-display-line-numbers-mode))
+  (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
 
-     (dolist (mode '(org-mode-hook
-                     term-mode-hook
-                     shell-mode-hook
-                     eshell-mode-hook
-                     vterm-mode-hook
-                     pdf-view-mode-hook))
-       (add-hook mode (lambda () (display-line-numbers-mode 0))))
+  (dolist (mode '(org-mode-hook
+                  term-mode-hook
+                  shell-mode-hook
+                  eshell-mode-hook
+                  vterm-mode-hook
+                  pdf-view-mode-hook))
+    (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
-     (set-face-attribute 'default nil :family "MonoLisa" :height 137)
-     ;; (set-face-attribute 'default nil :family "Comic Code Ligatures" :height 130)
-     ;; (set-fontset-font t nil "JetBrains Mono" nil 'append)
-     ;; (set-fontset-font t nil "Comic Code Ligatures" nil 'append)
-     ;; (set-fontset-font t nil "Fira Code" nil 'append)
-     (setq ido-enable-flex-matching t)
-     (setq ido-everywhere t)
-     (ido-mode 1)
-     (setq ido-use-filename-at-point 'guess)
-     (when (fboundp 'electric-pair-mode)
-       (electric-pair-mode t))
-   #+end_src
+  (set-face-attribute 'default nil :family "MonoLisa" :height 137)
+  ;; (set-face-attribute 'default nil :family "Comic Code Ligatures" :height 130)
+  ;; (set-fontset-font t nil "JetBrains Mono" nil 'append)
+  ;; (set-fontset-font t nil "Comic Code Ligatures" nil 'append)
+  ;; (set-fontset-font t nil "Fira Code" nil 'append)
+  (setq ido-enable-flex-matching t)
+  (setq ido-everywhere t)
+  (ido-mode 1)
+  (setq ido-use-filename-at-point 'guess)
+  (when (fboundp 'electric-pair-mode)
+    (electric-pair-mode t))
+#+end_src
 * Basic Settings
 ** Prerequest for package manager
-   #+begin_src emacs-lisp
-     (require 'package)
-     (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+#+begin_src emacs-lisp
+  (require 'package)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
-     (package-initialize)
+  (package-initialize)
 
-     (unless package-archive-contents
-       (package-refresh-contents))
+  (unless package-archive-contents
+    (package-refresh-contents))
 
-     (unless (package-installed-p 'use-package)
-       (package-install 'use-package))
-     (require 'use-package)
-     (setq use-package-always-ensure t)
-   #+end_src
+  (unless (package-installed-p 'use-package)
+    (package-install 'use-package))
+  (require 'use-package)
+  (setq use-package-always-ensure t)
+#+end_src
 ** Basic config that need to load after emacs launch
-      #+begin_src emacs-lisp
-        (setq-default tab-width 4)
-        (blink-cursor-mode 0)
-        (progn
-          (setq-default indent-tabs-mode nil))
-        (setq xah-fly-use-meta-key nil)
-        (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
-        (define-key key-translation-map (kbd "<apps>") (kbd "<menu>"))
-        (global-set-key (kbd "C-x w") 'elfeed)
-   #+end_src
+#+begin_src emacs-lisp
+  (setq-default tab-width 4)
+  (blink-cursor-mode 0)
+  (progn
+    (setq-default indent-tabs-mode nil))
+  (setq xah-fly-use-meta-key nil)
+  (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+  (define-key key-translation-map (kbd "<apps>") (kbd "<menu>"))
+  (global-set-key (kbd "C-x w") 'elfeed)
+#+end_src
 ** Theme
-   #+begin_src emacs-lisp
-     (use-package gruvbox-theme
-       :config
-       (load-theme 'gruvbox t))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package gruvbox-theme
+    :config
+    (load-theme 'gruvbox t))
+#+end_src
 ** Package
 *** Intergrate
-    #+begin_src emacs-lisp
-            (blink-cursor-mode 0)
-            (use-package tree-sitter
-              :diminish tree-sitter-mode
-              :config
-              (global-tree-sitter-mode)
-              (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-            (use-package tree-sitter-langs)
-            (use-package vterm)
-            (use-package multi-vterm)
-            (use-package diminish)
-            (use-package flx)
-            (use-package lua-mode)
-            (use-package python-mode)
-            (use-package rust-mode)
-            (use-package csharp-mode)
-            (use-package swift-mode)
-            (use-package ca65-mode)
-            (use-package lua-mode)
-            (use-package rainbow-delimiters
-              :hook (prog-mode . rainbow-delimiters-mode))
+#+begin_src emacs-lisp
+  (blink-cursor-mode 0)
+  (use-package tree-sitter
+    :diminish tree-sitter-mode
+    :config
+    (global-tree-sitter-mode)
+    (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+  (use-package tree-sitter-langs)
+  (use-package vterm)
+  (use-package multi-vterm)
+  (use-package diminish)
+  (use-package flx)
+  (use-package lua-mode)
+  (use-package python-mode)
+  (use-package rust-mode)
+  (use-package csharp-mode)
+  (use-package swift-mode)
+  (use-package ca65-mode)
+  (use-package lua-mode)
+  (use-package rainbow-delimiters
+    :hook (prog-mode . rainbow-delimiters-mode))
 
-            (use-package ligature
-              :load-path "~/.emacs.d/github/ligature.el/"
-              :config
-              ;; Enable the "www" ligature in every possible major mode
-              (ligature-set-ligatures 't '("www"))
-              ;; Enable traditional ligature support in eww-mode, if the
-              ;; `variable-pitch' face supports it
-              (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
-              ;; Enable all Cascadia Code ligatures in programming modes
-              (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
-                                                   ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
-                                                   "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
-                                                   "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
-                                                   "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
-                                                   "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
-                                                   "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
-                                                   "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
-                                                   ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
-                                                   "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
-                                                   "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
-                                                   "?=" "?." "??" ";;" "/=" "/>" "//" "__" "~~" "(*" "*)"
-                                                   "\\\\" "://"))
-              ;; Enables ligature checks globally in all buffers. You can also do it
-              ;; per mode with `ligature-mode'.
-              (global-ligature-mode t))
+  (use-package ligature
+    :load-path "~/.emacs.d/github/ligature.el/"
+    :config
+    ;; Enable the "www" ligature in every possible major mode
+    (ligature-set-ligatures 't '("www"))
+    ;; Enable traditional ligature support in eww-mode, if the
+    ;; `variable-pitch' face supports it
+    (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+    ;; Enable all Cascadia Code ligatures in programming modes
+    (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                                         ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                                         "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                                         "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                                         "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                                         "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                                         "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                                         "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                                         ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                                         "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                                         "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                                         "?=" "?." "??" ";;" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                                         "\\\\" "://"))
+    ;; Enables ligature checks globally in all buffers. You can also do it
+    ;; per mode with `ligature-mode'.
+    (global-ligature-mode t))
 
-            (use-package xah-fly-keys
-              :diminish xah-fly-keys
-              :config
-              (xah-fly-keys-set-layout "dvorak")
-              (define-key xah-fly-command-map (kbd "b") 'swiper)
-              (define-key xah-fly-command-map (kbd "a") 'counsel-M-x)
-              (define-key xah-fly-leader-key-map (kbd "n e") 'multi-vterm)
-              (define-key xah-fly-leader-key-map (kbd "c .") 'counsel-find-file)
-              (define-key xah-fly-leader-key-map (kbd "h h") 'counsel-describe-function)
-              (define-key xah-fly-leader-key-map (kbd "h n") 'counsel-describe-variable)
-              (define-key xah-fly-leader-key-map (kbd "h g") 'counsel-info-lookup-symbol)
-              (xah-fly-keys 1))
-    #+end_src
+  (use-package xah-fly-keys
+    :diminish xah-fly-keys
+    :config
+    (xah-fly-keys-set-layout "dvorak")
+    (define-key xah-fly-command-map (kbd "b") 'swiper)
+    (define-key xah-fly-command-map (kbd "a") 'counsel-M-x)
+    (define-key xah-fly-leader-key-map (kbd "n e") 'multi-vterm)
+    (define-key xah-fly-leader-key-map (kbd "c .") 'counsel-find-file)
+    (define-key xah-fly-leader-key-map (kbd "h h") 'counsel-describe-function)
+    (define-key xah-fly-leader-key-map (kbd "h n") 'counsel-describe-variable)
+    (define-key xah-fly-leader-key-map (kbd "h g") 'counsel-info-lookup-symbol)
+    (xah-fly-keys 1))
+#+end_src
 *** ivy
 #+begin_src emacs-lisp
   (use-package counsel)
@@ -175,88 +174,88 @@
 
 #+end_src
 ** Org settings
-    #+begin_src emacs-lisp
-      (use-package org
-        :custom
-        (org-agenda-start-with-log-mode t)
-        (org-log-done 'time)
-        (org-log-into-drawer t))
-      ;; (org-agenda-files
-      ;;  '("~/orgfile/Tasks.org")		; example
-      ;;  '("~/orgfile/birthday.org")))
+#+begin_src emacs-lisp
+  (use-package org
+    :custom
+    (org-agenda-start-with-log-mode t)
+    (org-log-done 'time)
+    (org-log-into-drawer t))
+  ;; (org-agenda-files
+  ;;  '("~/orgfile/Tasks.org")		; example
+  ;;  '("~/orgfile/birthday.org")))
 
-      (use-package org-bullets
-        :hook (org-mode . org-bullets-mode)
-        :custom
-        (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+  (use-package org-bullets
+    :hook (org-mode . org-bullets-mode)
+    :custom
+    (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
-      ;; Replace list hyphen with dot
-      (font-lock-add-keywords 'org-mode
-                              '(("^ *\\([-]\\) "
-                                 (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+  ;; Replace list hyphen with dot
+  (font-lock-add-keywords 'org-mode
+                          '(("^ *\\([-]\\) "
+                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
-      (dolist (face '((org-level-1 . 1.2)
-                      (org-level-2 . 1.1)
-                      (org-level-3 . 1.05)
-                      (org-level-4 . 1.0)
-                      (org-level-5 . 1.1)
-                      (org-level-6 . 1.1)
-                      (org-level-7 . 1.1)
-                      (org-level-8 . 1.1))))
+  (dolist (face '((org-level-1 . 1.2)
+                  (org-level-2 . 1.1)
+                  (org-level-3 . 1.05)
+                  (org-level-4 . 1.0)
+                  (org-level-5 . 1.1)
+                  (org-level-6 . 1.1)
+                  (org-level-7 . 1.1)
+                  (org-level-8 . 1.1))))
 
-      ;; Make sure org-indent face is available
-      (require 'org-indent)
-      (require 'org-tempo)
-      (setq org-structure-template-alist
-            '(("py" . "python")
-              ("el" . "src emacs-lisp")
-              ("rs" . "rust")
-              ("a" . "export ascii\n")
-              ("c" . "center\n")
-              ("C" . "comment\n")
-              ("e" . "example\n")
-              ("E" . "export")
-              ("h" . "export html\n")
-              ("l" . "export latex\n")
-              ("q" . "quote\n")
-              ("s" . "src")
-              ("v" . "verse\n")))
-      (progn
-        ;; no need to warn
-        (put 'narrow-to-region 'disabled nil)
-        (put 'narrow-to-page 'disabled nil)
-        (put 'upcase-region 'disabled nil)
-        (put 'downcase-region 'disabled nil)
-        (put 'erase-buffer 'disabled nil)
-        (put 'scroll-left 'disabled nil)
-        (put 'dired-find-alternate-file 'disabled nil)
-        )
+  ;; Make sure org-indent face is available
+  (require 'org-indent)
+  (require 'org-tempo)
+  (setq org-structure-template-alist
+        '(("py" . "python")
+          ("el" . "src emacs-lisp")
+          ("rs" . "rust")
+          ("a" . "export ascii\n")
+          ("c" . "center\n")
+          ("C" . "comment\n")
+          ("e" . "example\n")
+          ("E" . "export")
+          ("h" . "export html\n")
+          ("l" . "export latex\n")
+          ("q" . "quote\n")
+          ("s" . "src")
+          ("v" . "verse\n")))
+  (progn
+    ;; no need to warn
+    (put 'narrow-to-region 'disabled nil)
+    (put 'narrow-to-page 'disabled nil)
+    (put 'upcase-region 'disabled nil)
+    (put 'downcase-region 'disabled nil)
+    (put 'erase-buffer 'disabled nil)
+    (put 'scroll-left 'disabled nil)
+    (put 'dired-find-alternate-file 'disabled nil)
+    )
 
-      ;; Ensure that anything that should be fixed-pitch in Org files appears that way
-      (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
-      (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
-      (set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
-      (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
-      (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
-      (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-      (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-      (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-      (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+  ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+  (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+  (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
 
-      ;; Get rid of the background on column views
-      (set-face-attribute 'org-column nil :background nil)
-      (set-face-attribute 'org-column-title nil :background nil)
-    #+end_src
+  ;; Get rid of the background on column views
+  (set-face-attribute 'org-column nil :background nil)
+  (set-face-attribute 'org-column-title nil :background nil)
+#+end_src
 ** auto tangle
-    #+begin_src emacs-lisp
-      (defun efs/org-babel-tangle-config()
-        (when (string-equal (buffer-file-name)
-                            (expand-file-name "~/dotfiles/arch_acer.org"))
-          (let ((org-confirm-babel-evaluate nil))
-            (org-babel-tangle))))
+#+begin_src emacs-lisp
+  (defun efs/org-babel-tangle-config()
+    (when (string-equal (buffer-file-name)
+                        (expand-file-name "~/dotfiles/arch_acer.org"))
+      (let ((org-confirm-babel-evaluate nil))
+        (org-babel-tangle))))
 
-      (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
-    #+end_src
+  (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
+#+end_src
 ** Backup
 #+begin_src emacs-lisp
   (setq vc-make-backup-files t)
@@ -272,168 +271,168 @@
 
 #+end_src
 * Application
-    #+begin_src emacs-lisp
-      (use-package magit
-        :custom
-        (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+#+begin_src emacs-lisp
+  (use-package magit
+    :custom
+    (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-      (use-package elfeed)
-      (setq elfeed-feeds
-            '("http://lukesmith.xyz/rss.xml"
-              "https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA"
-              "https://www.youtube.com/feeds/videos.xml?channel_id=UCPf-EnX70UM7jqjKwhDmS8g"
-              "http://www.youtube.com/feeds/videos.xml?channel_id=UCyl1z3jo3XHR1riLFKG5UAg"
-              "http://www.youtube.com/feeds/videos.xml?channel_id=UC1CfXB_kRs3C-zaeTG3oGyg"))
-      (add-hook 'elfeed-new-entry-hook
-                (elfeed-make-tagger :before "2 weeks ago"
-                                    :remove 'unread))
-    #+end_src
+  (use-package elfeed)
+  (setq elfeed-feeds
+        '("http://lukesmith.xyz/rss.xml"
+          "https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA"
+          "https://www.youtube.com/feeds/videos.xml?channel_id=UCPf-EnX70UM7jqjKwhDmS8g"
+          "http://www.youtube.com/feeds/videos.xml?channel_id=UCyl1z3jo3XHR1riLFKG5UAg"
+          "http://www.youtube.com/feeds/videos.xml?channel_id=UC1CfXB_kRs3C-zaeTG3oGyg"))
+  (add-hook 'elfeed-new-entry-hook
+            (elfeed-make-tagger :before "2 weeks ago"
+                                :remove 'unread))
+#+end_src
 ** ERC
-  #+begin_src emacs-lisp
-    (setq erc-server "irc.libera.chat"
-          erc-nick "subaru"
-          erc-user-full-name "subaru tendou"
-          erc-track-shorten-start 8
-          erc-autojoin-channels-alist '(("irc.libera.chat" "#systemcrafters" "#emacs"))
-          erc-kill-buffer-on-part t
-          erc-auto-query 'bury)
-  #+end_src
+#+begin_src emacs-lisp
+  (setq erc-server "irc.libera.chat"
+        erc-nick "subaru"
+        erc-user-full-name "subaru tendou"
+        erc-track-shorten-start 8
+        erc-autojoin-channels-alist '(("irc.libera.chat" "#systemcrafters" "#emacs"))
+        erc-kill-buffer-on-part t
+        erc-auto-query 'bury)
+#+end_src
 * System configuration
 ** xinitrc
-   #+begin_src conf :tangle ~/.xinitrc
-     #!/bin/bash
+#+begin_src conf :tangle ~/.xinitrc
+  #!/bin/bash
 
-     export _JAVA_AWT_WM_NONREPARENTING=1
+  export _JAVA_AWT_WM_NONREPARENTING=1
 
-     # # Cursor and mouse behavier
-     xset r rate 300 50 &
-     xset s off &
-     xset -dpms &
-     unclutter &
-     udiskie &
-     picom -CGb --vsync --backend glx &
-     pcloud -b &
-     nitrogen --restore &
-     export GTK_IM_MODULE=fcitx
-     export QT_IM_MODULE=fcitx
-     export XMODIFIERS=fcitx
-     export DefaultIMModule=fcitx
-     fcitx5 &
-     # eval `dbus-launch --sh-syntax --exit-with-session`
-     # exe --no-startup-id fcitx5 -d
-     emacs &
-     # st&
+  # # Cursor and mouse behavier
+  xset r rate 300 50 &
+  xset s off &
+  xset -dpms &
+  unclutter &
+  udiskie &
+  picom -CGb --vsync --backend glx &
+  pcloud -b &
+  nitrogen --restore &
+  export GTK_IM_MODULE=fcitx
+  export QT_IM_MODULE=fcitx
+  export XMODIFIERS=fcitx
+  export DefaultIMModule=fcitx
+  fcitx5 &
+  # eval `dbus-launch --sh-syntax --exit-with-session`
+  # exe --no-startup-id fcitx5 -d
+  emacs &
+  # st&
 
-     # exec dbus-launch --exit-with-session emacs -mm --debug-init
-     exec dwm
-   #+end_src
+  # exec dbus-launch --exit-with-session emacs -mm --debug-init
+  exec dwm
+#+end_src
 ** zsh
-   #+begin_src conf :tangle ~/.config/zsh/.zshrc
-     export PATH=$PATH:/home/tendou/.local/bin
+#+begin_src conf :tangle ~/.config/zsh/.zshrc
+  export PATH=$PATH:/home/tendou/.local/bin
 
-     # zsh config
-     for f in /home/tendou/.config/zsh/.shellConfig/*; do source "$f"; done
+  # zsh config
+  for f in /home/tendou/.config/zsh/.shellConfig/*; do source "$f"; done
 
-     # Enable colors and change prompt:
-     autoload -U colors && colors # Load colors
-     autoload -Uz vcs_info
-     precmd_vcs_info() { vcs_info }
-     precmd_functions+=( precmd_vcs_info )
-     setopt prompt_subst
-     RPROMPT=\$vcs_info_msg_0_
-     zstyle ':vcs_info:git:*' formats 'on branch %b'
-     PROMPT='%B%F{yellow}%2~ %b%B%F{white}${vcs_info_msg_0_}%B%F{gray}%(!.#h.>) '
-     # PROMPT=\$vcs_info_msg_0_'%# '
+  # Enable colors and change prompt:
+  autoload -U colors && colors # Load colors
+  autoload -Uz vcs_info
+  precmd_vcs_info() { vcs_info }
+  precmd_functions+=( precmd_vcs_info )
+  setopt prompt_subst
+  RPROMPT=\$vcs_info_msg_0_
+  zstyle ':vcs_info:git:*' formats 'on branch %b'
+  PROMPT='%B%F{yellow}%2~ %b%B%F{white}${vcs_info_msg_0_}%B%F{gray}%(!.#h.>) '
+  # PROMPT=\$vcs_info_msg_0_'%# '
 
-     # Disable ctrl-s to freeze terminal.
-     stty stop undef
+  # Disable ctrl-s to freeze terminal.
+  stty stop undef
 
-     # Lines configured by zsh-newuser-install
-     HISTFILE=/home/tendou/.config/.histfile
-     HISTSIZE=50000
-     SAVEHIST=50000
-     bindkey -v
+  # Lines configured by zsh-newuser-install
+  HISTFILE=/home/tendou/.config/.histfile
+  HISTSIZE=50000
+  SAVEHIST=50000
+  bindkey -v
 
-     # The following lines were added by compinstall
-     zstyle :compinstall filename '/home/tendou/.config/zsh/.zshrc'
+  # The following lines were added by compinstall
+  zstyle :compinstall filename '/home/tendou/.config/zsh/.zshrc'
 
-     autoload -Uz compinit && compinit
-     # End of lines added by compinstall
+  autoload -Uz compinit && compinit
+  # End of lines added by compinstall
 
-     # User config
-     # . /usr/share/LS_COLORS/dircolors.sh
+  # User config
+  # . /usr/share/LS_COLORS/dircolors.sh
 
-     # Syntax highlight plugin put at the end
-     source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  # Syntax highlight plugin put at the end
+  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-     # Just a backup solution for prompt color
-     # PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%1~%{$fg[red]%}]%{$reset_color%}$%b "
+  # Just a backup solution for prompt color
+  # PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%1~%{$fg[red]%}]%{$reset_color%}$%b "
 
-     # Reference fomr "https://scriptingosx.com/2019/07/moving-to-zsh-06-customizing-the-zsh-prompt/"
-     # PROMPT="%B%F{yellow}%2~%f%b %(!.#h.> )"
-     # RPROMPT="%F{white}[%*]"
+  # Reference fomr "https://scriptingosx.com/2019/07/moving-to-zsh-06-customizing-the-zsh-prompt/"
+  # PROMPT="%B%F{yellow}%2~%f%b %(!.#h.> )"
+  # RPROMPT="%F{white}[%*]"
 
-     # Don't want the auto cd anymore but put it here in cast I want it back
-     # setopt autocd  # Automatically cd into typed directory.
+  # Don't want the auto cd anymore but put it here in cast I want it back
+  # setopt autocd  # Automatically cd into typed directory.
 
-     # vterm config
-     vterm_printf(){
-         if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ] ); then
-             # Tell tmux to pass the escape sequences through
-             printf "\ePtmux;\e\e]%s\007\e\\" "$1"
-         elif [ "${TERM%%-*}" = "screen" ]; then
-             # GNU screen (screen, screen-256color, screen-256color-bce)
-             printf "\eP\e]%s\007\e\\" "$1"
-         else
-             printf "\e]%s\e\\" "$1"
-         fi
-     }
-   #+end_src
+  # vterm config
+  vterm_printf(){
+  if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ] ); then
+  # Tell tmux to pass the escape sequences through
+  printf "\ePtmux;\e\e]%s\007\e\\" "$1"
+  elif [ "${TERM%%-*}" = "screen" ]; then
+  # GNU screen (screen, screen-256color, screen-256color-bce)
+  printf "\eP\e]%s\007\e\\" "$1"
+  else
+  printf "\e]%s\e\\" "$1"
+  fi
+  }
+#+end_src
 ** zsh alias
-   #+begin_src conf :tangle ~/.config/zsh/.shellConfig/aliases
-     # Alias
-     alias ls='ls -CF --color=auto'
-     alias la='ls -A'
-     alias ll='ls -alF'
-     alias suspend='sudo systemctl suspend'
-     alias gs='git status'
-     alias grep='grep --color=auto'
-     alias rm='rm -i'
-     alias mv='mv -i'
-     alias tmux='tmux -u'
-     # alias ll='ls -lah'
-     # alias la='ls -a'
-     alias gpgl='gpg --list-secret-keys --keyid-format LONG'
-     alias cl='sudo pacman -Rns $(pacman -Qdtq)'
-     alias cpu='sudo auto-cpufreq --stats'
-     alias te='tar -xvzf'
-     alias install_grub='sudo grub-install --target=x86_64-efi --efi-directory=uefi --bootloader-id=grub'
+#+begin_src conf :tangle ~/.config/zsh/.shellConfig/aliases
+  # Alias
+  alias ls='ls -CF --color=auto'
+  alias la='ls -A'
+  alias ll='ls -alF'
+  alias suspend='sudo systemctl suspend'
+  alias gs='git status'
+  alias grep='grep --color=auto'
+  alias rm='rm -i'
+  alias mv='mv -i'
+  alias tmux='tmux -u'
+  # alias ll='ls -lah'
+  # alias la='ls -a'
+  alias gpgl='gpg --list-secret-keys --keyid-format LONG'
+  alias cl='sudo pacman -Rns $(pacman -Qdtq)'
+  alias cpu='sudo auto-cpufreq --stats'
+  alias te='tar -xvzf'
+  alias install_grub='sudo grub-install --target=x86_64-efi --efi-directory=uefi --bootloader-id=grub'
 
-     co() {
-     gcc "$1" -o ../Debug/"$2"
-     }
+  co() {
+  gcc "$1" -o ../Debug/"$2"
+  }
 
-     dlweb() {
-     wget --recursive --no-clobber --page-requisites --html-extension --convert-links --domains "$1" --no-parent "$2"	 
-     }
-   #+end_src
+  dlweb() {
+  wget --recursive --no-clobber --page-requisites --html-extension --convert-links --domains "$1" --no-parent "$2"	 
+  }
+#+end_src
 ** zsh profile
-   #+begin_src conf :tangle ~/.config/zsh/.zprofile
-     export PATH=$PATH"$HOME/.local/bin"
-     export PATH="$HOME/.cargo/bin:$PATH"
-     # export VISUAL="emacsclient -c -a emacs" # $VISUAL opens in GUI mode
-     export VISUAL=emacs
-     export EDITOR="$VISUAL"
-     export HISTCONTROL=ignoreboth
-     export LESS_TERMCAP_mb=$'\e[1;32m'
-     export LESS_TERMCAP_md=$'\e[1;32m'
-     export LESS_TERMCAP_me=$'\e[0m'
-     export LESS_TERMCAP_se=$'\e[0m'
-     export LESS_TERMCAP_so=$'\e[01;33m'
-     export LESS_TERMCAP_ue=$'\e[0m'
-     export LESS_TERMCAP_us=$'\e[1;4;31m'
-     # eval "$(gh completion -s zsh)"
-     if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
-       exec sway
-     fi
-   #+end_src
+#+begin_src conf :tangle ~/.config/zsh/.zprofile
+  export PATH=$PATH"$HOME/.local/bin"
+  export PATH="$HOME/.cargo/bin:$PATH"
+  # export VISUAL="emacsclient -c -a emacs" # $VISUAL opens in GUI mode
+  export VISUAL=emacs
+  export EDITOR="$VISUAL"
+  export HISTCONTROL=ignoreboth
+  export LESS_TERMCAP_mb=$'\e[1;32m'
+  export LESS_TERMCAP_md=$'\e[1;32m'
+  export LESS_TERMCAP_me=$'\e[0m'
+  export LESS_TERMCAP_se=$'\e[0m'
+  export LESS_TERMCAP_so=$'\e[01;33m'
+  export LESS_TERMCAP_ue=$'\e[0m'
+  export LESS_TERMCAP_us=$'\e[1;4;31m'
+  # eval "$(gh completion -s zsh)"
+  if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+  exec sway
+  fi
+#+end_src
