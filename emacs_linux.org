@@ -32,7 +32,7 @@
      (set-face-attribute 'default nil :family "MonoLisa" :height 137)
      ;; (set-face-attribute 'default nil :family "Comic Code Ligatures" :height 130)
      ;; (set-fontset-font t nil "JetBrains Mono" nil 'append)
-     (set-fontset-font t nil "Comic Code Ligatures" nil 'append)
+     ;; (set-fontset-font t nil "Comic Code Ligatures" nil 'append)
      ;; (set-fontset-font t nil "Fira Code" nil 'append)
      (setq ido-enable-flex-matching t)
      (setq ido-everywhere t)
@@ -101,6 +101,15 @@
       (use-package ligature
         :load-path "~/.emacs.d/lisp/"
         :config
+<<<<<<< HEAD:emacs_linux.org
+=======
+        (which-key-mode)
+        (setq which-key-idle-delay 1))
+
+      (use-package ligature
+        :load-path "~/.emacs.d/github/ligature.el/"
+        :config
+>>>>>>> e3ba272763d8c9bb2971fda71668919a84f2fb05:arch_asus.org
         ;; Enable the "www" ligature in every possible major mode
         (ligature-set-ligatures 't '("www"))
         ;; Enable traditional ligature support in eww-mode, if the
