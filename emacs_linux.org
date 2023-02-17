@@ -2,8 +2,7 @@
 #+title Emacs settings
 #+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/init.el :mkdirp yes
 
-* Basic Settings
-** Early Settings
+* Early Settings
    #+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
      (set-language-environment "UTF-8")
      (set-default-coding-systems 'utf-8)
@@ -42,6 +41,7 @@
      (when (fboundp 'electric-pair-mode)
        (electric-pair-mode t))
    #+end_src
+* Basic Settings
 ** Prerequest for package manager
    #+begin_src emacs-lisp
      (require 'package)
@@ -57,14 +57,15 @@
      (require 'use-package)
      (setq use-package-always-ensure t)
    #+end_src
-** Keybind
+** Basic config that need to load after emacs launch
       #+begin_src emacs-lisp
         (setq-default tab-width 4)
+        (blink-cursor-mode 0)
         (progn
           (setq-default indent-tabs-mode nil))
         (setq xah-fly-use-meta-key nil)
         (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
-        ;; (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+        (define-key key-translation-map (kbd "<apps>") (kbd "<menu>"))
         (global-set-key (kbd "C-x w") 'elfeed)
    #+end_src
 ** Theme
@@ -72,9 +73,6 @@
      (use-package gruvbox-theme
        :config
        (load-theme 'gruvbox t))
-     ;; (use-package solarized-theme
-     ;;   :config
-     ;;   (load-theme 'solarized-dark t))
    #+end_src
 ** Package
 *** Intergrate
@@ -100,39 +98,31 @@
       (use-package rainbow-delimiters
         :hook (prog-mode . rainbow-delimiters-mode))
 
-      (use-package which-key
-        :diminish which-key
-        :defer 0
-        :diminish which-key-mode
+      (use-package ligature
+        :load-path "~/.emacs.d/lisp/"
         :config
-        (which-key-mode)
-        (setq which-key-idle-delay 1))
-
-      ;; (use-package ligature
-      ;;   :load-path "~/.emacs.d/github/ligature.el/"
-      ;;   :config
-      ;;   ;; Enable the "www" ligature in every possible major mode
-      ;;   (ligature-set-ligatures 't '("www"))
-      ;;   ;; Enable traditional ligature support in eww-mode, if the
-      ;;   ;; `variable-pitch' face supports it
-      ;;   (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
-      ;;   ;; Enable all Cascadia Code ligatures in programming modes
-      ;;   (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
-      ;;                                        ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
-      ;;                                        "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
-      ;;                                        "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
-      ;;                                        "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
-      ;;                                        "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
-      ;;                                        "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
-      ;;                                        "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
-      ;;                                        ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
-      ;;                                        "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
-      ;;                                        "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
-      ;;                                        "?=" "?." "??" ";;" "/=" "/>" "//" "__" "~~" "(*" "*)"
-      ;;                                        "\\\\" "://"))
-      ;;   ;; Enables ligature checks globally in all buffers. You can also do it
-      ;;   ;; per mode with `ligature-mode'.
-      ;;   (global-ligature-mode t))
+        ;; Enable the "www" ligature in every possible major mode
+        (ligature-set-ligatures 't '("www"))
+        ;; Enable traditional ligature support in eww-mode, if the
+        ;; `variable-pitch' face supports it
+        (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+        ;; Enable all Cascadia Code ligatures in programming modes
+        (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                                             ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                                             "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                                             "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                                             "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                                             "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                                             "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                                             "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                                             ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                                             "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                                             "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                                             "?=" "?." "??" ";;" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                                             "\\\\" "://"))
+        ;; Enables ligature checks globally in all buffers. You can also do it
+        ;; per mode with `ligature-mode'.
+        (global-ligature-mode t))
 
       (use-package xah-fly-keys
         :diminish xah-fly-keys
@@ -151,7 +141,6 @@
 #+begin_src emacs-lisp
   (use-package counsel)
   (use-package swiper)
-
   (use-package ivy
     :diminish ivy-mode
     :init
@@ -167,32 +156,25 @@
     (ivy-rich-mode 1))
 
   (setq ivy-use-virtual-buffers t)
+
   (setq enable-recursive-minibuffers t)
   (global-set-key (kbd "C-c g") 'counsel-git)
   (global-set-key (kbd "C-c j") 'counsel-git-grep)
   (global-set-key (kbd "C-c k") 'counsel-ag)
   (global-set-key (kbd "C-x l") 'counsel-locate)
   (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
-#+end_src
-*** Application
-    #+begin_src emacs-lisp
-      (use-package magit
-        :custom
-        (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-      (use-package elfeed)
-      (setq elfeed-feeds
-            '("http://lukesmith.xyz/rss.xml"
-              "https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA"
-              "https://www.youtube.com/feeds/videos.xml?channel_id=UCPf-EnX70UM7jqjKwhDmS8g"
-              "http://www.youtube.com/feeds/videos.xml?channel_id=UCyl1z3jo3XHR1riLFKG5UAg"
-              "http://www.youtube.com/feeds/videos.xml?channel_id=UC1CfXB_kRs3C-zaeTG3oGyg"))
-      (add-hook 'elfeed-new-entry-hook
-                (elfeed-make-tagger :before "2 weeks ago"
-                                    :remove 'unread))
-    #+end_src
+  (use-package which-key
+    :diminish which-key
+    :defer 0
+    :diminish which-key-mode
+    :config
+    (which-key-mode)
+    (setq which-key-idle-delay 1))
+
+
+#+end_src
 ** Org settings
-*** basic
     #+begin_src emacs-lisp
       (use-package org
         :custom
@@ -265,7 +247,7 @@
       (set-face-attribute 'org-column nil :background nil)
       (set-face-attribute 'org-column-title nil :background nil)
     #+end_src
-*** auto tangle
+** auto tangle
     #+begin_src emacs-lisp
       (defun efs/org-babel-tangle-config()
         (when (string-equal (buffer-file-name)
@@ -275,7 +257,38 @@
 
       (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
     #+end_src
-* ERC
+** Backup
+#+begin_src emacs-lisp
+  (setq vc-make-backup-files t)
+
+  (setq
+   backup-by-copying t      ; don't clobber symlinks
+   backup-directory-alist
+   '(("." . ".saves"))    ; don't litter my fs tree
+   delete-old-versions t
+   kept-new-versions 6
+   kept-old-versions 2
+   version-control t)       ; use versioned backups
+
+#+end_src
+* Application
+    #+begin_src emacs-lisp
+      (use-package magit
+        :custom
+        (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+
+      (use-package elfeed)
+      (setq elfeed-feeds
+            '("http://lukesmith.xyz/rss.xml"
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA"
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCPf-EnX70UM7jqjKwhDmS8g"
+              "http://www.youtube.com/feeds/videos.xml?channel_id=UCyl1z3jo3XHR1riLFKG5UAg"
+              "http://www.youtube.com/feeds/videos.xml?channel_id=UC1CfXB_kRs3C-zaeTG3oGyg"))
+      (add-hook 'elfeed-new-entry-hook
+                (elfeed-make-tagger :before "2 weeks ago"
+                                    :remove 'unread))
+    #+end_src
+** ERC
   #+begin_src emacs-lisp
     (setq erc-server "irc.libera.chat"
           erc-nick "subaru"
@@ -284,21 +297,6 @@
           erc-autojoin-channels-alist '(("irc.libera.chat" "#systemcrafters" "#emacs"))
           erc-kill-buffer-on-part t
           erc-auto-query 'bury)
-  #+end_src
-* Keep .emacs.d Clean
-  #+begin_src emacs-lisp
-    ;; Change the user-emacs-directory to keep unwanted thing out of ~/.emacs.d
-    (setq user-emacs-directory (expand-file-name "~/.cache/emacs/")
-          url-history-file (expand-file-name "url/history" user-emacs-directory))
-
-    ;; Use no-littering to automatically set common path to the new user-emacs-directory
-    (use-package no-littering)
-
-    ;; Keep customization settings in a temperary file
-    (setq custom-file
-          (if (boundp 'server-socket-dir)
-              (expand-file-name "custom.el" server-socket-dir)
-            (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
   #+end_src
 * System configuration
 ** xinitrc
