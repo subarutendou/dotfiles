@@ -36,13 +36,6 @@
   (setq ido-use-filename-at-point 'guess)
   (when (fboundp 'electric-pair-mode)
     (electric-pair-mode t))
-
-#+end_src
-
-** Custom theme
-#+begin_src emacs-lisp :tangle C:/Users/tendou/AppData/Roaming/.emacs.d/early-init.el
-  ;; (add-to-list 'custom-theme-load-path "~/.emacs.d/lisp/")
-  ;; (load-theme 'themer-dark t)
 #+end_src
 
 ** Backup
@@ -187,8 +180,6 @@
     :config
     (which-key-mode)
     (setq which-key-idle-delay 1))
-
-
 #+end_src
 
 ** Org settings
@@ -198,9 +189,6 @@
     (org-agenda-start-with-log-mode t)
     (org-log-done 'time)
     (Org-log-into-drawer t))
-  ;; (org-agenda-files
-  ;;  '("~/orgfile/Tasks.org")		; example
-  ;;  '("~/orgfile/birthday.org")))
 
   (use-package org-bullets
     :hook (org-mode . org-bullets-mode)
