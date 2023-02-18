@@ -2,6 +2,7 @@
 #+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/init.el :mkdirp yes
 
 * Early Settings
+** Basic
 #+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
   (set-language-environment "UTF-8")
   (set-default-coding-systems 'utf-8)
@@ -18,7 +19,6 @@
   (column-number-mode 1)
   (when (version<= "26.0.50" emacs-version )
     (global-display-line-numbers-mode))
-  (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
 
   (dolist (mode '(org-mode-hook
                   term-mode-hook
@@ -40,6 +40,21 @@
   (when (fboundp 'electric-pair-mode)
     (electric-pair-mode t))
 #+end_src
+
+** Backup
+#+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
+  (setq vc-make-backup-files t)
+
+  (setq
+   backup-by-copying t      ; don't clobber symlinks
+   backup-directory-alist
+   '(("." . ".saves"))    ; don't litter my fs tree
+   delete-old-versions t
+   kept-new-versions 6
+   kept-old-versions 2
+   version-control t)       ; use versioned backups
+#+end_src
+
 * Basic Settings
 ** Prerequest for package manager
 #+begin_src emacs-lisp
@@ -56,6 +71,7 @@
   (require 'use-package)
   (setq use-package-always-ensure t)
 #+end_src
+
 ** Basic config that need to load after emacs launch
 #+begin_src emacs-lisp
   (setq-default tab-width 4)
@@ -67,12 +83,14 @@
   (define-key key-translation-map (kbd "<apps>") (kbd "<menu>"))
   (global-set-key (kbd "C-x w") 'elfeed)
 #+end_src
+
 ** Theme
 #+begin_src emacs-lisp
   (use-package gruvbox-theme
     :config
     (load-theme 'gruvbox t))
 #+end_src
+
 ** Package
 *** Intergrate
 #+begin_src emacs-lisp
@@ -136,6 +154,7 @@
     (define-key xah-fly-leader-key-map (kbd "h g") 'counsel-info-lookup-symbol)
     (xah-fly-keys 1))
 #+end_src
+
 *** ivy
 #+begin_src emacs-lisp
   (use-package counsel)
@@ -170,9 +189,8 @@
     :config
     (which-key-mode)
     (setq which-key-idle-delay 1))
-
-
 #+end_src
+
 ** Org settings
 #+begin_src emacs-lisp
   (use-package org
@@ -246,6 +264,7 @@
   (set-face-attribute 'org-column nil :background nil)
   (set-face-attribute 'org-column-title nil :background nil)
 #+end_src
+
 ** auto tangle
 #+begin_src emacs-lisp
   (defun efs/org-babel-tangle-config()
@@ -256,20 +275,7 @@
 
   (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
 #+end_src
-** Backup
-#+begin_src emacs-lisp
-  (setq vc-make-backup-files t)
 
-  (setq
-   backup-by-copying t      ; don't clobber symlinks
-   backup-directory-alist
-   '(("." . ".saves"))    ; don't litter my fs tree
-   delete-old-versions t
-   kept-new-versions 6
-   kept-old-versions 2
-   version-control t)       ; use versioned backups
-
-#+end_src
 * Application
 #+begin_src emacs-lisp
   (use-package magit
@@ -287,6 +293,7 @@
             (elfeed-make-tagger :before "2 weeks ago"
                                 :remove 'unread))
 #+end_src
+
 ** ERC
 #+begin_src emacs-lisp
   (setq erc-server "irc.libera.chat"
@@ -297,6 +304,7 @@
         erc-kill-buffer-on-part t
         erc-auto-query 'bury)
 #+end_src
+
 * System configuration
 ** xinitrc
 #+begin_src conf :tangle ~/.xinitrc
@@ -326,6 +334,7 @@
   # exec dbus-launch --exit-with-session emacs -mm --debug-init
   exec dwm
 #+end_src
+
 ** zsh
 #+begin_src conf :tangle ~/.config/zsh/.zshrc
   export PATH=$PATH:/home/tendou/.local/bin
@@ -388,6 +397,7 @@
   fi
   }
 #+end_src
+
 ** zsh alias
 #+begin_src conf :tangle ~/.config/zsh/.shellConfig/aliases
   # Alias
@@ -416,6 +426,7 @@
   wget --recursive --no-clobber --page-requisites --html-extension --convert-links --domains "$1" --no-parent "$2"	 
   }
 #+end_src
+
 ** zsh profile
 #+begin_src conf :tangle ~/.config/zsh/.zprofile
   export PATH=$PATH"$HOME/.local/bin"
