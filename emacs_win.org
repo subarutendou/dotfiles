@@ -2,24 +2,44 @@
 #+PROPERTY: header-args:emacs-lisp :tangle C:/Users/tendou/AppData/Roaming/.emacs.d/init.el :mkdirp yes
 
 * Pre-load
-** Basic
+
+** Minimum UI
 #+begin_src emacs-lisp :tangle C:/Users/tendou/AppData/Roaming/.emacs.d/early-init.el
-  (add-hook 'emacs-startup-hook 'toggle-frame-maximized)
-  (set-language-environment "UTF-8")
-  (set-default-coding-systems 'utf-8)
   (setq inhibit-startup-message t)
   (scroll-bar-mode -1)
   (tool-bar-mode -1)
   (tooltip-mode -1)
   (menu-bar-mode -1)
   (set-fringe-mode 10)
-  (fset 'yes-or-no-p 'y-or-n-p)
   (setq visible-bell t)
   (setq use-dialog-box nil)
+  (setq initial-scratch-message nil)
+  (show-paren-mode 1)              ; Highlight parenthesis
+  (setq-default x-select-enable-primary t) ; use primary as clipboard in emacs
+  ;; avoid leaving a gap between the frame and the screen
+  (setq-default frame-resize-pixelwise t)
+#+end_src
+
+** Basic
+#+begin_src emacs-lisp :tangle C:/Users/tendou/AppData/Roaming/.emacs.d/early-init.el
+  (add-hook 'emacs-startup-hook 'toggle-frame-maximized)
+  (set-language-environment "UTF-8")
+  (set-default-coding-systems 'utf-8)
+  (fset 'yes-or-no-p 'y-or-n-p)
   (setq native-comp-async-report-warnings-errors nil)
   (column-number-mode 1)
   (when (version<= "26.0.50" emacs-version )
     (global-display-line-numbers-mode))
+  (defvar file-name-handler-alist-old file-name-handler-alist)
+
+  (setq file-name-handler-alist nil
+        gc-cons-threshold most-positive-fixnum)
+  ;; Lower threshold to speed up garbage collection
+  (add-hook 'after-init-hook
+            `(lambda ()
+               (setq file-name-handler-alist file-name-handler-alist-old)
+               (setq gc-cons-threshold (* 2 1000 1000)))
+            t)
 
   (dolist (mode '(org-mode-hook
                   term-mode-hook
@@ -30,6 +50,7 @@
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
   ;; (set-face-attribute 'default nil :family "MonoLisa" :height 137)
   ;; (set-face-attribute 'default nil :family "IBM Plex Mono" :height 137)
+  ;; (set-face-attribute 'default nil :family "Comic Code ligatures" :height 140)
   (set-face-attribute 'default nil :family "Victor Mono" :height 140)
   (set-face-font 'italic "Victor Mono")
   (set-face-font 'bold-italic "Victor Mono")
@@ -74,8 +95,8 @@
 
 ** Basic config that need to load after emacs launch
 #+begin_src emacs-lisp
-  (setq-default tab-width 4)
   (blink-cursor-mode 0)
+  (setq-default tab-width 4)
   (progn
     (setq-default indent-tabs-mode nil))
   (setq xah-fly-use-meta-key nil)
@@ -176,6 +197,10 @@
   (global-set-key (kbd "C-c k") 'counsel-ag)
   (global-set-key (kbd "C-x l") 'counsel-locate)
   (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
+
+  (use-package savehist
+    :defer 2
+    :init (savehist-mode t))
 
   (use-package which-key
     :diminish which-key
