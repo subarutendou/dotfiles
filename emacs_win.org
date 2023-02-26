@@ -198,10 +198,6 @@
   (global-set-key (kbd "C-x l") 'counsel-locate)
   (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 
-  (use-package savehist
-    :defer 2
-    :init (savehist-mode t))
-
   (use-package which-key
     :diminish which-key
     :defer 0
