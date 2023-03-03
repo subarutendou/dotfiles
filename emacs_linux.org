@@ -713,9 +713,9 @@
   exec unclutter
   exec fcitx5
   exec pcloudcc -u akiyamamio_miku@hotmail.co.jp -d
-  exec /home/tendou/.local/bin/st
-  exec /home/tendou/.local/bin/st
-  # exec emacs
+  # exec /home/tendou/.local/bin/st
+  # exec /home/tendou/.local/bin/st
+  exec emacs
   default_border none
 
   # User keybind
