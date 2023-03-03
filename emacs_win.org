@@ -106,9 +106,9 @@
 
 ** Theme
 #+begin_src emacs-lisp
-  (use-package gruvbox-theme
+  (use-package nord-theme
     :config
-    (load-theme 'gruvbox t))
+    (load-theme 'nord t))
 #+end_src
 
 ** Package
