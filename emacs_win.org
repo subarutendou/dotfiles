@@ -117,13 +117,13 @@
   (use-package xah-fly-keys
     :diminish xah-fly-keys
     :config
-    (xah-fly-keys-set-layout "dvorak")
-    (define-key xah-fly-command-map (kbd "b") 'swiper)
+    (xah-fly-keys-set-layout "qwerty")
+    (define-key xah-fly-command-map (kbd "n") 'swiper)
     (define-key xah-fly-command-map (kbd "a") 'counsel-M-x)
-    (define-key xah-fly-leader-key-map (kbd "c .") 'counsel-find-file)
-    (define-key xah-fly-leader-key-map (kbd "h h") 'counsel-describe-function)
-    (define-key xah-fly-leader-key-map (kbd "h n") 'counsel-describe-variable)
-    (define-key xah-fly-leader-key-map (kbd "h g") 'counsel-info-lookup-symbol)
+    (define-key xah-fly-leader-key-map (kbd "i e") 'counsel-find-file)
+    (define-key xah-fly-leader-key-map (kbd "j j") 'counsel-describe-function)
+    (define-key xah-fly-leader-key-map (kbd "j l") 'counsel-describe-variable)
+    (define-key xah-fly-leader-key-map (kbd "j u") 'counsel-info-lookup-symbol)
     (xah-fly-keys 1))
 
   (use-package tree-sitter
