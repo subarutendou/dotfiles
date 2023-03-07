@@ -2,7 +2,6 @@
 #+PROPERTY: header-args:emacs-lisp :tangle C:/Users/tendou/AppData/Roaming/.emacs.d/init.el :mkdirp yes
 
 * Pre-load
-
 ** Minimum UI
 #+begin_src emacs-lisp :tangle C:/Users/tendou/AppData/Roaming/.emacs.d/early-init.el
   (setq inhibit-startup-message t)
@@ -114,18 +113,6 @@
 ** Package
 *** Intergrate
 #+begin_src emacs-lisp
-  (use-package xah-fly-keys
-    :diminish xah-fly-keys
-    :config
-    (xah-fly-keys-set-layout "dvorak")
-    (define-key xah-fly-command-map (kbd "b") 'swiper)
-    (define-key xah-fly-command-map (kbd "a") 'counsel-M-x)
-    (define-key xah-fly-leader-key-map (kbd "c .") 'counsel-find-file)
-    (define-key xah-fly-leader-key-map (kbd "h h") 'counsel-describe-function)
-    (define-key xah-fly-leader-key-map (kbd "h n") 'counsel-describe-variable)
-    (define-key xah-fly-leader-key-map (kbd "h g") 'counsel-info-lookup-symbol)
-    (xah-fly-keys 1))
-
   (use-package tree-sitter
     :diminish tree-sitter-mode
     :config
@@ -169,12 +156,22 @@
     ;; Enables ligature checks globally in all buffers. You can also do it
     ;; per mode with `ligature-mode'.
     (global-ligature-mode t))
+
+  (use-package xah-fly-keys
+    :diminish xah-fly-keys
+    :config
+    (xah-fly-keys-set-layout "dvorak")
+    (define-key xah-fly-command-map (kbd "a") 'counsel-M-x)
+    (define-key xah-fly-leader-key-map (kbd "c .") 'counsel-find-file)
+    (define-key xah-fly-leader-key-map (kbd "h h") 'counsel-describe-function)
+    (define-key xah-fly-leader-key-map (kbd "h n") 'counsel-describe-variable)
+    (define-key xah-fly-leader-key-map (kbd "h g") 'counsel-info-lookup-symbol)
+    (xah-fly-keys 1))
 #+end_src
 
 *** ivy
 #+begin_src emacs-lisp
   (use-package counsel)
-  (use-package swiper)
   (use-package ivy
     :diminish ivy-mode
     :init

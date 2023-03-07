@@ -1,9 +1,7 @@
-
 #+title Emacs settings
 #+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/init.el :mkdirp yes
 
 * Early Settings
-
 ** Minimum UI
 #+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
   (setq inhibit-startup-message t)
@@ -169,7 +167,6 @@
     :diminish xah-fly-keys
     :config
     (xah-fly-keys-set-layout "dvorak")
-    (define-key xah-fly-command-map (kbd "b") 'swiper)
     (define-key xah-fly-command-map (kbd "a") 'counsel-M-x)
     (define-key xah-fly-leader-key-map (kbd "c .") 'counsel-find-file)
     (define-key xah-fly-leader-key-map (kbd "h h") 'counsel-describe-function)
@@ -182,7 +179,6 @@
 *** ivy
 #+begin_src emacs-lisp
   (use-package counsel)
-  (use-package swiper)
   (use-package ivy
     :diminish ivy-mode
     :init
@@ -558,7 +554,7 @@
       bindsym $mod+Shift+q kill
 
       # Start your launcher
-      bindsym $mod+d exec $menu
+      bindsym $mod+p exec $menu
 
       # Drag floating windows by holding down $mod and left mouse button.
       # Resize them with right mouse button + $mod.
