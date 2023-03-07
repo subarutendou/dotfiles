@@ -96,6 +96,10 @@
 ** Basic config that need to load after emacs launch
 #+begin_src emacs-lisp
   (setq-default tab-width 4)
+  ;; (setq tab-width 4) ; or any other preferred value
+  (defvaralias 'c-basic-offset 'tab-width)
+  (defvaralias 'cperl-indent-level 'tab-width)
+
   (blink-cursor-mode 0)
   (progn
     (setq-default indent-tabs-mode nil))
@@ -555,6 +559,9 @@
 
   # Start your launcher
   bindsym $mod+p exec $menu
+
+  # Start your editor
+  bindsym $mod+Shift+Return exec emacs
 
   # Drag floating windows by holding down $mod and left mouse button.
   # Resize them with right mouse button + $mod.
