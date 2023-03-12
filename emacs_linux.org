@@ -187,7 +187,9 @@
   (use-package ivy
     :diminish ivy-mode
     :init
-    (ivy-mode 1))
+    (ivy-mode 1)
+    :config
+    (setq ivy-use-selectable-prompt t))
 
   (setq ivy-re-builders-alist
         '((ivy-switch-buffer . ivy--regex-plus)
@@ -199,6 +201,12 @@
     (ivy-rich-mode 1))
 
   (setq ivy-use-virtual-buffers t)
+
+  (use-package swiper
+    :config
+    (setq ivy-re-builders-alist
+          '((swiper . ivy--regex-plus)
+            (t . ivy--regex-fuzzy))))
 
   (setq enable-recursive-minibuffers t)
   (global-set-key (kbd "C-c g") 'counsel-git)
