@@ -92,6 +92,7 @@
     (package-install 'use-package))
   (require 'use-package)
   (setq use-package-always-ensure t)
+  (use-package quelpa-use-package)
 #+end_src
 
 ** Basic config that need to load after emacs launch
@@ -325,6 +326,8 @@
   (add-hook 'elfeed-new-entry-hook
             (elfeed-make-tagger :before "2 weeks ago"
                                 :remove 'unread))
+  (use-package ement
+    :quelpa (ement :fetcher github :repo "alphapapa/ement.el"))
 #+end_src
 
 ** ERC
