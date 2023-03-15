@@ -733,6 +733,9 @@
   #+begin_src emacs-lisp
     (use-package emojify
       :hook (after-init . global-emojify-mode))
+    (use-package rainbow-delimiters
+      :hook (prog-mode . rainbow-delimiters-mode))
+
   #+end_src
 * ivy
   #+begin_src emacs-lisp

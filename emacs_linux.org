@@ -140,8 +140,6 @@
   (use-package swift-mode)
   (use-package ca65-mode)
   (use-package lua-mode)
-  (use-package rainbow-delimiters
-    :hook (prog-mode . rainbow-delimiters-mode))
 
   (use-package ligature
     :load-path "~/.emacs.d/github/ligature.el/"
@@ -732,6 +730,7 @@
   # exec /home/tendou/.local/bin/st
   # exec /home/tendou/.local/bin/st
   exec emacs
+  exec 1password
   default_border none
 
   # User keybind
