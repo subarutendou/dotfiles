@@ -126,6 +126,7 @@
   (use-package lua-mode)
   (use-package python-mode)
   (use-package rust-mode)
+  (use-package zig-mode)
   (use-package csharp-mode)
   (use-package yaml-mode)
   (use-package ca65-mode)
