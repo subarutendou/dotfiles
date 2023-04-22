@@ -364,6 +364,7 @@
   # eval `dbus-launch --sh-syntax --exit-with-session`
   # exe --no-startup-id fcitx5 -d
   emacs &
+  1password &
   # st&
 
   # exec dbus-launch --exit-with-session emacs -mm --debug-init
@@ -478,9 +479,9 @@
   export LESS_TERMCAP_ue=$'\e[0m'
   export LESS_TERMCAP_us=$'\e[1;4;31m'
   # eval "$(gh completion -s zsh)"
-  if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
-  exec sway
-  fi
+  # if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+  # exec sway
+  # fi
 #+end_src
 
 ** sway
