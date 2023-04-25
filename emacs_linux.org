@@ -723,7 +723,6 @@
   }
 
   # User config
-  # exec xset r rate 300 50
   exec xset s off
   exec xset -dpms
   exec autotiling-rs
@@ -731,7 +730,6 @@
   exec fcitx5
   # exec pcloudcc -u akiyamamio_miku@hotmail.co.jp -d
   exec pcloud
-  # exec /home/tendou/.local/bin/st
   # exec /home/tendou/.local/bin/st
   exec emacs
   exec 1password
