@@ -102,8 +102,6 @@
   (progn
     (setq-default indent-tabs-mode nil))
   (setq xah-fly-use-meta-key nil)
-  (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
-  (define-key key-translation-map (kbd "<apps>") (kbd "<menu>"))
 #+end_src
 
 ** Theme
@@ -131,6 +129,7 @@
   (use-package csharp-mode)
   (use-package yaml-mode)
   (use-package ca65-mode)
+  (use-package json-mode)
   (use-package magit)
 
   (use-package rainbow-delimiters
@@ -171,6 +170,8 @@
     (define-key xah-fly-leader-key-map (kbd "h h") 'counsel-describe-function)
     (define-key xah-fly-leader-key-map (kbd "h n") 'counsel-describe-variable)
     (define-key xah-fly-leader-key-map (kbd "h g") 'counsel-info-lookup-symbol)
+    (define-key key-translation-map (kbd "<escape>") (kbd "C-g"))
+    (define-key key-translation-map (kbd "<apps>") (kbd "<menu>"))
     (xah-fly-keys 1))
 #+end_src
 

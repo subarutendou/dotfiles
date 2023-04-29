@@ -107,8 +107,6 @@
   (progn
     (setq-default indent-tabs-mode nil))
   (setq xah-fly-use-meta-key nil)
-  (define-key key-translation-map (kbd "<escape>") (kbd "C-g"))
-  (define-key key-translation-map (kbd "<apps>") (kbd "<menu>"))
   (global-set-key (kbd "C-x w") 'elfeed)
 #+end_src
 
@@ -180,6 +178,8 @@
     (define-key xah-fly-leader-key-map (kbd "h n") 'counsel-describe-variable)
     (define-key xah-fly-leader-key-map (kbd "h g") 'counsel-info-lookup-symbol)
     (define-key xah-fly-leader-key-map (kbd "n e") 'multi-vterm)
+    (define-key key-translation-map (kbd "<escape>") (kbd "C-g"))
+    (define-key key-translation-map (kbd "<apps>") (kbd "<menu>"))
     (xah-fly-keys 1))
 #+end_src
 
