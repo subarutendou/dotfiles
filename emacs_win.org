@@ -165,7 +165,6 @@
     :config
     (xah-fly-keys-set-layout "dvorak")
     (define-key xah-fly-command-map (kbd "a") 'counsel-M-x)
-    (define-key xah-fly-command-map (kbd "b") 'swiper)
     (define-key xah-fly-leader-key-map (kbd "c .") 'counsel-find-file)
     (define-key xah-fly-leader-key-map (kbd "h h") 'counsel-describe-function)
     (define-key xah-fly-leader-key-map (kbd "h n") 'counsel-describe-variable)
@@ -195,12 +194,6 @@
     (ivy-rich-mode 1))
 
   (setq ivy-use-virtual-buffers t)
-
-  (use-package swiper
-    :config
-    (setq ivy-re-builders-alist
-          '((swiper . ivy--regex-plus)
-            (t . ivy--regex-fuzzy))))
 
   (setq enable-recursive-minibuffers t)
   (global-set-key (kbd "C-c g") 'counsel-git)
