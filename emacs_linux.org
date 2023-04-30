@@ -935,6 +935,7 @@
 #+begin_src conf :tangle ~/.config/hypr/hyprpaper.conf
   # preload = /home/tendou/Pictures/wallpaper/nordThemeWallpaper.png
   preload = /home/tendou/Pictures/wallpaper/ROG Strix 2019_1920x1080.png
+  # preload = /home/tendou/Pictures/tooru.png
   #if more than one preload is desired then continue to preload other backgrounds
   # preload = /path/to/next_image.png
   # .. more preloads
