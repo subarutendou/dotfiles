@@ -139,7 +139,7 @@
   (use-package rainbow-delimiters
     :hook (prog-mode . rainbow-delimiters-mode))
   (use-package ligature
-    :load-path "~/.emacs.d/lisp/"
+    :load-path "~/.emacs.d/github/"
     :config
     ;; Enable the "www" ligature in every possible major mode
     (ligature-set-ligatures 't '("www"))
