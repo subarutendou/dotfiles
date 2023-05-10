@@ -106,9 +106,13 @@
 
 ** Theme
 #+begin_src emacs-lisp
-  (use-package nord-theme
+  ;; (use-package nord-theme
+  ;;   :config
+  ;;   (load-theme 'nord t))
+
+  (use-package monokai-theme
     :config
-    (load-theme 'nord t))
+    (load-theme 'monokai t))
 #+end_src
 
 ** Package
@@ -135,7 +139,7 @@
   (use-package rainbow-delimiters
     :hook (prog-mode . rainbow-delimiters-mode))
   (use-package ligature
-    :load-path "~/.emacs.d/lisp/"
+    :load-path "~/.emacs.d/github/"
     :config
     ;; Enable the "www" ligature in every possible major mode
     (ligature-set-ligatures 't '("www"))

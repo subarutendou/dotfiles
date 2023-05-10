@@ -112,9 +112,13 @@
 
 ** Theme
 #+begin_src emacs-lisp
-  (use-package nord-theme
+  ;; (use-package nord-theme
+    ;; :config
+    ;; (load-theme 'nord t))
+
+  (use-package monokai-theme
     :config
-    (load-theme 'nord t))
+    (load-theme 'monokai t))
 #+end_src
 
 ** Package
