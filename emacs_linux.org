@@ -56,6 +56,8 @@
   ;; (set-fontset-font t nil "JetBrains Mono" nil 'append)
   ;; (set-fontset-font t nil "Comic Code Ligatures" nil 'append)
   ;; (set-fontset-font t nil "Fira Code" nil 'append)
+  (setq browse-url-browser-function 'browse-url-generic
+        browse-url-generic-program "chromium-browser")
   (setq ido-enable-flex-matching t)
   (setq ido-everywhere t)
   (ido-mode 1)

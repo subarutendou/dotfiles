@@ -55,6 +55,7 @@
   ;; (set-face-attribute 'default nil :family "Victor Mono" :height 140)
   ;; (set-face-font 'italic "Victor Mono")
   ;; (set-face-font 'bold-italic "Victor Mono")
+  (setq browse-url-browser-function 'browse-url-default-windows-browser)
   (setq ido-enable-flex-matching t)
   (setq ido-everywhere t)
   (ido-mode 1)
