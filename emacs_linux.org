@@ -683,8 +683,8 @@
   binde=, XF86AudioPrev, exec, playerctl previous
 
   # Switch off display
-  bind = $mainMod, l, exec, hyprctl dispatch dpms off
-  bind = $mainMod SHIFT, l, exec, hyprctl dispatch dpms on
+  bind = $mainMod, s, exec, hyprctl dispatch dpms off
+  bind = $mainMod SHIFT, s, exec, hyprctl dispatch dpms on
 #+end_src
 
 ** hyprpaper
