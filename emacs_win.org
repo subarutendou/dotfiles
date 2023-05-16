@@ -100,6 +100,9 @@
 #+begin_src emacs-lisp
   (blink-cursor-mode 0)
   (setq-default tab-width 4)
+  (defvaralias 'c-basic-offset 'tab-width)
+  (defvaralias 'cperl-indent-level 'tab-width)
+  (setq xah-fly-use-meta-key nil)
   (progn
     (setq-default indent-tabs-mode nil))
   (setq xah-fly-use-meta-key nil)
