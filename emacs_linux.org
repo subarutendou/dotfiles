@@ -24,7 +24,6 @@
   (set-language-environment "UTF-8")
   (set-default-coding-systems 'utf-8)
   (fset 'yes-or-no-p 'y-or-n-p)
-  (add-hook 'dired-mode-hook (lambda () (dired-omit-mode)))
   (setq native-comp-async-report-warnings-errors nil)
   (column-number-mode 1)
   (when (version<= "26.0.50" emacs-version )
