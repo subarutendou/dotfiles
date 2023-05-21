@@ -532,8 +532,8 @@
       family: Comic Code Ligatures
       style: Regular
 
-  # Point size
-  size: 14.0
+    # Point size
+    size: 14.0
 
 #+end_src
 
