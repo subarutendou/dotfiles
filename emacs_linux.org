@@ -561,10 +561,8 @@
 
   # Execute your favorite apps at launch
   # exec-once = waybar & hyprpaper & firefox
-  exec-once = hyprpaper
-  exec-once = emacs
-  exec-once = 1password
-  exec-once = pcloud
+  # exec-once = swaybg -i /home/tendou/pic/wallpaper/mesubuta.png
+  exec-once = hyprpaper & emacs & 1password & pcloud
 
   # Source a file (multi-file configs)
   # source = ~/.config/hypr/myColors.conf
@@ -737,25 +735,25 @@
   bind = $mainMod, s, exec, hyprctl dispatch dpms off
   bind = $mainMod SHIFT, s, exec, hyprctl dispatch dpms on
 #+end_src
-
 ** hyprpaper
 #+begin_src conf :tangle ~/.config/hypr/hyprpaper.conf
-  # preload = /home/tendou/Pictures/wallpaper/nordThemeWallpaper.png
-  # preload = /home/tendou/pic/wallpaper/ROG Strix 2019_1920x1080.png
-  preload = /home/tendou/pic/2021-04-15 18-04-51.png
-  # preload = /home/tendou/Pictures/tooru.png
-  #if more than one preload is desired then continue to preload other backgrounds
-  # preload = /path/to/next_image.png
-  # .. more preloads
+  #+begin_src conf :tangle ~/.config/hypr/hyprpaper.conf
+    # preload = /home/tendou/Pictures/wallpaper/nordThemeWallpaper.png
+    # preload = /home/tendou/pic/wallpaper/ROG Strix 2019_1920x1080.png
+    preload = /home/tendou/pic/2021-04-15 18-04-51.png
+    # preload = /home/tendou/Pictures/tooru.png
+    #if more than one preload is desired then continue to preload other backgrounds
+    # preload = /path/to/next_image.png
+    # .. more preloads
 
-  #set the default wallpaper(s) seen on inital workspace(s) --depending on the number of monitors used
-  # wallpaper = eDP-1,/home/tendou/pic/wallpaper/ROG Strix 2019_1920x1080.png
-  wallpaper = eDP-1,/home/tendou/pic/2021-04-15 18-04-51.png
-  # wallpaper = eDP-1,/home/tendou/Pictures/tooru.png
-  #if more than one monitor in use, can load a 2nd image
-  # wallpaper = monitor2,/path/to/next_image.png
-  # .. more monitors
-#+end_src
+    #set the default wallpaper(s) seen on inital workspace(s) --depending on the number of monitors used
+    # wallpaper = eDP-1,/home/tendou/pic/wallpaper/ROG Strix 2019_1920x1080.png
+    wallpaper = eDP-1,/home/tendou/pic/2021-04-15 18-04-51.png
+    # wallpaper = eDP-1,/home/tendou/Pictures/tooru.png
+    #if more than one monitor in use, can load a 2nd image
+    # wallpaper = monitor2,/path/to/next_image.png
+    # .. more monitors
+  #+end_src
 
 ** wofi
 *** basic
