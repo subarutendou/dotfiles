@@ -324,9 +324,6 @@
   # User config
   # . /usr/share/LS_COLORS/dircolors.sh
 
-  # Syntax highlight plugin put at the end
-  source /usr/share//zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
   # Just a backup solution for prompt color
   # PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%1~%{$fg[red]%}]%{$reset_color%}$%b "
 
