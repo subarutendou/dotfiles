@@ -656,7 +656,10 @@
   # Example windowrule v2
   # windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
   # See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
-
+  $w1 = hyprctl hyprpaper wallpaper "eDP-1,/home/tendou/Pictures/wallpaper/nordThemeWallpaper.png"
+  $w2 = hyprctl hyprpaper wallpaper "eDP-1,/home/tendou/pic/wallpaper/ROG Strix 2019_1920x1080.png"
+  $w3 = hyprctl hyprpaper wallpaper "eDP-1,/home/tendou/pic/2021-04-15 18-04-51.png"
+  $w4 = hyprctl hyprpaper wallpaper "eDP-1,/home/tendou/Pictures/tooru.png"
 
   # See https://wiki.hyprland.org/Configuring/Keywords/ for more
   $mainMod = SUPER
@@ -686,9 +689,13 @@
 
   # Switch workspaces with mainMod + [0-9]
   bind = $mainMod, 1, workspace, 1
+  bind = $mainMod, 1, exec,      $w1
   bind = $mainMod, 2, workspace, 2
+  bind = $mainMod, 2, exec,      $w2
   bind = $mainMod, 3, workspace, 3
+  bind = $mainMod, 3, exec,      $w3
   bind = $mainMod, 4, workspace, 4
+  bind = $mainMod, 4, exec,      $w4
   bind = $mainMod, 5, workspace, 5
   bind = $mainMod, 6, workspace, 6
   bind = $mainMod, 7, workspace, 7
@@ -698,9 +705,13 @@
 
   # Move active window to a workspace with mainMod + SHIFT + [0-9]
   bind = $mainMod SHIFT, 1, movetoworkspace, 1
+  bind = $mainMod SHIFT, 1, exec,            $w1
   bind = $mainMod SHIFT, 2, movetoworkspace, 2
+  bind = $mainMod SHIFT, 2, exec,            $w2
   bind = $mainMod SHIFT, 3, movetoworkspace, 3
+  bind = $mainMod SHIFT, 3, exec,            $w3
   bind = $mainMod SHIFT, 4, movetoworkspace, 4
+  bind = $mainMod SHIFT, 4, exec,            $w4
   bind = $mainMod SHIFT, 5, movetoworkspace, 5
   bind = $mainMod SHIFT, 6, movetoworkspace, 6
   bind = $mainMod SHIFT, 7, movetoworkspace, 7
@@ -737,18 +748,19 @@
 #+end_src
 ** hyprpaper
 #+begin_src conf :tangle ~/.config/hypr/hyprpaper.conf
-  #+begin_src conf :tangle ~/.config/hypr/hyprpaper.conf
-    # preload = /home/tendou/Pictures/wallpaper/nordThemeWallpaper.png
-    # preload = /home/tendou/pic/wallpaper/ROG Strix 2019_1920x1080.png
+  ,#+begin_src conf :tangle ~/.config/hypr/hyprpaper.conf
+    preload = /home/tendou/Pictures/wallpaper/nordThemeWallpaper.png
+    preload = /home/tendou/pic/wallpaper/ROG Strix 2019_1920x1080.png
     preload = /home/tendou/pic/2021-04-15 18-04-51.png
-    # preload = /home/tendou/Pictures/tooru.png
+    preload = /home/tendou/Pictures/tooru.png
     #if more than one preload is desired then continue to preload other backgrounds
     # preload = /path/to/next_image.png
     # .. more preloads
 
     #set the default wallpaper(s) seen on inital workspace(s) --depending on the number of monitors used
+    wallpaper = eDP-1,/home/tendou/Pictures/wallpaper/nordThemeWallpaper.png
     # wallpaper = eDP-1,/home/tendou/pic/wallpaper/ROG Strix 2019_1920x1080.png
-    wallpaper = eDP-1,/home/tendou/pic/2021-04-15 18-04-51.png
+    # wallpaper = eDP-1,/home/tendou/pic/2021-04-15 18-04-51.png
     # wallpaper = eDP-1,/home/tendou/Pictures/tooru.png
     #if more than one monitor in use, can load a 2nd image
     # wallpaper = monitor2,/path/to/next_image.png
