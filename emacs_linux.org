@@ -99,8 +99,8 @@
 
 ** Basic config that need to load after emacs launch
 #+begin_src emacs-lisp
-  (setq-default tab-width 4)
-  ;; (setq tab-width 4) ; or any other preferred value
+  (setq-default tab-width 2)
+  (setq tab-width 2) ; or any other preferred value
   (defvaralias 'c-basic-offset 'tab-width)
   (defvaralias 'cperl-indent-level 'tab-width)
 
