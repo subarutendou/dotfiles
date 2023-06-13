@@ -146,6 +146,10 @@
   (use-package ca65-mode)
   (use-package lua-mode)
   (use-package json-mode)
+  (use-package auto-complete
+    :diminish auto-complete-mode
+    :config
+    (ac-config-default))
 
   (use-package ligature
     :load-path "~/.emacs.d/github/ligature.el/"

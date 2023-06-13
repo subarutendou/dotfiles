@@ -99,6 +99,7 @@
 #+begin_src emacs-lisp
   (blink-cursor-mode 0)
   (setq-default tab-width 4)
+  (setq tab-width 4) ; or any other preferred value
   (defvaralias 'c-basic-offset 'tab-width)
   (defvaralias 'cperl-indent-level 'tab-width)
   (setq xah-fly-use-meta-key nil)
@@ -137,7 +138,10 @@
   (use-package yaml-mode)
   (use-package ca65-mode)
   (use-package json-mode)
-  (use-package magit)
+  (use-package auto-complete
+    :diminish auto-complete-mode
+    :config
+    (ac-config-default))
 
   (use-package rainbow-delimiters
     :hook (prog-mode . rainbow-delimiters-mode))
@@ -218,10 +222,14 @@
     (setq which-key-idle-delay 1))
 #+end_src
 
-** App
+*** App
 #+begin_src emacs-lisp
   (use-package ement
     :quelpa (ement :fetcher github :repo "alphapapa/ement.el"))
+
+  (use-package magit
+    :custom
+    (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 #+end_src
 
 ** Org settings
