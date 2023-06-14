@@ -1197,3 +1197,117 @@
   include /etc/sway/config.d/*
 #+end_src
 
+* ZSH
+** zsh
+#+begin_src conf :tangle ~/.config/zsh/.zshrc
+  export PATH=$PATH:/home/tendou/.local/bin
+
+  # zsh config
+  for f in /home/tendou/.config/zsh/.shellConfig/*; do source "$f"; done
+
+  # Enable colors and change prompt:
+  autoload -U colors && colors # Load colors
+  autoload -Uz vcs_info
+  precmd_vcs_info() { vcs_info }
+  precmd_functions+=( precmd_vcs_info )
+  setopt prompt_subst
+  RPROMPT=\$vcs_info_msg_0_
+  zstyle ':vcs_info:git:*' formats 'on branch %b'
+  PROMPT='%B%F{yellow}%2~ %b%B%F{white}${vcs_info_msg_0_}%B%F{gray}%(!.#h.>) '
+  # PROMPT=\$vcs_info_msg_0_'%# '
+
+  # Disable ctrl-s to freeze terminal.
+  stty stop undef
+
+  # Lines configured by zsh-newuser-install
+  HISTFILE=/home/tendou/.config/.histfile
+  HISTSIZE=50000
+  SAVEHIST=50000
+  bindkey -v
+
+  # The following lines were added by compinstall
+  zstyle :compinstall filename '/home/tendou/.config/zsh/.zshrc'
+
+  autoload -Uz compinit && compinit
+  # End of lines added by compinstall
+
+  # User config
+  # . /usr/share/LS_COLORS/dircolors.sh
+
+  # Syntax highlight plugin put at the end
+  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+  # Just a backup solution for prompt color
+  # PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%1~%{$fg[red]%}]%{$reset_color%}$%b "
+
+  # Reference fomr "https://scriptingosx.com/2019/07/moving-to-zsh-06-customizing-the-zsh-prompt/"
+  # PROMPT="%B%F{yellow}%2~%f%b %(!.#h.> )"
+  # RPROMPT="%F{white}[%*]"
+
+  # Don't want the auto cd anymore but put it here in cast I want it back
+  # setopt autocd  # Automatically cd into typed directory.
+
+  # vterm config
+  vterm_printf(){
+  if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ] ); then
+  # Tell tmux to pass the escape sequences through
+  printf "\ePtmux;\e\e]%s\007\e\\" "$1"
+  elif [ "${TERM%%-*}" = "screen" ]; then
+  # GNU screen (screen, screen-256color, screen-256color-bce)
+  printf "\eP\e]%s\007\e\\" "$1"
+  else
+  printf "\e]%s\e\\" "$1"
+  fi
+  }
+#+end_src
+
+** zsh alias
+#+begin_src conf :tangle ~/.config/zsh/.shellConfig/aliases
+  # Alias
+  alias ls='ls -CF --color=auto'
+  alias la='ls -A'
+  alias ll='ls -alF'
+  alias suspend='sudo systemctl suspend'
+  alias gs='git status'
+  alias grep='grep --color=auto'
+  alias rm='rm -i'
+  alias mv='mv -i'
+  alias tmux='tmux -u'
+  # alias ll='ls -lah'
+  # alias la='ls -a'
+  alias gpgl='gpg --list-secret-keys --keyid-format LONG'
+  alias cl='sudo pacman -Rns $(pacman -Qdtq)'
+  alias cpu='sudo auto-cpufreq --stats'
+  alias te='tar -xvzf'
+  alias install_grub='sudo grub-install --target=x86_64-efi --efi-directory=uefi --bootloader-id=grub'
+
+  co() {
+  gcc "$1" -o ../Debug/"$2"
+  }
+
+  dlweb() {
+  wget --recursive --no-clobber --page-requisites --html-extension --convert-links --domains "$1" --no-parent "$2"	 
+  }
+#+end_src
+
+** zsh profile
+#+begin_src conf :tangle ~/.config/zsh/.zprofile
+  export PATH=$PATH"$HOME/.local/bin"
+  export PATH="$HOME/.cargo/bin:$PATH"
+  # export VISUAL="emacsclient -c -a emacs" # $VISUAL opens in GUI mode
+  export VISUAL=emacs
+  export EDITOR="$VISUAL"
+  export HISTCONTROL=ignoreboth
+  export LESS_TERMCAP_mb=$'\e[1;32m'
+  export LESS_TERMCAP_md=$'\e[1;32m'
+  export LESS_TERMCAP_me=$'\e[0m'
+  export LESS_TERMCAP_se=$'\e[0m'
+  export LESS_TERMCAP_so=$'\e[01;33m'
+  export LESS_TERMCAP_ue=$'\e[0m'
+  export LESS_TERMCAP_us=$'\e[1;4;31m'
+  # eval "$(gh completion -s zsh)"
+  if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+  exec Hyprland
+  fi
+#+end_src
+

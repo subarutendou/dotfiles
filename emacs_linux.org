@@ -382,71 +382,33 @@
   exec dwm
 #+end_src
 
-** zsh
-#+begin_src conf :tangle ~/.config/zsh/.zshrc
-  export PATH=$PATH:/home/tendou/.local/bin
+** bash
+#+begin_src conf :tangle ~/.bashrc
+  export EDITOR=VISUAL
+  export VISUAL="emacs"
 
-  # zsh config
-  for f in /home/tendou/.config/zsh/.shellConfig/*; do source "$f"; done
-
-  # Enable colors and change prompt:
-  autoload -U colors && colors # Load colors
-  autoload -Uz vcs_info
-  precmd_vcs_info() { vcs_info }
-  precmd_functions+=( precmd_vcs_info )
-  setopt prompt_subst
-  RPROMPT=\$vcs_info_msg_0_
-  zstyle ':vcs_info:git:*' formats 'on branch %b'
-  PROMPT='%B%F{yellow}%2~ %b%B%F{white}${vcs_info_msg_0_}%B%F{gray}%(!.#h.>) '
-  # PROMPT=\$vcs_info_msg_0_'%# '
-
-  # Disable ctrl-s to freeze terminal.
-  stty stop undef
-
-  # Lines configured by zsh-newuser-install
-  HISTFILE=/home/tendou/.config/.histfile
-  HISTSIZE=50000
-  SAVEHIST=50000
-  bindkey -v
-
-  # The following lines were added by compinstall
-  zstyle :compinstall filename '/home/tendou/.config/zsh/.zshrc'
-
-  autoload -Uz compinit && compinit
-  # End of lines added by compinstall
-
-  # User config
-  # . /usr/share/LS_COLORS/dircolors.sh
-
-  # Syntax highlight plugin put at the end
-  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-  # Just a backup solution for prompt color
-  # PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%1~%{$fg[red]%}]%{$reset_color%}$%b "
-
-  # Reference fomr "https://scriptingosx.com/2019/07/moving-to-zsh-06-customizing-the-zsh-prompt/"
-  # PROMPT="%B%F{yellow}%2~%f%b %(!.#h.> )"
-  # RPROMPT="%F{white}[%*]"
-
-  # Don't want the auto cd anymore but put it here in cast I want it back
-  # setopt autocd  # Automatically cd into typed directory.
-
-  # vterm config
-  vterm_printf(){
-  if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ] ); then
-  # Tell tmux to pass the escape sequences through
-  printf "\ePtmux;\e\e]%s\007\e\\" "$1"
-  elif [ "${TERM%%-*}" = "screen" ]; then
-  # GNU screen (screen, screen-256color, screen-256color-bce)
-  printf "\eP\e]%s\007\e\\" "$1"
-  else
-  printf "\e]%s\e\\" "$1"
-  fi
+  function parse_git_dirty {
+      STATUS="$(git status 2> /dev/null)"
+      if [[ $? -ne 0 ]]; then printf ""; return; else printf " ["; fi
+      if echo ${STATUS} | grep -c "renamed:"         &> /dev/null; then printf " >"; else printf ""; fi
+      if echo ${STATUS} | grep -c "brach is ahead:"         &> /dev/null; then printf " !"; else printf ""; fi
+      if echo ${STATUS} | grep -c "new file:"         &> /dev/null; then printf " +"; else printf ""; fi
+      if echo ${STATUS} | grep -c "Untracked fiels:"         &> /dev/null; then printf " ?"; else printf ""; fi
+      if echo ${STATUS} | grep -c "modified:"         &> /dev/null; then printf " *"; else printf ""; fi
+      if echo ${STATUS} | grep -c "deleted:"         &> /dev/null; then printf " -"; else printf ""; fi
+      printf " ]"
   }
-#+end_src
 
-** zsh alias
-#+begin_src conf :tangle ~/.config/zsh/.shellConfig/aliases
+  parse_git_brach() {
+      git rev-parse --abbrev-ref HEAD 2> /dev/null
+  }
+
+  PS1="\$(parse_git_brach)\$(parse_git_dirty) \$ => "
+
+  #update
+  alias update='sudo pacman -Syu'
+  alias aur='sudo pacman -Sau'
+
   # Alias
   alias ls='ls -CF --color=auto'
   alias la='ls -A'
@@ -474,22 +436,28 @@
   }
 #+end_src
 
-** zsh profile
-#+begin_src conf :tangle ~/.config/zsh/.zprofile
-  export PATH=$PATH"$HOME/.local/bin"
-  export PATH="$HOME/.cargo/bin:$PATH"
-  # export VISUAL="emacsclient -c -a emacs" # $VISUAL opens in GUI mode
-  export VISUAL=emacs
-  export EDITOR="$VISUAL"
-  export HISTCONTROL=ignoreboth
-  export LESS_TERMCAP_mb=$'\e[1;32m'
-  export LESS_TERMCAP_md=$'\e[1;32m'
-  export LESS_TERMCAP_me=$'\e[0m'
-  export LESS_TERMCAP_se=$'\e[0m'
-  export LESS_TERMCAP_so=$'\e[01;33m'
-  export LESS_TERMCAP_ue=$'\e[0m'
-  export LESS_TERMCAP_us=$'\e[1;4;31m'
-  # eval "$(gh completion -s zsh)"
+** bash_profile
+#+begin_src conf :tangle ~/.bash_profile
+  #
+  # ~/.bash_profile
+  #
+
+  [[ -f ~/.bashrc ]] && . ~/.bashrc
+
+  PATH=$PATH:~/.local/bin
+
+  # Text color variables
+  txtund=$(tput sgr 0 1)          # Underline
+  txtbld=$(tput bold)             # Bold
+  bldred=${txtbld}$(tput setaf 1) #  red
+  bldblu=${txtbld}$(tput setaf 4) #  blue
+  bldwht=${txtbld}$(tput setaf 7) #  white
+  txtrst=$(tput sgr0)             # Reset
+  info=${bldwht}*${txtrst}        # Feedback
+  pass=${bldblu}*${txtrst}
+  warn=${bldred}*${txtrst}
+  ques=${bldblu}?${txtrst}
+
   if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
   exec Hyprland
   fi
