@@ -403,7 +403,7 @@
       git rev-parse --abbrev-ref HEAD 2> /dev/null
   }
 
-  PS1="\$(parse_git_brach)\$(parse_git_dirty) \$ => "
+  PS1="\$(parse_git_brach)\$(parse_git_dirty) \w > "
 
   #update
   alias update='sudo pacman -Syu'
@@ -503,7 +503,7 @@
   # Font configuration
   font:
     normal:
-      family: Comic Code Ligatures
+      family: MonoLisa
       style: Regular
 
     # Point size
