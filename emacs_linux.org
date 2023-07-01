@@ -177,19 +177,19 @@
     ;; per mode with `ligature-mode'.
     (global-ligature-mode t))
 
-  (use-package xah-fly-keys
-    :diminish xah-fly-keys
-    :config
-    (xah-fly-keys-set-layout "qwerty")
-    (define-key xah-fly-command-map (kbd "a") 'counsel-M-x)
-    (define-key xah-fly-leader-key-map (kbd "i e") 'counsel-find-file)
-    (define-key xah-fly-leader-key-map (kbd "j j") 'counsel-describe-function)
-    (define-key xah-fly-leader-key-map (kbd "j l") 'counsel-describe-variable)
-    (define-key xah-fly-leader-key-map (kbd "j u") 'counsel-info-lookup-symbol)
-    (define-key xah-fly-leader-key-map (kbd "l d") 'multi-vterm)
-    (define-key key-translation-map (kbd "<escape>") (kbd "C-g"))
-    (define-key key-translation-map (kbd "<apps>") (kbd "<menu>"))
-    (xah-fly-keys 1))
+  ;; (use-package xah-fly-keys
+  ;;   :diminish xah-fly-keys
+  ;;   :config
+  ;;   (xah-fly-keys-set-layout "qwerty")
+  ;;   (define-key xah-fly-command-map (kbd "a") 'counsel-M-x)
+  ;;   (define-key xah-fly-leader-key-map (kbd "i e") 'counsel-find-file)
+  ;;   (define-key xah-fly-leader-key-map (kbd "j j") 'counsel-describe-function)
+  ;;   (define-key xah-fly-leader-key-map (kbd "j l") 'counsel-describe-variable)
+  ;;   (define-key xah-fly-leader-key-map (kbd "j u") 'counsel-info-lookup-symbol)
+  ;;   (define-key xah-fly-leader-key-map (kbd "l d") 'multi-vterm)
+  ;;   (define-key key-translation-map (kbd "<escape>") (kbd "C-g"))
+  ;;   (define-key key-translation-map (kbd "<apps>") (kbd "<menu>"))
+  ;;   (xah-fly-keys 1))
 #+end_src
 
 *** ivy
@@ -358,7 +358,7 @@
 
   export _JAVA_AWT_WM_NONREPARENTING=1
 
-  # # Cursor and mouse behavier
+         # # Cursor and mouse behavier
   xset r rate 300 50 &
   xset s off &
   xset -dpms &
@@ -426,6 +426,7 @@
   alias cpu='sudo auto-cpufreq --stats'
   alias te='tar -xvzf'
   alias install_grub='sudo grub-install --target=x86_64-efi --efi-directory=uefi --bootloader-id=grub'
+  alias vim='nvim'
 
   co() {
   gcc "$1" -o ../Debug/"$2"
@@ -459,8 +460,13 @@
   ques=${bldblu}?${txtrst}
 
   if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
-  exec Hyprland
+     exec startx
   fi
+
+  # opam configuration
+  test -r /home/tendou/.opam/opam-init/init.sh && . /home/tendou/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+
+  eval $(opam env)
 #+end_src
 
 ** alacritty
@@ -534,7 +540,7 @@
   # Execute your favorite apps at launch
   # exec-once = waybar & hyprpaper & firefox
   # exec-once = swaybg -i /home/tendou/pic/wallpaper/mesubuta.png
-  exec-once = hyprpaper & emacs & 1password & pcloud
+  exec-once = hyprpaper & alacritty & 1password & pcloud
 
   # Source a file (multi-file configs)
   # source = ~/.config/hypr/myColors.conf
