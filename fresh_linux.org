@@ -265,7 +265,7 @@
   # opam configuration
   test -r /home/tendou/.opam/opam-init/init.sh && . /home/tendou/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 
-  eval $(opam env)
+  eval $(opam env --switch=4.14.0)
 #+end_src
 
 ** alacritty
