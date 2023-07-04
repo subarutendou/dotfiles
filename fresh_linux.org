@@ -118,6 +118,8 @@
 ** settings
 #+begin_src emacs-lisp
   (blink-cursor-mode 0)
+  (add-to-list 'load-path "/home/tendou/.opam/4.14.0/share/emacs/site-lisp")
+  (require 'ocp-indent)
 #+end_src
 ** auto tangle
 #+begin_src emacs-lisp
