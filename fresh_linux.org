@@ -61,7 +61,8 @@
 ** use-package
 #+begin_src emacs-lisp
   (require 'package)
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+  (add-to-list 'package-archives
+	       '("melpa-stable" . "https://stable.melpa.org/packages/"))
   (package-initialize)
   (unless package-archive-contents
     (package-refresh-contents))
@@ -69,10 +70,12 @@
     (package-install 'use-package))
   (require 'use-package)
   (setq use-package-always-ensure t)
-  (use-package quelpa-use-package)
 #+end_src
 ** package
 #+begin_src emacs-lisp
+  (use-package gruvbox-theme
+    :config
+    (load-theme 'gruvbox t))
   (use-package diminish)
   (use-package flx)
   (use-package lua-mode)
@@ -111,9 +114,6 @@
   (use-package magit
 	       :custom
 	       (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-vl))
-  (use-package gruvbox-theme
-    :config
-    (load-theme 'gruvbox t))
 #+end_src
 ** settings
 #+begin_src emacs-lisp
@@ -131,14 +131,11 @@
 
   (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
 #+end_src
-* Application
+* application
 #+begin_src emacs-lisp
   (use-package magit
     :custom
     (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
-
-  (use-package ement
-    :quelpa (ement :fetcher github :repo "alphapapa/ement.el"))
 #+end_src
 
 ** ERC
@@ -152,7 +149,7 @@
         erc-auto-query 'bury)
 #+end_src
 
-* System configuration
+* system configuration
 ** xinitrc
 #+begin_src conf :tangle ~/.xinitrc
   #!/bin/bash
