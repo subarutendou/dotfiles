@@ -72,6 +72,7 @@
   (use-package quelpa-use-package)
 #+end_src
 ** package
+*** melpa package
 #+begin_src emacs-lisp
   (use-package diminish)
   (use-package flx)
@@ -114,6 +115,40 @@
   (use-package gruvbox-theme
     :config
     (load-theme 'gruvbox t))
+#+end_src
+*** manual installed
+#+begin_src emacs-lisp
+  (use-package ligature
+    :load-path "~/.emacs.d/github/ligature.el"
+    :config
+    (ligature-set-ligatures 'prog-mode '("-->" "->" "->>" "-<" "--<"
+					 "-~" "]#" ".-" "!=" "!=="
+					 "#(" "#{" "#[" "#_" "#_("
+					 "/=" "/==" "|||" "||" ;; "|"
+					 "==" "===" "==>" "=>" "=>>"
+					 "=<<" "=/" ">-" ">->" ">="
+					 ">=>" "<-" "<--" "<->" "<-<"
+					 "<!--" "<|" "<||" "<|||"
+					 "<|>" "<=" "<==" "<==>" "<=>"
+					 "<=<" "<<-" "<<=" "<~" "<~>"
+					 "<~~" "~-" "~@" "~=" "~>"
+					 "~~" "~~>" ".=" "..=" "---"
+					 "{|" "[|" ".."  "..."  "..<"
+					 ".?"  "::" ":::" "::=" ":="
+					 ":>" ":<" ";;" "!!"  "!!."
+					 "!!!"  "?."  "?:" "??"  "?="
+					 "**" "***" "*>" "*/" "#:"
+					 "#!"  "#?"  "##" "###" "####"
+					 "#=" "/*" "/>" "//" "///"
+					 "&&" "|}" "|]" "$>" "++"
+					 "+++" "+>" "=:=" "=!=" ">:"
+					 ">>" ">>>" "<:" "<*" "<*>"
+					 "<$" "<$>" "<+" "<+>" "<>"
+					 "<<" "<<<" "</" "</>" "^="
+					 "%%" "'''" "\"\"\"" ))
+    ;; Enables ligature checks globally in all buffers. You can also do it
+    ;; per mode with `ligature-mode'.
+    (global-ligature-mode t))
 #+end_src
 ** settings
 #+begin_src emacs-lisp
