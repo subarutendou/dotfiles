@@ -74,6 +74,9 @@
 ** package
 *** melpa package
 #+begin_src emacs-lisp
+  (use-package gruvbox-theme
+    :config
+    (load-theme 'gruvbox t))
   (use-package diminish)
   (use-package flx)
   (use-package lua-mode)
@@ -112,9 +115,6 @@
   (use-package magit
 	       :custom
 	       (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-vl))
-  (use-package gruvbox-theme
-    :config
-    (load-theme 'gruvbox t))
 #+end_src
 *** manual installed
 #+begin_src emacs-lisp

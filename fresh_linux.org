@@ -117,10 +117,11 @@
 	       (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-vl))
 #+end_src
 
+
 *** manual installed
 #+begin_src emacs-lisp
   (use-package ligature
-    :load-path "path-to-ligature-repo"
+    :load-path "~/.emacs.d/github/ligature.el"
     :config
     (ligature-set-ligatures 'prog-mode '("-->" "->" "->>" "-<" "--<"
 					 "-~" "]#" ".-" "!=" "!=="
