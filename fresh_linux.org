@@ -48,13 +48,6 @@
   (when (fboundp 'electric-pair-mode)
     (electric-pair-mode t))
   (set-face-attribute 'default nil :family "MonoLisa" :height 137)
-  (require 'recentf)
-  (recentf-mode t)
-  (setq recentf-max-saved-items 50)
-
-  (require 'savehist)
-  (setq savehist-save-minibuffer-history t)
-  (add-hook 'after-init-hook #'savehist-mode)
   (setq vc-make-backup-files t)
   (setq
    backup-by-copying t
@@ -164,6 +157,13 @@
 ** settings
 #+begin_src emacs-lisp
   (blink-cursor-mode 0)
+  (require 'recentf)
+  (recentf-mode t)
+  (setq recentf-max-saved-items 50)
+
+  (require 'savehist)
+  (setq savehist-save-minibuffer-history t)
+  (add-hook 'after-init-hook #'savehist-mode)
   (add-to-list 'load-path "/home/tendou/.opam/4.14.0/share/emacs/site-lisp")
   (require 'ocp-indent)
 #+end_src
