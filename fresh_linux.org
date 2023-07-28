@@ -2,7 +2,7 @@
 #+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/init.el :mkdirp yes
 
 * pre-load
-** COMMENT Minimum
+** Minimum
 #+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
   (setq inhibit-startup-message t
 	inhibit-startup-echo-area-message t)
@@ -22,6 +22,7 @@
   (set-language-environment "UTF-8")
   (set-default-coding-systems 'utf-8)
   (fset 'yes-or-no-p 'y-or-n-p)
+  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
   (setq native-comp-async-report-warnings-errors nil)
   (column-number-mode 1)
 
@@ -229,11 +230,12 @@
   (recentf-mode t)
   (setq recentf-max-saved-items 50)
 
-  (require 'savehist)
-  (setq savehist-save-minibuffer-history t)
-  (add-hook 'after-init-hook #'savehist-mode)
-  (add-to-list 'load-path "/home/tendou/.opam/4.14.0/share/emacs/site-lisp")
-  (require 'ocp-indent)
+  (use-package savehist
+      :config
+      (setq history-length 25)
+      (savehist-mode 1)
+      (setq savehist-save-minibuffer-history t)
+      (add-hook 'after-init-hook #'savehist-mode))
 #+end_src
 ** auto tangle
 #+begin_src emacs-lisp
@@ -382,7 +384,7 @@
 #+end_src
 
 ** alacritty
-#+begin_src yaml :tangle ~/.config/alacritty/alacritty.yml
+#+begin_src yaml :tangle ~/.config/alacritty/alacritty.yml :mkdirp yes
   env:
     WINIT_X11_SCALE_FACTOR: "1"
     TERM: xterm-256color
