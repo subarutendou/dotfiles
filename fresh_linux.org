@@ -25,6 +25,7 @@
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
   (setq native-comp-async-report-warnings-errors nil)
   (column-number-mode 1)
+  (global-auto-revert-mode 1)
 
   (defvar my-linum-current-line-number 0)
 
@@ -187,7 +188,6 @@
     (setq evil-want-integration t)
     (evil-collection-init))
 #+end_src
-
 
 *** manual installed
 #+begin_src emacs-lisp
