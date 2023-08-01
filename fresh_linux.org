@@ -271,8 +271,10 @@
   #!/bin/bash
 
   export _JAVA_AWT_WM_NONREPARENTING=1
+  # fix debian slow program launch
+  dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY &
 
-         # # Cursor and mouse behavier
+  # Cursor and mouse behavier
   xset r rate 300 50 &
   xset s off &
   xset -dpms &
