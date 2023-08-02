@@ -290,7 +290,8 @@
   fcitx5 &
   # eval `dbus-launch --sh-syntax --exit-with-session`
   # exe --no-startup-id fcitx5 -d
-  emacs &
+  # emacs &
+  alacritty &
   1password &
   # st&
 
