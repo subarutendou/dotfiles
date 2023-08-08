@@ -1,10 +1,11 @@
 #+title Emacs settings
 #+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/init.el :mkdirp yes
 
-* Early Settings
-** Minimum UI
+* pre-load
+** Minimum
 #+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
-  (setq inhibit-startup-message t)
+  (setq inhibit-startup-message t
+	inhibit-startup-echo-area-message t)
   (scroll-bar-mode -1)
   (tool-bar-mode -1)
   (tooltip-mode -1)
@@ -13,302 +14,229 @@
   (setq visible-bell t)
   (setq use-dialog-box nil)
   (setq initial-scratch-message nil)
-  (show-paren-mode 1)              ; Highlight parenthesis
-  (setq-default x-select-enable-primary t) ; use primary as clipboard in emacs
-  ;; avoid leaving a gap between the frame and the screen
+  (save-place-mode 1)
+  (show-paren-mode 1)
+  (setq-default x-select-enable-primary t)
   (setq-default frame-resize-pixelwise t)
-#+end_src
-
-** Basic
-#+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
+  (add-hook 'emacs-startup-hook 'toggle-frame-maximized)
   (set-language-environment "UTF-8")
   (set-default-coding-systems 'utf-8)
   (fset 'yes-or-no-p 'y-or-n-p)
+  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
   (setq native-comp-async-report-warnings-errors nil)
   (column-number-mode 1)
-  (when (version<= "26.0.50" emacs-version )
-    (global-display-line-numbers-mode))
+  (global-auto-revert-mode 1)
+
+  (defvar my-linum-current-line-number 0)
+
+  (setq linum-format 'my-linum-relative-line-numbers)
+
+  (defun my-linum-relative-line-numbers (line-number)
+    (let ((test2 (- line-number my-linum-current-line-number)))
+      (propertize
+       (number-to-string (cond ((<= test2 0) (* -1 test2))
+			       ((> test2 0) test2)))
+       'face 'linum)))
+
+  (defadvice linum-update (around my-linum-update)
+    (let ((my-linum-current-line-number (line-number-at-pos)))
+      ad-do-it))
+  (ad-activate 'linum-update)
+
+  (global-linum-mode t)
+
   (defvar file-name-handler-alist-old file-name-handler-alist)
-
   (setq file-name-handler-alist nil
-        gc-cons-threshold most-positive-fixnum)
-  ;; Lower threshold to speed up garbage collection
+	gc-cons-threshold most-positive-fixnum)
   (add-hook 'after-init-hook
-            `(lambda ()
-               (setq file-name-handler-alist file-name-handler-alist-old)
-               (setq gc-cons-threshold (* 2 1000 1000)))
-            t)
-
-  (dolist (mode '(org-mode-hook
-                  term-mode-hook
-                  shell-mode-hook
-                  eshell-mode-hook
-                  vterm-mode-hook
-                  pdf-view-mode-hook))
+	    (lambda ()
+	      (setq file-name-handler-alist file-name-handler-alist-old)
+	      (setq gc-cons-threashold (* 2 1000 1000)))
+	    t)
+  (dolist (mode ' (org-mode-hook
+		   term-mode-hook
+		   shell-mode-hook
+		   eshell-mode-hook
+		   vterm-mode-hook))
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
-  (set-face-attribute 'default nil :family "MonoLisa" :height 137)
-  ;; (set-face-attribute 'default nil :family "Victor Mono" :height 140)
-  ;; (set-face-font 'italic "Victor Mono")
-  ;; (set-face-font 'bold-italic "Victor Mono")
-  ;; (set-face-attribute 'default nil :family "Comic Code Ligatures" :height 140)
-  ;; (set-fontset-font t nil "JetBrains Mono" nil 'append)
-  ;; (set-fontset-font t nil "Comic Code Ligatures" nil 'append)
-  ;; (set-fontset-font t nil "Fira Code" nil 'append)
-  (setq browse-url-browser-function 'browse-url-generic
-        browse-url-generic-program "chromium-browser")
+  (setq browse-url-browser-function 'browse-url-default-windows-browser)
   (setq ido-enable-flex-matching t)
   (setq ido-everywhere t)
   (ido-mode 1)
   (setq ido-use-filename-at-point 'guess)
   (when (fboundp 'electric-pair-mode)
     (electric-pair-mode t))
-#+end_src
-
-** Backup
-#+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
+  (set-face-attribute 'default nil :family "MonoLisa" :height 137)
   (setq vc-make-backup-files t)
-
   (setq
-   backup-by-copying t      ; don't clobber symlinks
+   backup-by-copying t
    backup-directory-alist
-   '(("." . ".saves"))    ; don't litter my fs tree
+   '(("." . ".saves"))
    delete-old-versions t
    kept-new-versions 6
    kept-old-versions 2
-   version-control t)       ; use versioned backups
+   version-control t)
 #+end_src
 
-* Basic Settings
-** Prerequest for package manager
+* basic
+** use-package
 #+begin_src emacs-lisp
   (require 'package)
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-
+  (add-to-list 'package-archives
+	       '("melpa-stable" . "https://stable.melpa.org/packages/"))
   (package-initialize)
-
   (unless package-archive-contents
     (package-refresh-contents))
-
   (unless (package-installed-p 'use-package)
     (package-install 'use-package))
   (require 'use-package)
   (setq use-package-always-ensure t)
-  (use-package quelpa-use-package)
 #+end_src
-
-** Basic config that need to load after emacs launch
+** package
+*** melpa emacs
 #+begin_src emacs-lisp
-  (setq-default tab-width 4)
-  (setq tab-width 4) ; or any other preferred value
-  (defvaralias 'c-basic-offset 'tab-width)
-  (defvaralias 'cperl-indent-level 'tab-width)
-
-  (blink-cursor-mode 0)
-  (progn
-    (setq-default indent-tabs-mode nil))
-  (setq xah-fly-use-meta-key nil)
-  (global-set-key (kbd "C-x w") 'elfeed)
-#+end_src
-
-** Theme
-#+begin_src emacs-lisp
-  ;; (use-package nord-theme
-    ;; :config
-    ;; (load-theme 'nord t))
-
   (use-package gruvbox-theme
     :config
     (load-theme 'gruvbox t))
-#+end_src
 
-** Package
-*** Intergrate
-#+begin_src emacs-lisp
-  (blink-cursor-mode 0)
-  (use-package tree-sitter
-    :diminish tree-sitter-mode
-    :config
-    (global-tree-sitter-mode)
-    (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-  (use-package tree-sitter-langs)
-  (use-package vterm)
-  (use-package multi-vterm)
   (use-package diminish)
   (use-package flx)
   (use-package lua-mode)
   (use-package python-mode)
-  (use-package zig-mode)
   (use-package rust-mode)
-  (use-package yaml-mode)
-  (use-package csharp-mode)
-  (use-package swift-mode)
-  (use-package ca65-mode)
-  (use-package lua-mode)
+  (use-package zig-mode)
   (use-package json-mode)
+
   (use-package auto-complete
-    :diminish auto-complete-mode
-    :config
-    (ac-config-default))
+	       :diminish auto-complete-mode
+	       :config
+	       (ac-config-default))
 
-  (use-package ligature
-    :load-path "~/.emacs.d/github/ligature.el/"
-    :config
-    ;; Enable the "www" ligature in every possible major mode
-    (ligature-set-ligatures 't '("www"))
-    ;; Enable traditional ligature support in eww-mode, if the
-    ;; `variable-pitch' face supports it
-    (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
-    ;; Enable all Cascadia Code ligatures in programming modes
-    (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
-                                         ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
-                                         "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
-                                         "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
-                                         "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
-                                         "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
-                                         "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
-                                         "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
-                                         ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
-                                         "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
-                                         "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
-                                         "?=" "?." "??" ";;" "/=" "/>" "//" "__" "~~" "(*" "*)"
-                                         "\\\\" "://"))
-    ;; Enables ligature checks globally in all buffers. You can also do it
-    ;; per mode with `ligature-mode'.
-    (global-ligature-mode t))
-
-  ;; (use-package xah-fly-keys
-  ;;   :diminish xah-fly-keys
-  ;;   :config
-  ;;   (xah-fly-keys-set-layout "qwerty")
-  ;;   (define-key xah-fly-command-map (kbd "a") 'counsel-M-x)
-  ;;   (define-key xah-fly-leader-key-map (kbd "i e") 'counsel-find-file)
-  ;;   (define-key xah-fly-leader-key-map (kbd "j j") 'counsel-describe-function)
-  ;;   (define-key xah-fly-leader-key-map (kbd "j l") 'counsel-describe-variable)
-  ;;   (define-key xah-fly-leader-key-map (kbd "j u") 'counsel-info-lookup-symbol)
-  ;;   (define-key xah-fly-leader-key-map (kbd "l d") 'multi-vterm)
-  ;;   (define-key key-translation-map (kbd "<escape>") (kbd "C-g"))
-  ;;   (define-key key-translation-map (kbd "<apps>") (kbd "<menu>"))
-  ;;   (xah-fly-keys 1))
-#+end_src
-
-*** ivy
-#+begin_src emacs-lisp
-  (use-package counsel)
+  (use-package rainbow-delimiters
+	       :hook (prog-mode . rainbow-delimiters-mode))
   (use-package ivy
-    :diminish ivy-mode
+    :diminish
+    :bind (("C-s" . swiper)
+	   :map ivy-minibuffer-map
+	   ("TAB" . ivy-alt-done)
+	   ("C-f" . ivy-alt-done)
+	   ("C-l" . ivy-alt-done)
+	   ("C-j" . ivy-next-line)
+	   ("C-k" . ivy-previous-line)
+	   :map ivy-switch-buffer-map
+	   ("C-k" . ivy-previous-line)
+	   ("C-l" . ivy-done)
+	   ("C-d" . ivy-switch-buffer-kill)
+	   :map ivy-reverse-i-search-map
+	   ("C-k" . ivy-previous-line)
+	   ("C-d" . ivy-reverse-i-search-kill))
     :init
     (ivy-mode 1)
     :config
-    (setq ivy-use-selectable-prompt t))
+    (setq ivy-use-virtual-buffers t)
+    (setq ivy-wrap t)
+    (setq ivy-count-format "(%d/%d) ")
+    (setq enable-recursive-minibuffers t)
+
+    ;; Use different regex strategies per completion command
+    ;;(push '(completion-at-point . ivy--regex-fuzzy) ivy-re-builders-alist) ;; This doesn't seem to work...
+    (push '(swiper . ivy--regex-ignore-order) ivy-re-builders-alist)
+    (push '(counsel-M-x . ivy--regex-ignore-order) ivy-re-builders-alist)
+
+    ;; Set minibuffer height for different commands
+    (setf (alist-get 'counsel-projectile-ag ivy-height-alist) 15)
+    (setf (alist-get 'counsel-projectile-rg ivy-height-alist) 15)
+    (setf (alist-get 'swiper ivy-height-alist) 15)
+    (setf (alist-get 'counsel-switch-buffer ivy-height-alist) 7))
 
   (setq ivy-re-builders-alist
-        '((ivy-switch-buffer . ivy--regex-plus)
-          (t . ivy--regex-fuzzy)))
-  (setq ivy-initial-inputs-alist nil)
+	'((ivy-switch-buffer . ivy--regex-plus)
+	  (t . ivy--regex-fuzzy)))
 
-  (use-package ivy-rich
+  (use-package counsel
+    :demand t
+    :bind (("M-x" . counsel-M-x)
+	   ("C-x b" . counsel-ibuffer)
+	   ("C-x C-f" . counsel-find-file)
+	   ;; ("C-M-j" . counsel-switch-buffer)
+	   ("C-M-l" . counsel-imenu)
+	   :map minibuffer-local-map
+	   ("C-r" . 'counsel-minibuffer-history))
+    :custom
+    (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
+    :config
+    (setq ivy-initial-inputs-alist nil)) ;; Don't start searches with ^
+
+  (use-package magit
+	       :custom
+	       (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-vl))
+
+  (use-package evil
+    :demand t
+    :bind (("<escape>" . keyboard-escape-quit))
     :init
-    (ivy-rich-mode 1))
-
-  (setq ivy-use-virtual-buffers t)
-
-  (use-package swiper
+    ;; allows for using cgn
+    ;; (setq evil-search-module 'evil-search)
+    (setq evil-want-keybinding nil)
     :config
-    (setq ivy-re-builders-alist
-          '((swiper . ivy--regex-plus)
-            (t . ivy--regex-fuzzy))))
+    (evil-mode 1))
 
-  (setq enable-recursive-minibuffers t)
-  (global-set-key (kbd "C-c g") 'counsel-git)
-  (global-set-key (kbd "C-c j") 'counsel-git-grep)
-  (global-set-key (kbd "C-c k") 'counsel-ag)
-  (global-set-key (kbd "C-x l") 'counsel-locate)
-  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
-
-  (use-package which-key
-    :diminish which-key
-    :defer 0
-    :diminish which-key-mode
+  ;;; Vim Bindings Everywhere else
+  (use-package evil-collection
+    :after evil
     :config
-    (which-key-mode)
-    (setq which-key-idle-delay 1))
+    (setq evil-want-integration t)
+    (evil-collection-init))
 #+end_src
 
-** Org settings
+*** manual installed
 #+begin_src emacs-lisp
-  (use-package org
-    :custom
-    (org-agenda-start-with-log-mode t)
-    (org-log-done 'time)
-    (org-log-into-drawer t))
-  ;; (org-agenda-files
-  ;;  '("~/orgfile/Tasks.org")		; example
-  ;;  '("~/orgfile/birthday.org")))
-
-  (use-package org-bullets
-    :hook (org-mode . org-bullets-mode)
-    :custom
-    (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
-
-  ;; Replace list hyphen with dot
-  (font-lock-add-keywords 'org-mode
-                          '(("^ *\\([-]\\) "
-                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-
-  (dolist (face '((org-level-1 . 1.2)
-                  (org-level-2 . 1.1)
-                  (org-level-3 . 1.05)
-                  (org-level-4 . 1.0)
-                  (org-level-5 . 1.1)
-                  (org-level-6 . 1.1)
-                  (org-level-7 . 1.1)
-                  (org-level-8 . 1.1))))
-
-  ;; Make sure org-indent face is available
-  (require 'org-indent)
-  (require 'org-tempo)
-  (setq org-structure-template-alist
-        '(("py" . "python")
-          ("el" . "src emacs-lisp")
-          ("rs" . "rust")
-          ("a" . "export ascii\n")
-          ("c" . "center\n")
-          ("C" . "comment\n")
-          ("e" . "example\n")
-          ("E" . "export")
-          ("h" . "export html\n")
-          ("l" . "export latex\n")
-          ("q" . "quote\n")
-          ("s" . "src")
-          ("v" . "verse\n")))
-  (progn
-    ;; no need to warn
-    (put 'narrow-to-region 'disabled nil)
-    (put 'narrow-to-page 'disabled nil)
-    (put 'upcase-region 'disabled nil)
-    (put 'downcase-region 'disabled nil)
-    (put 'erase-buffer 'disabled nil)
-    (put 'scroll-left 'disabled nil)
-    (put 'dired-find-alternate-file 'disabled nil)
-    )
-
-  ;; Ensure that anything that should be fixed-pitch in Org files appears that way
-  (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
-  (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
-  (set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
-  (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
-  (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
-  (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-  (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-  (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-  (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
-
-  ;; Get rid of the background on column views
-  (set-face-attribute 'org-column nil :background nil)
-  (set-face-attribute 'org-column-title nil :background nil)
+  (use-package ligature
+    :load-path "~/.emacs.d/github/ligature.el"
+    :config
+    (ligature-set-ligatures 'prog-mode '("-->" "->" "->>" "-<" "--<"
+					 "-~" "]#" ".-" "!=" "!=="
+					 "#(" "#{" "#[" "#_" "#_("
+					 "/=" "/==" "|||" "||" ;; "|"
+					 "==" "===" "==>" "=>" "=>>"
+					 "=<<" "=/" ">-" ">->" ">="
+					 ">=>" "<-" "<--" "<->" "<-<"
+					 "<!--" "<|" "<||" "<|||"
+					 "<|>" "<=" "<==" "<==>" "<=>"
+					 "<=<" "<<-" "<<=" "<~" "<~>"
+					 "<~~" "~-" "~@" "~=" "~>"
+					 "~~" "~~>" ".=" "..=" "---"
+					 "{|" "[|" ".."  "..."  "..<"
+					 ".?"  "::" ":::" "::=" ":="
+					 ":>" ":<" ";;" "!!"  "!!."
+					 "!!!"  "?."  "?:" "??"  "?="
+					 "**" "***" "*>" "*/" "#:"
+					 "#!"  "#?"  "##" "###" "####"
+					 "#=" "/*" "/>" "//" "///"
+					 "&&" "|}" "|]" "$>" "++"
+					 "+++" "+>" "=:=" "=!=" ">:"
+					 ">>" ">>>" "<:" "<*" "<*>"
+					 "<$" "<$>" "<+" "<+>" "<>"
+					 "<<" "<<<" "</" "</>" "^="
+					 "%%" "'''" "\"\"\"" ))
+    ;; Enables ligature checks globally in all buffers. You can also do it
+    ;; per mode with `ligature-mode'.
+    (global-ligature-mode t))
 #+end_src
+** settings
+#+begin_src emacs-lisp
+  (blink-cursor-mode 0)
+  (require 'recentf)
+  (recentf-mode t)
+  (setq recentf-max-saved-items 50)
 
+  (use-package savehist
+      :config
+      (setq history-length 25)
+      (savehist-mode 1)
+      (setq savehist-save-minibuffer-history t)
+      (add-hook 'after-init-hook #'savehist-mode))
+#+end_src
 ** auto tangle
 #+begin_src emacs-lisp
   (defun efs/org-babel-tangle-config()
@@ -319,25 +247,11 @@
 
   (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
 #+end_src
-
-* Application
+* application
 #+begin_src emacs-lisp
   (use-package magit
     :custom
     (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
-
-  (use-package elfeed)
-  (setq elfeed-feeds
-        '("http://lukesmith.xyz/rss.xml"
-          "https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA"
-          "https://www.youtube.com/feeds/videos.xml?channel_id=UCPf-EnX70UM7jqjKwhDmS8g"
-          "http://www.youtube.com/feeds/videos.xml?channel_id=UCyl1z3jo3XHR1riLFKG5UAg"
-          "http://www.youtube.com/feeds/videos.xml?channel_id=UC1CfXB_kRs3C-zaeTG3oGyg"))
-  (add-hook 'elfeed-new-entry-hook
-            (elfeed-make-tagger :before "2 weeks ago"
-                                :remove 'unread))
-  (use-package ement
-    :quelpa (ement :fetcher github :repo "alphapapa/ement.el"))
 #+end_src
 
 ** ERC
@@ -351,19 +265,26 @@
         erc-auto-query 'bury)
 #+end_src
 
-* System configuration
+* system configuration
 ** xinitrc
 #+begin_src conf :tangle ~/.xinitrc
   #!/bin/bash
 
   export _JAVA_AWT_WM_NONREPARENTING=1
+  # fix debian slow program launch
+  dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY &
 
-         # # Cursor and mouse behavier
+  while true; do
+	xsetroot -name "$( date +"%F %R")"
+	sleep 1m
+  done &
+
+  # start up program
+  # Cursor and mouse behavier
   xset r rate 300 50 &
   xset s off &
   xset -dpms &
   unclutter &
-  udiskie &
   picom -CGb --vsync --backend glx &
   pcloud -b &
   nitrogen --restore &
@@ -371,12 +292,8 @@
   export QT_IM_MODULE=fcitx
   export XMODIFIERS=fcitx
   export DefaultIMModule=fcitx
-  fcitx5 &
-  # eval `dbus-launch --sh-syntax --exit-with-session`
-  # exe --no-startup-id fcitx5 -d
   emacs &
   1password &
-  # st&
 
   # exec dbus-launch --exit-with-session emacs -mm --debug-init
   exec dwm
@@ -386,6 +303,9 @@
 #+begin_src conf :tangle ~/.bashrc
   export EDITOR=VISUAL
   export VISUAL="emacs"
+  export GTK_THEME=Adwaita:dark
+  export GTK2_RC_FILES=/usr/share/themes/Adwaita-dark/gtk-2.0/gtkrc
+  export QT_STYLE_OVERRIDE=adwaita-dark
 
   function parse_git_dirty {
       STATUS="$(git status 2> /dev/null)"
@@ -466,11 +386,11 @@
   # opam configuration
   test -r /home/tendou/.opam/opam-init/init.sh && . /home/tendou/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 
-  eval $(opam env)
+  eval $(opam env --switch=default)
 #+end_src
 
 ** alacritty
-#+begin_src yaml :tangle ~/.config/alacritty/alacritty.yml
+#+begin_src yaml :tangle ~/.config/alacritty/alacritty.yml :mkdirp yes
   env:
     WINIT_X11_SCALE_FACTOR: "1"
     TERM: xterm-256color
@@ -517,3 +437,49 @@
 
 #+end_src
 
+** tmux
+#+begin_src conf :tangle ~/.tmux.conf
+  # unbind default prefix
+  unbind C-b
+
+  # setting my prefix
+  set -g prefix C-x
+  # vi motion
+  setw -g mode-keys vi
+  # widow begin at 1
+  set -g base-index 1
+
+  # use prefix+KJHL to change pane
+  #up
+  bind-key k select-pane -U
+  #down
+  bind-key j select-pane -D
+  #left
+  bind-key h select-pane -L
+  #right
+  bind-key l select-pane -R
+
+  set -g default-terminal "tmux-256color"
+  set -ga terminal-overrides ",*256col*:Tc"
+
+  # panes seperate line
+  #set -g pane-border-bg colour236
+  #set -g pane-border-fg colour236
+  #set -g pane-active-border-bg colour232
+  #set -g pane-active-border-fg colour232
+
+  # List of plugins
+  set -g @plugin 'tmux-plugins/tpm'
+  set -g @plugin 'tmux-plugins/tmux-sensible'
+  #set -g @plugin "arcticicestudio/nord-tmux"
+  set -g @plugin 'egel/tmux-gruvbox'
+  set -g @plugin 'tmux-plugins/tmux-resurrect'
+
+  # Other examples:
+  # set -g @plugin 'github_username/plugin_name'
+  # set -g @plugin 'git@github.com/user/plugin'
+  # set -g @plugin 'git@bitbucket.com/user/plugin'
+
+  # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+  run -b '~/.tmux/plugins/tpm/tpm'
+#+end_src
