@@ -255,10 +255,6 @@
   picom -CGb --vsync --backend glx &
   pcloud -b &
   nitrogen --restore &
-  export GTK_IM_MODULE=fcitx
-  export QT_IM_MODULE=fcitx
-  export XMODIFIERS=fcitx
-  export DefaultIMModule=fcitx
   emacs &
   1password &
 
