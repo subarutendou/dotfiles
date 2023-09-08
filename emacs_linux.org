@@ -182,12 +182,12 @@
 
 * system configuration
 ** xinitrc
-#+begin_src conf :tangle ~/.xinitrc
+#+begin_src conf :tangle ~/.xsession
   #!/bin/bash
 
   export _JAVA_AWT_WM_NONREPARENTING=1
   # fix debian slow program launch
-  dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY &
+  # dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY &
 
   while true; do
 	xsetroot -name "$( date +"%F %R")"
