@@ -28,20 +28,21 @@
   (global-auto-revert-mode 1)
   (when (version<= "26.0.50" emacs-version )
     (global-display-line-numbers-mode))
+  (setq display-line-numbers-type 'relative)
 
   (defvar file-name-handler-alist-old file-name-handler-alist)
   (setq file-name-handler-alist nil
     gc-cons-threshold most-positive-fixnum)
   (add-hook 'after-init-hook
-        (lambda ()
-          (setq file-name-handler-alist file-name-handler-alist-old)
-          (setq gc-cons-threashold (* 2 1000 1000)))
-        t)
+	(lambda ()
+	  (setq file-name-handler-alist file-name-handler-alist-old)
+	  (setq gc-cons-threashold (* 2 1000 1000)))
+	t)
   (dolist (mode ' (org-mode-hook
-           term-mode-hook
-           shell-mode-hook
-           eshell-mode-hook
-           vterm-mode-hook))
+	   term-mode-hook
+	   shell-mode-hook
+	   eshell-mode-hook
+	   vterm-mode-hook))
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
   (setq browse-url-browser-function 'browse-url-default-windows-browser)
   (setq ido-enable-flex-matching t)
@@ -104,6 +105,64 @@
 	       (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-vl))
 #+end_src
 
+*** evil
+#+begin_src emacs-lisp
+  (defun dw/evil-hook ()
+    (dolist (mode '(custom-mode
+		    eshell-mode
+		    git-rebase-mode
+		    erc-mode
+		    circe-server-mode
+		    circe-chat-mode
+		    circe-query-mode
+		    sauron-mode
+		    term-mode))
+    (add-to-list 'evil-emacs-state-modes mode)))
+
+  (defun dw/dont-arrow-me-bro ()
+    (interactive)
+    (message "Arrow keys are bad, you know?"))
+
+  (use-package evil
+    :init
+    (setq evil-want-integration t)
+    (setq evil-want-keybinding nil)
+    (setq evil-want-C-u-scroll t)
+    (setq evil-want-C-i-jump nil)
+    (setq evil-respect-visual-line-mode t)
+    :config
+    (add-hook 'evil-mode-hook 'dw/evil-hook)
+    (evil-mode 1)
+    (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+    (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+
+    ;; Use visual line motions even outside of visual-line-mode buffers
+    (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+    (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+
+    (define-key evil-normal-state-map (kbd "<left>") 'dw/dont-arrow-me-bro)
+    (define-key evil-normal-state-map (kbd "<right>") 'dw/dont-arrow-me-bro)
+    (define-key evil-normal-state-map (kbd "<down>") 'dw/dont-arrow-me-bro)
+    (define-key evil-normal-state-map (kbd "<up>") 'dw/dont-arrow-me-bro)
+    (evil-global-set-key 'motion (kbd "<left>") 'dw/dont-arrow-me-bro)
+    (evil-global-set-key 'motion (kbd "<right>") 'dw/dont-arrow-me-bro)
+    (evil-global-set-key 'motion (kbd "<down>") 'dw/dont-arrow-me-bro)
+    (evil-global-set-key 'motion (kbd "<up>") 'dw/dont-arrow-me-bro)
+
+    (evil-set-initial-state 'messages-buffer-mode 'normal)
+    (evil-set-initial-state 'dashboard-mode 'normal))
+
+  (use-package evil-collection
+    :after evil
+    :init
+    (setq evil-collection-company-use-tng nil)  ;; Is this a bug in evil-collection?
+    :custom
+    (evil-collection-outline-bind-tab-p nil)
+    :config
+    (setq evil-collection-mode-list
+	  (remove 'lispy evil-collection-mode-list))
+    (evil-collection-init))
+#+end_src
 *** manual installed
 #+begin_src emacs-lisp
   (use-package ligature
