@@ -68,6 +68,7 @@
    version-control t)
 #+end_src
 * basic
+* package
 ** use-package
 #+begin_src emacs-lisp
   (require 'package)
@@ -81,7 +82,7 @@
   (setq use-package-always-ensure t)
   (use-package quelpa-use-package)
 #+end_src
-*** melpa package
+** melpa package
 #+begin_src emacs-lisp
   (use-package gruvbox-theme
     :config
@@ -115,7 +116,7 @@
 	       :custom
 	       (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-vl))
 #+end_src
-*** evil
+** evil
 #+begin_src emacs-lisp
   (defun dw/evil-hook ()
     (dolist (mode '(custom-mode
@@ -174,7 +175,29 @@
     (evil-collection-init))
 #+end_src
 
-*** manual installed
+** vertico
+  #+begin_src emacs-lisp
+    (use-package vertico
+      :init
+      (vertico-mode))
+
+    (use-package orderless
+      :init
+      (setq completion-styless '(orderless)
+            completion-category-defaults nil
+            completion-cotegory-overrides '((file (styles partial-completion)))))
+
+    (defun crm-indicator (arg)
+      (cons (concat "[CRM] " (car args)) (cdr args)))
+    (advice-add #'comleting-read-multiple :filter-args #'crm-indicator)
+
+    (setq minibuffer-prompt-properties
+          '(read-only t cursor-intangible t face minibuffer-prompt))
+    (add-hook 'monobuffer-setup-hook #'cursor-intangible-mode)
+
+    (setq enable-recursive-minibuffers t)
+  #+end_src
+** manual installed
 #+begin_src emacs-lisp
   (use-package ligature
     :load-path "~/.emacs.d/github/ligature.el"
