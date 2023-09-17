@@ -26,6 +26,7 @@
   (setq native-comp-async-report-warnings-errors nil)
   (column-number-mode 1)
   (global-auto-revert-mode 1)
+  (add-hook 'dired-mode-hook 'auto-revert-mode)
   (when (version<= "26.0.50" emacs-version )
     (global-display-line-numbers-mode))
   (setq display-line-numbers-type 'relative)

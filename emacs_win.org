@@ -22,6 +22,7 @@
   (setq use-dialog-box nil)
   (show-paren-mode 1)
   (global-auto-revert-mode 1)
+  (add-hook 'dired-mode-hook 'auto-revert-mode)
   (setq-default x-select-enable-primary t)
   (setq-default frame-resize-pixelwise t)
   (add-hook 'emacs-startup-hook 'toggle-frame-maximized)
