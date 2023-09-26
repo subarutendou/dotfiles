@@ -48,7 +48,8 @@
   (setq browse-url-browser-function 'browse-url-default-windows-browser)
   (when (fboundp 'electric-pair-mode)
     (electric-pair-mode t))
-  (set-face-attribute 'default nil :family "MonoLisa" :height 137)
+  ;;(set-face-attribute 'default nil :family "MonoLisa" :height 137)
+  (set-face-attribute 'default nil :family "Victor Mono" :height 137)
   (setq vc-make-backup-files t)
   (setq
    backup-by-copying t
