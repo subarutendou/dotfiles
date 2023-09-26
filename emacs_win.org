@@ -57,7 +57,7 @@
   (setq ido-use-filename-at-point 'guess)
   (when (fboundp 'electric-pair-mode)
     (electric-pair-mode t))
-  (set-face-attribute 'default nil :family "MonoLisa" :height 137)
+  (set-face-attribute 'default nil :family "Victor Mono" :height 137)
   (setq vc-make-backup-files t)
   (setq
    backup-by-copying t
@@ -89,6 +89,16 @@
     :config
     (load-theme 'gruvbox t))
 
+  (use-package ido
+    :config
+    (ido-mode 1)
+    (setq ido-everywhere t)
+    (setq ido-enable-flex-matching t)
+    )
+
+  (use-package ido-completing-read+
+    :config
+    (ido-ubiquitous-mode 1))
   (use-package diminish)
   (use-package flx)
   (use-package lua-mode)
@@ -176,15 +186,6 @@
     (evil-collection-init))
 #+end_src
 
-*** ido
-#+begin_src emacs-lisp
-  (use-package ido
-    :config
-    (ido-mode 1)
-    (setq ido-everywhere t)
-    (setq ido-enable-flex-matching t)
-    )
-#+end_src
 *** manual installed
 #+begin_src emacs-lisp
   (use-package ligature
