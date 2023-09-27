@@ -59,6 +59,7 @@
    kept-new-versions 6
    kept-old-versions 2
    version-control t)
+  (load-theme 'themer-jamstacker-dark t)
 #+end_src
 
 * basic
@@ -78,9 +79,9 @@
 ** package
 *** melpa emacs
 #+begin_src emacs-lisp
-  (use-package gruvbox-theme
-    :config
-    (load-theme 'gruvbox t))
+  ;; (use-package gruvbox-theme
+    ;; :config
+    ;; (load-theme 'gruvbox t))
 
   (use-package diminish)
   (use-package flx)
@@ -373,37 +374,46 @@
     WINIT_X11_SCALE_FACTOR: "1"
     TERM: xterm-256color
 
-    # Theme configuration
-    # Copyright (c) 2016-present Sven Greb
-    # <development@svengreb.de>
-    # This source code is licensed under the MIT license found in the license file.
+  # Themer Jamstacker
 
-  # Colors (Gruvbox Material Dark Medium)
-  colors:
-    primary:
-      background: '0x282828'
-      foreground: '0xdfbf8e'
-
-    normal:
-      black:   '0x665c54'
-      red:     '0xea6962'
-      green:   '0xa9b665'
-      yellow:  '0xe78a4e'
-      blue:    '0x7daea3'
-      magenta: '0xd3869b'
-      cyan:    '0x89b482'
-      white:   '0xdfbf8e'
-
-    bright:
-      black:   '0x928374'
-      red:     '0xea6962'
-      green:   '0xa9b665'
-      yellow:  '0xe3a84e'
-      blue:    '0x7daea3'
-      magenta: '0xd3869b'
-      cyan:    '0x89b482'
-      white:   '0xdfbf8e'
-
+  schemes:
+    themer-jamstacker-dark: &dark
+      primary:
+	background: "#1C1D1F"
+	foreground: "#DFDFDF"
+      cursor:
+	text: "#1C1D1F"
+	cursor: "#C490FF"
+      selection:
+	text: "#1C1D1F"
+	background: "#FFFFFF"
+      normal:
+	black: "#5D5E5F"
+	red: "#F1729E"
+	green: "#DCFF00"
+	yellow: "#B6795B"
+	blue: "#FFFFFF"
+	magenta: "#6669B2"
+	cyan: "#5CFFE3"
+	white: "#DFDFDF"
+      bright:
+	black: "#7D7E7F"
+	red: "#F48EB1"
+	green: "#E3FF33"
+	yellow: "#C5947C"
+	blue: "#FFFFFF"
+	magenta: "#8587C1"
+	cyan: "#7DFFE9"
+	white: "#FFFFFF"
+      dim:
+	black: "#3C3D3F"
+	red: "#C66185"
+	green: "#B6D206"
+	yellow: "#97674F"
+	blue: "#D2D2D2"
+	magenta: "#575A95"
+	cyan: "#4FD2BC"
+	white: "#BEBEBF"
   # Font configuration
   font:
     normal:
