@@ -89,6 +89,7 @@
   (use-package rust-mode)
   (use-package zig-mode)
   (use-package json-mode)
+  (use-package yaml-mode)
 
   (use-package auto-complete
 	       :diminish auto-complete-mode
@@ -408,6 +409,18 @@
     normal:
       family: MonoLisa
       style: Regular
+
+    bold:
+      family: Victor Mono
+      style: Bold
+
+    italic:
+      family: Victor Mono
+      style: Italic
+
+    bold_italic:
+      family: Victor Mono
+      style: Bold Italic
 
     # Point size
     size: 14.0
