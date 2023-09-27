@@ -407,7 +407,7 @@
   # Font configuration
   font:
     normal:
-      family: MonoLisa
+      family: Victor Mono
       style: Regular
 
     bold:
