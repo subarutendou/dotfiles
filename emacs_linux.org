@@ -59,7 +59,6 @@
    kept-new-versions 6
    kept-old-versions 2
    version-control t)
-  (load-theme 'themer-jamstacker-dark t)
 #+end_src
 
 * basic
@@ -79,9 +78,9 @@
 ** package
 *** melpa emacs
 #+begin_src emacs-lisp
-  ;; (use-package gruvbox-theme
-    ;; :config
-    ;; (load-theme 'gruvbox t))
+  (use-package gruvbox-theme
+    :config
+    (load-theme 'gruvbox t))
 
   (use-package diminish)
   (use-package flx)
