@@ -1774,3 +1774,47 @@
     size: 14.0
 
 #+end_src
+
+* jamstacker
+#+begin_src :yaml
+  # Themer Jamstacker
+
+  schemes:
+    themer-jamstacker-dark: &dark
+      primary:
+	background: "#1C1D1F"
+	foreground: "#DFDFDF"
+      cursor:
+	text: "#1C1D1F"
+	cursor: "#C490FF"
+      selection:
+	text: "#1C1D1F"
+	background: "#FFFFFF"
+      normal:
+	black: "#5D5E5F"
+	red: "#F1729E"
+	green: "#DCFF00"
+	yellow: "#B6795B"
+	blue: "#FFFFFF"
+	magenta: "#6669B2"
+	cyan: "#5CFFE3"
+	white: "#DFDFDF"
+      bright:
+	black: "#7D7E7F"
+	red: "#F48EB1"
+	green: "#E3FF33"
+	yellow: "#C5947C"
+	blue: "#FFFFFF"
+	magenta: "#8587C1"
+	cyan: "#7DFFE9"
+	white: "#FFFFFF"
+      dim:
+	black: "#3C3D3F"
+	red: "#C66185"
+	green: "#B6D206"
+	yellow: "#97674F"
+	blue: "#D2D2D2"
+	magenta: "#575A95"
+	cyan: "#4FD2BC"
+	white: "#BEBEBF"
+#+end_src
