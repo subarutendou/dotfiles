@@ -159,6 +159,7 @@
   (recentf-mode t)
   (setq recentf-max-saved-items 50)
   (setq-default indent-tabs-mode nil)
+  (setq-default c-basic-offset 4)
 
   (use-package savehist
       :config
