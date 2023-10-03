@@ -249,7 +249,7 @@
       git rev-parse --abbrev-ref HEAD 2> /dev/null
   }
 
-  PS1="\$(parse_git_brach)\$(parse_git_dirty) \w\n > "
+  PS1="\$(parse_git_brach)\$(parse_git_dirty) \w/\n > "
 
   #update
   alias update='sudo pacman -Syu'
