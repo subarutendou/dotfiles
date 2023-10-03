@@ -30,7 +30,6 @@
   (when (version<= "26.0.50" emacs-version )
     (global-display-line-numbers-mode))
   (setq display-line-numbers-type 'relative)
-
   (defvar file-name-handler-alist-old file-name-handler-alist)
   (setq file-name-handler-alist nil
     gc-cons-threshold most-positive-fixnum)
@@ -85,9 +84,11 @@
   (use-package ido
     :config
     (ido-mode 1)
-    (setq ido-everywhere t)
-    (setq ido-enable-flex-matching t)
-    )
+    (setq ido-everywhere t))
+
+  (use-package ido-completing-read+
+    :config
+    (ido-ubiquitous-mode 1))
 
   (use-package smex
     :config
@@ -106,16 +107,16 @@
   (use-package yaml-mode)
 
   (use-package auto-complete
-	       :diminish auto-complete-mode
-	       :config
-	       (ac-config-default))
+               :diminish auto-complete-mode
+               :config
+               (ac-config-default))
 
   (use-package rainbow-delimiters
-	       :hook (prog-mode . rainbow-delimiters-mode))
+               :hook (prog-mode . rainbow-delimiters-mode))
 
   (use-package magit
-	       :custom
-	       (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-vl))
+               :custom
+               (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-vl))
 #+end_src
 
 *** manual installed
