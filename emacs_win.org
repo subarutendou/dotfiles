@@ -99,12 +99,14 @@
   (use-package ido-completing-read+
     :config
     (ido-ubiquitous-mode 1))
+
   (use-package smex
     :config
     (global-set-key (kbd "M-x") 'smex)
     (global-set-key (kbd "M-X") 'smex-major-mode-commands)
     ;; This is your old M-x.
     (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
+
   (use-package diminish)
   (use-package flx)
   (use-package lua-mode)
@@ -133,6 +135,7 @@
 	       :custom
 	       (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-vl))
 #+end_src
+
 *** manual installed
 #+begin_src emacs-lisp
   (use-package ligature
