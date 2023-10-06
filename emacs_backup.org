@@ -37,6 +37,7 @@
      (setq ido-everywhere t)
      (ido-mode 1)
      (setq ido-use-filename-at-point 'guess)
+     (setq display-line-numbers-type 'relative)
    #+end_src
 ** Prerequest for package manager
    #+begin_src emacs-lisp

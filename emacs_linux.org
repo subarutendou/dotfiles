@@ -21,7 +21,7 @@
   (add-hook 'emacs-startup-hook 'toggle-frame-maximized)
   (set-language-environment "UTF-8")
   (set-default-coding-systems 'utf-8)
-  (fset 'yes-or-no-p 'y-or-n-p)
+  (defalias 'yes-or-no-p 'y-or-n-p)
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
   (setq native-comp-async-report-warnings-errors nil)
   (column-number-mode 1)
@@ -34,15 +34,15 @@
   (setq file-name-handler-alist nil
     gc-cons-threshold most-positive-fixnum)
   (add-hook 'after-init-hook
-	(lambda ()
-	  (setq file-name-handler-alist file-name-handler-alist-old)
-	  (setq gc-cons-threashold (* 2 1000 1000)))
-	t)
+        (lambda ()
+          (setq file-name-handler-alist file-name-handler-alist-old)
+          (setq gc-cons-threashold (* 2 1000 1000)))
+        t)
   (dolist (mode ' (org-mode-hook
-	   term-mode-hook
-	   shell-mode-hook
-	   eshell-mode-hook
-	   vterm-mode-hook))
+           term-mode-hook
+           shell-mode-hook
+           eshell-mode-hook
+           vterm-mode-hook))
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
   (setq browse-url-browser-function 'browse-url-default-windows-browser)
   (when (fboundp 'electric-pair-mode)
