@@ -105,7 +105,6 @@
   (use-package zig-mode)
   (use-package json-mode)
   (use-package yaml-mode)
-
   (use-package auto-complete
                :diminish auto-complete-mode
                :config
