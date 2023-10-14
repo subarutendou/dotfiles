@@ -81,9 +81,9 @@
 #+end_src
 *** melpa package
 #+begin_src emacs-lisp
-  (use-package solarized-theme
+  (use-package gruvbox-theme
     :config
-    (load-theme 'solarized-dark t))
+    (load-theme 'gruvbox t))
 
   (use-package ido
     :config

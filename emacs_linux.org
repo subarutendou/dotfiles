@@ -79,9 +79,9 @@
 ** package
 *** melpa emacs
 #+begin_src emacs-lisp
-  (use-package solarized-theme
+  (use-package gruvbox-theme
     :config
-    (load-theme 'solarized-dark t))
+    (load-theme 'gruvbox t))
 
   (use-package ido
     :config
@@ -199,17 +199,17 @@
 #+end_src
 
 * system configuration
-** xinitrc
+** xsession
 #+begin_src conf :tangle ~/.xsession
   #!/bin/bash
 
   export _JAVA_AWT_WM_NONREPARENTING=1
   # fix debian slow program launch
-  # dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY &
+  dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY &
 
   while true; do
-	xsetroot -name "$( date +"%F %R")"
-	sleep 1m
+        xsetroot -name "$( date +"%F %R")"
+        sleep 1m
   done &
 
   # start up program
