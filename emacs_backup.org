@@ -1655,7 +1655,7 @@
 
   (global-linum-mode t)
 * evil
-#+begin_src conf
+#+begin_src emacs-lisp
   (defun dw/evil-hook ()
     (dolist (mode '(custom-mode
 		    eshell-mode
