@@ -34,6 +34,7 @@
   (column-number-mode 1)
   (when (version<= "26.0.50" emacs-version )
     (global-display-line-numbers-mode))
+  (setq display-line-numbers-type 'relative)
   (when (fboundp 'electric-pair-mode)
     (electric-pair-mode t))
   (defvar file-name-handler-alist-old file-name-handler-alist)

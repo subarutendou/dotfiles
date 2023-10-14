@@ -1654,8 +1654,6 @@
   (ad-activate 'linum-update)
 
   (global-linum-mode t)
-
-=======
 * evil
 #+begin_src conf
   (defun dw/evil-hook ()
@@ -1713,7 +1711,6 @@
     (setq evil-collection-mode-list
 	  (remove 'lispy evil-collection-mode-list))
     (evil-collection-init))
->>>>>>> origin/master
 #+end_src
 
 ** alacritty_gruvbox
