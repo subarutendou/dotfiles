@@ -145,7 +145,7 @@
     (setq evil-want-C-u-scroll t)
     (setq evil-want-C-i-jump nil)
     (setq evil-respect-visual-line-mode t)
-    (setq evil-undo-system 'undotree)
+    (setq evil-undo-system 'undo-redo)
     :config
     (add-hook 'evil-mode-hook 'dw/evil-hook)
     (evil-mode 1)
@@ -178,10 +178,6 @@
     (setq evil-collection-mode-list
           (remove 'lispy evil-collection-mode-list))
     (evil-collection-init))
-
-  (use-package undo-tree
-    :config
-    (global-undo-tree-mode))
 #+end_src
 
 ** alacritty_gruvbox
