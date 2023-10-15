@@ -120,18 +120,18 @@
                (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-vl))
 #+end_src
 
-*** evil
+*** COMMENT evil
 #+begin_src emacs-lisp
   (defun dw/evil-hook ()
     (dolist (mode '(custom-mode
-		    eshell-mode
-		    git-rebase-mode
-		    erc-mode
-		    circe-server-mode
-		    circe-chat-mode
-		    circe-query-mode
-		    sauron-mode
-		    term-mode))
+                    eshell-mode
+                    git-rebase-mode
+                    erc-mode
+                    circe-server-mode
+                    circe-chat-mode
+                    circe-query-mode
+                    sauron-mode
+                    term-mode))
     (add-to-list 'evil-emacs-state-modes mode)))
 
   (defun dw/dont-arrow-me-bro ()
@@ -145,6 +145,7 @@
     (setq evil-want-C-u-scroll t)
     (setq evil-want-C-i-jump nil)
     (setq evil-respect-visual-line-mode t)
+    (setq evil-undo-system 'undotree)
     :config
     (add-hook 'evil-mode-hook 'dw/evil-hook)
     (evil-mode 1)
@@ -175,8 +176,12 @@
     (evil-collection-outline-bind-tab-p nil)
     :config
     (setq evil-collection-mode-list
-	  (remove 'lispy evil-collection-mode-list))
+          (remove 'lispy evil-collection-mode-list))
     (evil-collection-init))
+
+  (use-package undo-tree
+    :config
+    (global-undo-tree-mode))
 #+end_src
 
 ** alacritty_gruvbox
