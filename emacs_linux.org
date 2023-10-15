@@ -120,7 +120,7 @@
                (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-vl))
 #+end_src
 
-*** COMMENT evil
+*** evil
 #+begin_src emacs-lisp
   (defun dw/evil-hook ()
     (dolist (mode '(custom-mode
