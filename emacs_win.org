@@ -191,44 +191,65 @@
     (evil-collection-init))
 #+end_src
 
-** alacritty_gruvbox
-#+begin_src yaml :tangle ~/.config/alacritty/alacritty.yml :mkdirp yes
+** alacritty
+#+begin_src yaml :tangle C:/Users/tendou/AppData/Roaming/alacritty/alacritty.yml :mkdirp yes
   env:
     WINIT_X11_SCALE_FACTOR: "1"
     TERM: xterm-256color
 
-    # Theme configuration
-    # Copyright (c) 2016-present Sven Greb
-    # <development@svengreb.de>
-    # This source code is licensed under the MIT license found in the license file.
+  window:
+    startup_mode: Maximized
 
-  # Colors (Gruvbox Material Dark Medium)
-  colors:
-    primary:
-      background: '0x282828'
-      foreground: '0xdfbf8e'
+  shell:
+    program: pwsh
+    args:
+      - -NoExit
 
-    normal:
-      black:   '0x665c54'
-      red:     '0xea6962'
-      green:   '0xa9b665'
-      yellow:  '0xe78a4e'
-      blue:    '0x7daea3'
-      magenta: '0xd3869b'
-      cyan:    '0x89b482'
-      white:   '0xdfbf8e'
+  working_directory: F:\
 
-    bright:
-      black:   '0x928374'
-      red:     '0xea6962'
-      green:   '0xa9b665'
-      yellow:  '0xe3a84e'
-      blue:    '0x7daea3'
-      magenta: '0xd3869b'
-      cyan:    '0x89b482'
-      white:   '0xdfbf8e'
+  # Themer Solarized
+  schemes:
+    themer-solarized-dark: &dark
+      primary:
+        background: "#002B36"
+        foreground: "#EEE8D5"
+      cursor:
+        text: "#002B36"
+        cursor: "#6C71C4"
+      selection:
+        text: "#002B36"
+        background: "#268BD2"
+      normal:
+        black: "#586E75"
+        red: "#DC322F"
+        green: "#859900"
+        yellow: "#B58900"
+        blue: "#268BD2"
+        magenta: "#D33682"
+        cyan: "#2AA198"
+        white: "#EEE8D5"
+      bright:
+        black: "#657B83"
+        red: "#E35953"
+        green: "#9DAC2D"
+        yellow: "#C39F2D"
+        blue: "#51A0D5"
+        magenta: "#DB5C95"
+        cyan: "#54B2A7"
+        white: "#FDF6E3"
+      dim:
+        black: "#073642"
+        red: "#B03130"
+        green: "#6A830B"
+        yellow: "#91760B"
+        blue: "#1E78B3"
+        magenta: "#A93473"
+        cyan: "#228984"
+        white: "#93A1A1"
 
-  # Font configuration
+  colors: *dark
+
+  # Font configurationfont:
   font:
     normal:
       family: Victor Mono
@@ -247,9 +268,9 @@
       style: Bold Italic
 
     # Point size
-    size: 14.0
-
+    size: 14
 #+end_src
+
 *** manual installed
 #+begin_src emacs-lisp
   (use-package ligature
@@ -299,68 +320,4 @@
     (savehist-mode 1)
     (setq savehist-save-minibuffer-history t)
     (add-hook 'after-init-hook #'savehist-mode))
-#+end_src
-** alacritty
-#+begin_src yaml :tangle C:/Users/tendou/AppData/Roaming/alacritty/alacritty.yml :mkdirp yes
-  env:
-    WINIT_X11_SCALE_FACTOR: "1"
-    TERM: xterm-256color
-
-  window:
-    startup_mode: Maximized
-
-  shell:
-    program: pwsh
-    args:
-      - -NoExit
-
-  working_directory: F:\
-
-  # Colors (Gruvbox Material Dark Medium)
-  colors:
-    primary:
-      background: '0x282828'
-      foreground: '0xdfbf8e'
-
-    normal:
-      black:   '0x665c54'
-      red:     '0xea6962'
-      green:   '0xa9b665'
-      yellow:  '0xe78a4e'
-      blue:    '0x7daea3'
-      magenta: '0xd3869b'
-      cyan:    '0x89b482'
-      white:   '0xdfbf8e'
-
-    bright:
-      black:   '0x928374'
-      red:     '0xea6962'
-      green:   '0xa9b665'
-      yellow:  '0xe3a84e'
-      blue:    '0x7daea3'
-      magenta: '0xd3869b'
-      cyan:    '0x89b482'
-      white:   '0xdfbf8e'
-
-  # Font configurationfont:
-  font:
-    normal:
-      family: Victor Mono
-      style: Regular
-
-    bold:
-      family: Victor Mono
-      style: Bold
-
-    italic:
-      family: Victor Mono
-      style: Italic
-
-    bold_italic:
-      family: Victor Mono
-      style: Bold Italic
-
-    # Point size
-    size: 14
-
 #+end_src
