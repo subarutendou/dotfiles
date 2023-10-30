@@ -80,12 +80,12 @@
   (setq use-package-always-ensure t)
   (use-package quelpa-use-package)
 #+end_src
+*** theme
+#+begin_src emacs-lisp
+  (load-theme 'themer-solarized-dark t)
+#+end_src
 *** melpa package
 #+begin_src emacs-lisp
-  (use-package gruvbox-theme
-    :config
-    (load-theme 'gruvbox t))
-
   (use-package ido
     :config
     (ido-mode 1)
