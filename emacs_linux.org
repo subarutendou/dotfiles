@@ -77,12 +77,12 @@
   (setq use-package-always-ensure t)
 #+end_src
 ** package
+*** theme
+#+begin_src emacs-lisp
+  (load-theme 'themer-solarized-dark t)
+#+end_src
 *** melpa emacs
 #+begin_src emacs-lisp
-  (use-package gruvbox-theme
-    :config
-    (load-theme 'gruvbox t))
-
   (use-package ido
     :config
     (ido-mode 1)
