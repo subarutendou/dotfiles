@@ -129,6 +129,11 @@
   (use-package magit
                :custom
                (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-vl))
+
+  (use-package avy
+    :ensure t
+    :bind
+    ("M-s" . avy-goto-char))
 #+end_src
 
 *** evil
