@@ -118,6 +118,11 @@
   (use-package magit
                :custom
                (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-vl))
+
+  (use-package avy
+    :ensure t
+    :bind
+    ("M-s" . avy-goto-char))
 #+end_src
 
 *** evil
@@ -179,7 +184,6 @@
           (remove 'lispy evil-collection-mode-list))
     (evil-collection-init))
 #+end_src
-
 ** alacritty
 #+begin_src yaml :tangle ~/.config/alacritty/alacritty.yml :mkdirp yes
   env:
