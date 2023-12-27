@@ -365,6 +365,7 @@
   export GTK_THEME=Adwaita:dark
   export GTK2_RC_FILES=/usr/share/themes/Adwaita-dark/gtk-2.0/gtkrc
   export QT_STYLE_OVERRIDE=adwaita-dark
+  export PATH=~/dow/swift-5.9.2-RELEASE-ubuntu18.04/usr/bin:"${PATH}"
 
   function parse_git_dirty {
       STATUS="$(git status 2> /dev/null)"
