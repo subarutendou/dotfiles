@@ -4,6 +4,8 @@
 * pre-load
 ** Minimum
 #+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
+  (setq custom-file "~/.emacs.d/.emacs.custom.el")
+
   (setq inhibit-startup-message t
     inhibit-startup-echo-area-message t)
   (scroll-bar-mode -1)
@@ -48,7 +50,8 @@
   (when (fboundp 'electric-pair-mode)
     (electric-pair-mode t))
   ;;(set-face-attribute 'default nil :family "MonoLisa" :height 137)
-  (set-face-attribute 'default nil :family "monospace" :height 137)
+  ;;(set-face-attribute 'default nil :family "Iosevka" :height 130)
+  (add-to-list 'default-frame-alist '(font . "Iosevka-20"))
   ;;(set-face-attribute 'default nil :family "Victor Mono" :height 137)
   ;;(add-to-list 'default-frame-alist
   ;;             '(font . "Victor Mono-14"))
@@ -61,14 +64,22 @@
    kept-new-versions 6
    kept-old-versions 2
    version-control t)
-#+end_src
 
+
+
+
+
+
+
+
+#+end_src
+** 
 * basic
 ** use-package
 #+begin_src emacs-lisp
   (require 'package)
   (add-to-list 'package-archives
-	       '("melpa-stable" . "https://stable.melpa.org/packages/"))
+	       '("melpa-stable" . "https://stable.melpa.org/packages/") t)
   (package-initialize)
   (unless package-archive-contents
     (package-refresh-contents))
@@ -79,13 +90,6 @@
 #+end_src
 
 ** package
-*** theme
-#+begin_src emacs-lisp
-  (use-package gruvbox-theme
-    :config
-    (load-theme 'gruvbox-dark-medium t))
-#+end_src
-
 *** melpa emacs
 #+begin_src emacs-lisp
   (use-package ido
@@ -129,66 +133,6 @@
     ("M-s" . avy-goto-char))
 #+end_src
 
-*** evil
-#+begin_src emacs-lisp
-  (defun dw/evil-hook ()
-    (dolist (mode '(custom-mode
-                    eshell-mode
-                    git-rebase-mode
-                    erc-mode
-                    circe-server-mode
-                    circe-chat-mode
-                    circe-query-mode
-                    sauron-mode
-                    term-mode))
-    (add-to-list 'evil-emacs-state-modes mode)))
-
-  (defun dw/dont-arrow-me-bro ()
-    (interactive)
-    (message "Arrow keys are bad, you know?"))
-
-  (use-package evil
-    :init
-    (setq evil-want-integration t)
-    (setq evil-want-keybinding nil)
-    (setq evil-want-C-u-scroll t)
-    (setq evil-want-C-i-jump nil)
-    (setq evil-respect-visual-line-mode t)
-    (setq evil-undo-system 'undo-redo)
-    :config
-    (add-hook 'evil-mode-hook 'dw/evil-hook)
-    (evil-mode 1)
-    (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-    (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
-
-    ;; Use visual line motions even outside of visual-line-mode buffers
-    (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-    (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-
-    (define-key evil-normal-state-map (kbd "<left>") 'dw/dont-arrow-me-bro)
-    (define-key evil-normal-state-map (kbd "<right>") 'dw/dont-arrow-me-bro)
-    (define-key evil-normal-state-map (kbd "<down>") 'dw/dont-arrow-me-bro)
-    (define-key evil-normal-state-map (kbd "<up>") 'dw/dont-arrow-me-bro)
-    (evil-global-set-key 'motion (kbd "<left>") 'dw/dont-arrow-me-bro)
-    (evil-global-set-key 'motion (kbd "<right>") 'dw/dont-arrow-me-bro)
-    (evil-global-set-key 'motion (kbd "<down>") 'dw/dont-arrow-me-bro)
-    (evil-global-set-key 'motion (kbd "<up>") 'dw/dont-arrow-me-bro)
-
-    (evil-set-initial-state 'messages-buffer-mode 'normal)
-    (evil-set-initial-state 'dashboard-mode 'normal))
-
-  (use-package evil-collection
-    :after evil
-    :init
-    (setq evil-collection-company-use-tng nil)  ;; Is this a bug in evil-collection?
-    :custom
-    (evil-collection-outline-bind-tab-p nil)
-    :config
-    (setq evil-collection-mode-list
-          (remove 'lispy evil-collection-mode-list))
-    (evil-collection-init))
-#+end_src
-
 ** settings
 #+begin_src emacs-lisp
   (blink-cursor-mode 0)
@@ -204,60 +148,21 @@
       (savehist-mode 1)
       (setq savehist-save-minibuffer-history t)
       (add-hook 'after-init-hook #'savehist-mode))
+
+  (load-file custom-file)
 #+end_src
 
 ** auto tangle
 #+begin_src emacs-lisp
   (defun efs/org-babel-tangle-config()
     (when (string-equal (buffer-file-name)
-                        (expand-file-name "~/.emacs.d/emacs_linux.org"))
+                        (expand-file-name "~/.emacs.d/emacs_linux_desktop.org"))
       (let ((org-confirm-babel-evaluate nil))
         (org-babel-tangle))))
 
   (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
 #+end_src
-* application
-** ERC
-#+begin_src emacs-lisp
-  (setq erc-server "irc.libera.chat"
-        erc-nick "subaru"
-        erc-user-full-name "subaru tendou"
-        erc-track-shorten-start 8
-        erc-autojoin-channels-alist '(("irc.libera.chat" "#systemcrafters" "#emacs"))
-        erc-kill-buffer-on-part t
-        erc-auto-query 'bury)
-#+end_src
-
 * system configuration
-** xinitrc
-#+begin_src conf :tangle ~/.xinitrc
-  #!/bin/bash
-
-  export _JAVA_AWT_WM_NONREPARENTING=1
-  # fix debian slow program launch
-    dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY &
-
-  while true; do
-        xsetroot -name "$( date +"%F %R")"
-        sleep 1m
-  done &
-
-  # start up program
-  # Cursor and mouse behavier
-  xset r rate 300 50 &
-  xset s off &
-  xset -dpms &
-  unclutter &
-  picom -CGb --vsync --backend glx &
-  pcloud -b &
-  nitrogen --restore &
-  emacs &
-  1password &
-
-  # exec dbus-launch --exit-with-session emacs -mm --debug-init
-  exec dwm
-#+end_src
-
 ** bash
 #+begin_src conf :tangle ~/.bashrc
   export EDITOR=VISUAL
@@ -340,7 +245,7 @@
   ques=${bldblu}?${txtrst}
 
   if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
-     exec startx
+     exec wrappedhl
   fi
 
   # opam configuration
@@ -351,49 +256,3 @@
   . "$HOME/.cargo/env"
 #+end_src
 
-** tmux
-#+begin_src conf :tangle ~/.tmux.conf
-  # unbind default prefix
-  unbind C-b
-
-  # setting my prefix
-  set -g prefix C-b
-  # vi motion
-  setw -g mode-keys vi
-  # widow begin at 1
-  set -g base-index 1
-
-  # use prefix+KJHL to change pane
-  #up
-  bind-key k select-pane -U
-  #down
-  bind-key j select-pane -D
-  #left
-  bind-key h select-pane -L
-  #right
-  bind-key l select-pane -R
-
-  set -g default-terminal "tmux-256color"
-  set -ga terminal-overrides ",*256col*:Tc"
-
-  # panes seperate line
-  #set -g pane-border-bg colour236
-  #set -g pane-border-fg colour236
-  #set -g pane-active-border-bg colour232
-  #set -g pane-active-border-fg colour232
-
-  # List of plugins
-  set -g @plugin 'tmux-plugins/tpm'
-  set -g @plugin 'tmux-plugins/tmux-sensible'
-  #set -g @plugin "arcticicestudio/nord-tmux"
-  set -g @plugin 'egel/tmux-gruvbox'
-  set -g @plugin 'tmux-plugins/tmux-resurrect'
-
-  # Other examples:
-  # set -g @plugin 'github_username/plugin_name'
-  # set -g @plugin 'git@github.com/user/plugin'
-  # set -g @plugin 'git@bitbucket.com/user/plugin'
-
-  # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
-  run -b '~/.tmux/plugins/tpm/tpm'
-#+end_src
