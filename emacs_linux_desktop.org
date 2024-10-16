@@ -4,6 +4,8 @@
 * pre-load
 ** Minimum
 #+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
+  (setq custom-file "~/.emacs.d/.emacs.custom.el")
+
   (setq inhibit-startup-message t
     inhibit-startup-echo-area-message t)
   (scroll-bar-mode -1)
@@ -48,7 +50,8 @@
   (when (fboundp 'electric-pair-mode)
     (electric-pair-mode t))
   ;;(set-face-attribute 'default nil :family "MonoLisa" :height 137)
-  (set-face-attribute 'default nil :family "monospace" :height 270)
+  ;;(set-face-attribute 'default nil :family "Iosevka" :height 130)
+  (add-to-list 'default-frame-alist '(font . "Iosevka-20"))
   ;;(set-face-attribute 'default nil :family "Victor Mono" :height 137)
   ;;(add-to-list 'default-frame-alist
   ;;             '(font . "Victor Mono-14"))
@@ -61,6 +64,14 @@
    kept-new-versions 6
    kept-old-versions 2
    version-control t)
+
+
+
+
+
+
+
+
 #+end_src
 ** 
 * basic
@@ -68,7 +79,7 @@
 #+begin_src emacs-lisp
   (require 'package)
   (add-to-list 'package-archives
-	       '("melpa-stable" . "https://stable.melpa.org/packages/"))
+	       '("melpa-stable" . "https://stable.melpa.org/packages/") t)
   (package-initialize)
   (unless package-archive-contents
     (package-refresh-contents))
@@ -137,6 +148,8 @@
       (savehist-mode 1)
       (setq savehist-save-minibuffer-history t)
       (add-hook 'after-init-hook #'savehist-mode))
+
+  (load-file custom-file)
 #+end_src
 
 ** auto tangle
@@ -150,35 +163,6 @@
   (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
 #+end_src
 * system configuration
-** xinitrc
-#+begin_src conf :tangle ~/.xinitrc
-  #!/bin/bash
-
-  export _JAVA_AWT_WM_NONREPARENTING=1
-  # fix debian slow program launch
-    dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY &
-
-  while true; do
-        xsetroot -name "$( date +"%F %R")"
-        sleep 1m
-  done &
-
-  # start up program
-  # Cursor and mouse behavier
-  xset r rate 300 50 &
-  xset s off &
-  xset -dpms &
-  unclutter &
-  picom -b &
-  pcloud -b &
-  nitrogen --restore &
-  emacs &
-  1password &
-
-  # exec dbus-launch --exit-with-session emacs -mm --debug-init
-  exec dwm
-#+end_src
-
 ** bash
 #+begin_src conf :tangle ~/.bashrc
   export EDITOR=VISUAL
@@ -261,7 +245,7 @@
   ques=${bldblu}?${txtrst}
 
   if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
-     exec startx
+     exec wrappedhl
   fi
 
   # opam configuration
