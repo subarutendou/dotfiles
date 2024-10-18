@@ -59,15 +59,8 @@
    kept-new-versions 6
    kept-old-versions 2
    version-control t)
-
-
-
-
-
-
-
-
 #+end_src
+
 * basic
 ** use-package
 #+begin_src emacs-lisp
@@ -249,6 +242,7 @@
 
   . "$HOME/.cargo/env"
 #+end_src
+
 ** hyprland
 #+begin_src conf :tangle ~/.config/hypr/hyprland.conf
   ################
@@ -514,6 +508,7 @@
   # Fix some dragging issues with XWayland
   windowrulev2 = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
 #+end_src
+
 ** hyprpaper
 #+begin_src conf :tangle ~/.config/hypr/hyprpaper.conf
   preload = /home/tendou/pictures/dokibird/MembersHalloweenWallpaper2024_10.png
