@@ -49,7 +49,7 @@
   (setq browse-url-browser-function 'browse-url-default-windows-browser)
   (when (fboundp 'electric-pair-mode)
     (electric-pair-mode t))
-  (add-to-list 'default-frame-alist '(font . "Iosevka-13"))
+  (add-to-list 'default-frame-alist '(font . "Iosevka-14"))
   (setq vc-make-backup-files t)
   (setq
    backup-by-copying t
@@ -250,8 +250,8 @@
 
   # See https://wiki.hyprland.org/Configuring/Monitors/
   #monitor=,preferred,auto,auto
-  #monitor =,1920x1080@120,auto,auto
-  monitor =,3840x2160@120,auto,2
+  monitor =,1920x1080@120,auto,auto
+  #monitor =,3840x2160@120,auto,1
 
   ###################
   ### MY PROGRAMS ###
@@ -262,7 +262,7 @@
   # Set programs that you use
   $terminal = st
   $menu = wofi --show=run
-
+  $browser = zen
 
   #################
   ### AUTOSTART ###
@@ -425,8 +425,9 @@
   $mainMod = SUPER # Sets "Windows" key as main modifier
 
   # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-  bind = $mainMod SHIFT, M, exec, $terminal
-  bind = $mainMod SHIFT, C, killactive,
+  bind = $mainMod, X, exec, $terminal
+  bind = $mainMod, Q, killactive,
+  bind = $mainMod, B, exec, $browser
   bind = $mainMod, V, togglefloating,
   bind = $mainMod, R, exec, $menu
   bind = $mainMod, P, pseudo, # dwindle
