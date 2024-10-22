@@ -276,7 +276,6 @@
   # exec-once = waybar & hyprpaper & firefox
   exec-once = emacs
   exec-once = pcloud
-  exec-once = 1password
   exec-once = hyprpaper
 
   ############################
@@ -427,10 +426,13 @@
   # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
   bind = $mainMod, X, exec, $terminal
   bind = $mainMod, Q, killactive,
+<<<<<<< HEAD
   bind = $mainMod, B, exec, $browser
+=======
+>>>>>>> origin/master
   bind = $mainMod, V, togglefloating,
   bind = $mainMod, R, exec, $menu
-  bind = $mainMod, P, pseudo, # dwindle
+  bind = $mainMod, B, exec, $browser
   bind = $mainMod, U, togglesplit, # dwindle
 
   # Move focus with mainMod + arrow keys
