@@ -88,10 +88,9 @@
     :config
     (ido-ubiquitous-mode 1))
 
-  (use-package smex
+  (use-package amx
     :config
-    (global-set-key (kbd "M-x") 'smex)
-    (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+    (amx-mode)
     ;; This is your old M-x.
     (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
 
@@ -511,6 +510,6 @@
 
 ** hyprpaper
 #+begin_src conf :tangle ~/.config/hypr/hyprpaper.conf
-  preload = /home/tendou/pictures/dokibird/MembersHalloweenWallpaper2024_10.png
-  wallpaper = , /home/tendou/pictures/dokibird/MembersHalloweenWallpaper2024_10.png
+  preload = /home/tendou/Pictures/dokibird/MembersHalloweenWallpaper2024_10.png
+  wallpaper = , /home/tendou/Pictures/dokibird/MembersHalloweenWallpaper2024_10.png
 #+end_src

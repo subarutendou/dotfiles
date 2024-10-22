@@ -91,12 +91,9 @@
     :config
     (ido-ubiquitous-mode 1))
 
-  (use-package smex
+  (use-package amx
     :config
-    (global-set-key (kbd "M-x") 'smex)
-    (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-    ;; This is your old M-x.
-    (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
+    (amx-mode))
 
   (use-package diminish)
   (use-package flx)
