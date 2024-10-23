@@ -96,6 +96,7 @@
 
   (use-package diminish)
   (use-package flx)
+  (use-package swift-mode)
   (use-package lua-mode)
   (use-package python-mode)
   (use-package rust-mode)
