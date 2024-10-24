@@ -263,7 +263,7 @@
   # Set programs that you use
   $terminal = st
   $menu = wofi --show=run
-  $browser = zen
+  $browser = firefox
 
   #################
   ### AUTOSTART ###
