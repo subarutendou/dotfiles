@@ -263,7 +263,7 @@
   # Set programs that you use
   $terminal = st
   $menu = wofi --show=run
-  $browser = firefox
+  $browser = zen 
 
   #################
   ### AUTOSTART ###
@@ -430,7 +430,6 @@
   bind = $mainMod, B, exec, $browser
   bind = $mainMod, V, togglefloating,
   bind = $mainMod, R, exec, $menu
-  bind = $mainMod, B, exec, $browser
   bind = $mainMod, U, togglesplit, # dwindle
 
   # Move focus with mainMod + arrow keys
