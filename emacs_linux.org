@@ -5,6 +5,7 @@
 ** Minimum
 #+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
   (setq custom-file "~/.emacs.d/.emacs.custom.el")
+  (add-to-list 'load-path "~/.emacs.d/.emacs.local/")
 
   (setq inhibit-startup-message t
     inhibit-startup-echo-area-message t)
@@ -36,15 +37,15 @@
   (setq file-name-handler-alist nil
     gc-cons-threshold most-positive-fixnum)
   (add-hook 'after-init-hook
-        (lambda ()
-          (setq file-name-handler-alist file-name-handler-alist-old)
-          (setq gc-cons-threashold (* 2 1000 1000)))
-        t)
+	(lambda ()
+	  (setq file-name-handler-alist file-name-handler-alist-old)
+	  (setq gc-cons-threashold (* 2 1000 1000)))
+	t)
   (dolist (mode ' (org-mode-hook
-           term-mode-hook
-           shell-mode-hook
-           eshell-mode-hook
-           vterm-mode-hook))
+	   term-mode-hook
+	   shell-mode-hook
+	   eshell-mode-hook
+	   vterm-mode-hook))
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
   (setq browse-url-browser-function 'browse-url-default-windows-browser)
   (when (fboundp 'electric-pair-mode)
