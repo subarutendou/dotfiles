@@ -103,9 +103,9 @@
   (use-package json-mode)
   (use-package yaml-mode)
   (use-package auto-complete
-	       :diminish auto-complete-mode
-	       :config
-	       (ac-config-default))
+               :diminish auto-complete-mode
+               :config
+               (ac-config-default))
 
   (require 'xah-fly-keys)
   (xah-fly-keys-set-layout "qwerty")
@@ -115,11 +115,12 @@
   (require 'c3-mode)
 
   (use-package rainbow-delimiters
-	       :hook (prog-mode . rainbow-delimiters-mode))
+               :hook (prog-mode . rainbow-delimiters-mode))
 
-  (use-package magit
-	       :custom
-	       (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-vl))
+  (use-package which-key
+    :config
+    (which-key-mode)
+    (which-key-setup-minibuffer))
 
   (use-package avy
     :ensure t

@@ -80,52 +80,52 @@
 ** package
 *** melpa emacs
 #+begin_src emacs-lisp
-      (use-package ido
-        :config
-        (ido-mode 1)
-        (setq ido-everywhere t))
+  (use-package ido
+    :config
+    (ido-mode 1)
+    (setq ido-everywhere t))
 
-      (use-package ido-completing-read+
-        :config
-        (ido-ubiquitous-mode 1))
+  (use-package ido-completing-read+
+    :config
+    (ido-ubiquitous-mode 1))
 
-      (use-package amx
-        :config
-        (amx-mode)
-        ;; This is your old M-x.
-        (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
+  (use-package amx
+    :config
+    (amx-mode)
+    ;; This is your old M-x.
+    (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
 
-      (require 'xah-fly-keys)
-      (xah-fly-keys-set-layout "qwerty")
-      (xah-fly-keys 1)
-      (use-package diminish)
-      (use-package flx)
-      (use-package swift-mode)
-      (use-package lua-mode)
-      (use-package python-mode)
-      (use-package rust-mode)
-      (use-package json-mode)
-      (use-package yaml-mode)
-      (use-package auto-complete
-                   :diminish auto-complete-mode
-                   :config
-                   (ac-config-default))
+  (require 'xah-fly-keys)
+  (xah-fly-keys-set-layout "qwerty")
+  (xah-fly-keys 1)
+  (use-package diminish)
+  (use-package flx)
+  (use-package swift-mode)
+  (use-package lua-mode)
+  (use-package python-mode)
+  (use-package rust-mode)
+  (use-package json-mode)
+  (use-package yaml-mode)
+  (use-package auto-complete
+               :diminish auto-complete-mode
+               :config
+               (ac-config-default))
 
-      (require 'simpc-mode)
-      (add-to-list 'auto-mode-alist '("\\.[hc]\\(pp\\)?\\'" . simpc-mode))
-      (require 'c3-mode)
+  (require 'simpc-mode)
+  (add-to-list 'auto-mode-alist '("\\.[hc]\\(pp\\)?\\'" . simpc-mode))
+  (require 'c3-mode)
 
-      (use-package rainbow-delimiters
-                   :hook (prog-mode . rainbow-delimiters-mode))
+  (use-package rainbow-delimiters
+               :hook (prog-mode . rainbow-delimiters-mode))
 
-      (use-package magit
-                   :custom
-                   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-vl))
+  (use-package which-key
+    (which-key-mode)
+    (which-key-setup-minibuffer))
 
-      (use-package avy
-        :ensure t
-        :bind
-        ("M-s" . avy-goto-char))
+  (use-package avy
+    :ensure t
+    :bind
+    ("M-s" . avy-goto-char))
 #+end_src
 
 ** settings
