@@ -119,6 +119,7 @@
                :hook (prog-mode . rainbow-delimiters-mode))
 
   (use-package which-key
+    :config
     (which-key-mode)
     (which-key-setup-minibuffer))
 
