@@ -67,7 +67,7 @@
 #+begin_src emacs-lisp
   (require 'package)
   (add-to-list 'package-archives
-	       '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+               '("melpa-stable" . "https://stable.melpa.org/packages/") t)
   (package-initialize)
   (unless package-archive-contents
     (package-refresh-contents))
@@ -151,120 +151,6 @@
 * emacs.local
 ** xah-fly-keys
 #+begin_src emacs-lisp :tangle ~/.emacs.d/.emacs.local/xah-fly-keys.el :mkdirp yes
-  ;;; xah-fly-keys.el --- ergonomic modal keybinding minor mode. -*- coding: utf-8; lexical-binding: t; -*-
-
-  ;; Copyright © 2013, 2024 by Xah Lee
-
-  ;; Author: Xah Lee ( http://xahlee.info/ )
-  ;; Maintainer: Xah Lee <xah@xahlee.org>
-  ;; Version: 26.7.20241109085947
-  ;; Created: 2013-09-10
-  ;; Package-Requires: ((emacs "27"))
-  ;; Keywords: convenience, vi, vim, ergoemacs, keybinding
-  ;; License: GPL v3.
-  ;; Homepage: http://xahlee.info/emacs/misc/xah-fly-keys.html
-
-  ;; This file is not part of GNU Emacs.
-
-  ;;; Commentary:
-
-  ;; xah-fly-keys is a efficient keybinding for emacs. It is modal like
-  ;; vi, but key choices are based on statistics of command call
-  ;; frequency.
-
-  ;;; Usage:
-
-  ;; M-x xah-fly-keys to toggle the mode on/off.
-
-  ;; Important command/insert mode switch keys:
-
-  ;; `xah-fly-command-mode-activate'
-  ;; press F8 or Alt+Space or Ctrl+Space <escape>.
-  ;; Note: escape only works when in emacs is running in GUI mode, before emacs 29.
-
-  ;; `xah-fly-insert-mode-activate'
-  ;; when in command mode, press qwerty letter key f.
-
-  ;; When in command mode:
-
-  ;; "f" calls `xah-fly-insert-mode-activate'.
-
-  ;; Space is a leader key. For example, "SPC r" calls `query-replace'.
-  ;; Press "SPC C-h" to see the full list.
-
-  ;; "SPC SPC" also activates insertion mode.
-
-  ;; "SPC RET" calls `execute-extended-command'.
-
-  ;; "a" calls `execute-extended-command'.
-
-  ;; The leader key sequence basically supplant ALL emacs commands that
-  ;; starts with C-x key.
-
-  ;; When using xah-fly-keys, you don't need to press Control or Meta,
-  ;; with the following exceptions:
-
-  ;; "C-c" for major mode commands.
-  ;; "C-g" for cancel.
-  ;; "C-q" for quoted-insert.
-  ;; "C-h" for getting a list of keys following a prefix/leader key.
-
-  ;; Leader key
-
-  ;; You NEVER need to press "C-x"
-
-  ;; Any emacs command that has a keybinding starting with C-x, has also
-  ;; a key sequence binding in xah-fly-keys. For example,
-
-  ;; "C-x b" for `switch-to-buffer' is "SPC f"
-  ;; "C-x C-f" for `find-file' is "SPC i e"
-  ;; "C-x n n" for `narrow-to-region' is "SPC l l"
-
-  ;; The first key we call it leader key. In the above examples, the SPC
-  ;; is the leader key.
-
-  ;; When in command mode, the "SPC" is a leader key.
-
-  ;; the following standard keys with Control are supported:
-
-  ;; "C-TAB" `xah-next-user-buffer'
-  ;; "C-S-TAB" `xah-previous-user-buffer'
-  ;; "C-v" paste
-  ;; "C-w" close
-  ;; "C-z" undo
-  ;; "C-n" new
-  ;; "C-o" open
-  ;; "C-s" save
-  ;; "C-S-s" save as
-  ;; "C-S-t" open last closed
-  ;; "C-+" `text-scale-increase'
-  ;; "C--" `text-scale-decrease'
-
-  ;; To disable both Control and Meta shortcut keys, add the following
-  ;; lines to you init.el BEFORE loading xah-fly-keys:
-
-  ;; (setq xah-fly-use-control-key nil)
-  ;; (setq xah-fly-use-meta-key nil)
-
-  ;; If you have a bug, post on github.
-
-  ;; For detail about design and other info, see home page at
-  ;; http://xahlee.info/emacs/misc/xah-fly-keys.html
-
-  ;; If you like this project, paypal me $30 to Xah@XahLee.org
-
-  ;;; Installation:
-  ;; here's how to manual install
-  ;;
-  ;; put the file xah-fly-keys.el in ~/.emacs.d/lisp/
-  ;; create the dir if doesn't exist.
-  ;;
-  ;; put the following in your emacs init file:
-  ;; (add-to-list 'load-path "~/.emacs.d/lisp/")
-  ;; (require 'xah-fly-keys)
-  ;; (xah-fly-keys-set-layout "qwerty") ; optional
-  ;; (xah-fly-keys 1)
-  ;;
   ;; possible layout values:
 
   ;; adnw (German)
