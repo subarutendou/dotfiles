@@ -121,6 +121,8 @@
     :config
     (evil-mode 1))
 
+  (use-package magit)
+
   (require 'simpc-mode)
   (add-to-list 'auto-mode-alist '("\\.[hc]\\(pp\\)?\\'" . simpc-mode))
   (require 'c3-mode)
@@ -507,7 +509,7 @@
   # See https://wiki.hyprland.org/Configuring/Keywords/
 
   # Set programs that you use
-  $terminal = st
+  $terminal = kitty
   $menu = wofi --show=run
   $browser = brave 
 
