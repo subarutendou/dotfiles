@@ -669,7 +669,7 @@
 
   # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
   bind = CONTROL_SUPER_ALT_SHIFT, X, exec, $terminal
-  bind = CONTROL_SUPER, C, killactive,
+  bind = ALT_SUPER, C, killactive,
   bind = CONTROL_SUPER_ALT_SHIFT, B, exec, $browser
   bind = $mainMod, V, togglefloating,
   bind = CONTROL_SUPER_ALT_SHIFT, R, exec, $menu
