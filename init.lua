@@ -4,6 +4,7 @@ vim.opt.nu = true
 vim.opt.hlsearch = false
 vim.opt.tabstop = 4
 vim.opt.expandtab = true
+vim.opt.clipboard = "unnamedplus"
 
 vim.keymap.set('n', '<leader>w', '<cmd>write<cr>', {desc = 'Save'})
 vim.keymap.set('n', '<leader>m', '<cmd>Explore<cr>', {desc = 'Explore'})
