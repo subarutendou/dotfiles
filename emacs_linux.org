@@ -665,16 +665,16 @@
   ###################
 
   # See https://wiki.hyprland.org/Configuring/Keywords/
-  $mainMod = CONTROL_SUPER_ALT_SHIFT
+  $mainMod = SUPER
 
   # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-  bind = $mainMod, X, exec, $terminal
+  bind = CONTROL_SUPER_ALT_SHIFT, X, exec, $terminal
   bind = $mainMod, Q, killactive,
-  bind = $mainMod, B, exec, $browser
+  bind = CONTROL_SUPER_ALT_SHIFT, B, exec, $browser
   bind = $mainMod, V, togglefloating,
-  bind = $mainMod, R, exec, $menu
+  bind = CONTROL_SUPER_ALT_SHIFT, R, exec, $menu
   bind = $mainMod, U, togglesplit, # dwindle
-  bind = $mainMod, E, exec, emacs
+  bind = CONTROL_SUPER_ALT_SHIFT, E, exec, emacs
 
   # Move focus with mainMod + arrow keys
   bind = $mainMod, H, movefocus, l
