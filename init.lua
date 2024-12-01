@@ -11,6 +11,7 @@ vim.opt.smartcase = true
 
 vim.keymap.set('n', '<leader>w', '<cmd>write<cr>', {desc = 'Save'})
 vim.keymap.set('n', '<leader>m', '<cmd>Explore<cr>', {desc = 'Explore'})
+vim.keymap.set('i', 'jj', '<Esc>', {desc = 'Esc'})
 
 local vim = vim
 local Plug = vim.fn['plug#']
