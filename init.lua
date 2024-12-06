@@ -1,4 +1,5 @@
 vim.g.mapleader = ','
+vim.g.maplocalleader = ","
 vim.opt.guifont = "Victor Mono:h14:#h-slight"
 vim.opt.rnu = true
 vim.opt.nu = true
@@ -13,12 +14,7 @@ vim.keymap.set('n', '<leader>w', '<cmd>write<cr>', {desc = 'Save'})
 vim.keymap.set('n', '<leader>m', '<cmd>Explore<cr>', {desc = 'Explore'})
 vim.keymap.set('i', 'jj', '<Esc>', {desc = 'Esc'})
 
-local vim = vim
-local Plug = vim.fn['plug#']
-
-vim.call('plug#begin')
-Plug 'ellisonleao/gruvbox.nvim'
-vim.call('plug#end')
+require("config.lazy")
 
 vim.o.background = "dark" -- or "light" for light mode
 vim.cmd([[colorscheme gruvbox]])
