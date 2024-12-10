@@ -1,0 +1,5 @@
+brew install git
+op vault list
+brew install neovim
+nvim .ssh/authorized_keys
+nvim .gitconfig

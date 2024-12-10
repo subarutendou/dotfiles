@@ -3,7 +3,6 @@ vim.g.maplocalleader = ","
 vim.opt.guifont = "Victor Mono:h14:#h-slight"
 vim.opt.rnu = true
 vim.opt.nu = true
-vim.opt.hlsearch = false
 vim.opt.tabstop = 4
 vim.opt.expandtab = true
 vim.opt.clipboard = "unnamedplus"
