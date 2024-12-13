@@ -42,3 +42,6 @@ cc -o main main.c
 ./main
 ./main
 ./main
+sh ~/dotfiles/.clear.sh
+sh ~/dotfiles/.clear.sh
+sh ~/dotfiles/.clear.sh
