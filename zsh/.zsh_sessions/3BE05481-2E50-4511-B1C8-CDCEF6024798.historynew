@@ -1,0 +1,12 @@
+cd ..
+rm -rf gpSP
+pwd
+ln -s /vol
+cd ..
+rm vol
+ln -s /Volumes/SD2/MUOS/save/mGBA /Volumes/SD2/MUOS/save/gpSP
+ls
+la
+ll
+ll
+ln -s /Volumes/SD2/MUOS/save/file/mGBA /Volumes/SD2/MUOS/save/file/gpSP

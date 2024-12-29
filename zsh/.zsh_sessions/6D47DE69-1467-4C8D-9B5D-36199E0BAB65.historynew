@@ -1,0 +1,8 @@
+ls
+cd MUOS/theme
+ls
+la
+rm .*
+la
+cd ..
+ls

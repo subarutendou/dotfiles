@@ -19,3 +19,6 @@ alias ls='ls --color=auto'
 alias ll='ls -Al'
 alias la='ls -A'
 alias cleard='cd ~/Downloads && sh ~/.clear.sh && cd'
+
+source $HOMEBREW_PREFIX/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh

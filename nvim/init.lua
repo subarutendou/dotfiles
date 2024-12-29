@@ -17,4 +17,4 @@ vim.keymap.set('n', '<leader>n', '<cmd>nohlsearch<cr>', {desc = 'Clear Highlight
 require("config.lazy")
 
 vim.o.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme gruvbox]])
+vim.cmd([[colorscheme dracula]])
