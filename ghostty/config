@@ -1,0 +1,4 @@
+theme = Dracula
+font-family = "Victor Mono"
+shell-integration-features = no-cursor
+cursor-style-blink = false
