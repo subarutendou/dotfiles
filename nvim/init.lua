@@ -15,6 +15,3 @@ vim.keymap.set('i', 'jj', '<Esc>', {desc = 'Esc'})
 vim.keymap.set('n', '<leader>n', '<cmd>nohlsearch<cr>', {desc = 'Clear Highlight'})
 
 require("config.lazy")
-
-vim.o.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme dracula]])
