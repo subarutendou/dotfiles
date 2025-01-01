@@ -1,3 +1,4 @@
+macos-titlebar-style = hidden
 theme = GruvboxDark
 font-family = "Victor Mono"
 shell-integration-features = no-cursor
