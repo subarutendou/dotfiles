@@ -3,3 +3,6 @@
 .#*
 .saves/
 .DS_Store
+.history
+.session
+.historynew

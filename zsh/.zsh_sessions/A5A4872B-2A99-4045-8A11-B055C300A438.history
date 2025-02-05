@@ -210,3 +210,166 @@ nvim .
 cd
 nvim Downloads/kitty-master
 la
+nvim
+ghostty +validate-config
+ghostty +list-themes
+ghostty +list-fonts
+ghostty +list-actions
+man ghossty
+ghostty +show-config
+ghostty +show-config
+cd dotfiles
+nvim .config/ghostty/config
+mv /Users/tendou/.config/ghostty /Users/tendou/dotfiles
+ln -s /Users/tendou/dotfiles/ghostty /Users/tendou/.config
+nvim .config/nvim/init.lua
+nvim .config/nvim/init.lua
+nvim .config/nvim/init.lua
+nvim .config/nvim/init.lua
+cd dot
+cd dotfiles
+git add -A
+git commit -m "change to dracula theme"
+git push
+cd
+cd Downloads
+git clone https://github.com/dracula/terminal-app.git\
+
+cd
+ghostty +list-themes\
+
+nvim .
+cd
+cd Downloads
+ls
+nvim init
+cd
+cd /Volumes/TF2/Collections
+ll
+nvim .
+cd
+nvim Downloads/anbernic
+nvim .
+nvim Guilty Gear (Japan) (Rev 1).m3u
+nvim .
+nvim .
+nvim .
+nvim .
+fish
+fish
+nvim .
+ghostty +list-themes\
+
+ll
+nvim .
+cd dotfiles
+git add -A
+git commit -m "change theme"
+git push
+cd
+ghostty +show-config
+ghostty +validate-config
+ghostty +show-config
+cd /Volumes/TF2/Collections
+nvim .
+cd
+nvim .zshenv
+nvim .config
+cd dotfiles
+git add -A
+git status
+git commit -m "change ghostty theme"
+git push
+cd
+cd dotfiles
+git pull
+git status
+cd
+cd /Volumes/TF2/Collections
+nvim .
+cd
+cd /Volumes/TF2/Collections
+nvim mario.txt
+cd
+cd Downloads
+sh ~/dotfiles/.clear.sh
+cd
+nvim /Volumes/TF2/Collections
+cd
+nvim /Volumes/TF2/Collections
+cd
+nvim /Volumes/TF2/Collections
+nvim /Volumes/TF2/Collections
+nvim /Volumes/TF2/Collections
+cd dotfiles
+git pull
+cd
+ghostty +show-config
+nvim study/c/student_record
+nvim study/c/student_record
+cd dotfiles
+git add -A
+git commit -m "change kitty to gruvbox"
+git push
+git status
+cd
+nvim study/c/student_record
+nvim .
+cd study/c/student_record
+nvim .
+ls
+cd /Volumes/NO\ NAME
+la
+cp .fseventsd /Users/tendou/Downloads
+cp -r .fseventsd /Users/tendou/Downloads
+cd
+cd Downloads
+la
+cp -r .fseventsd /Volumes/NO\ NAME
+cd /co
+cd /Volumes/NO\ NAME
+la
+mv -r ./* /Users/tendou/Downloads/backup\ 3ds
+mv ./* /Users/tendou/Downloads/backup\ 3ds
+cd
+cd /Volumes/NO\ NAME
+ls
+la
+cd GBA
+ls
+la
+rm .*
+cd..
+cd ..
+ls
+cd gb
+la
+rm .*
+cd ..
+la
+cd cia
+cd cias
+rm .*
+cd
+cd /Volumes/NO NAME/
+cd /Volumes/NO\ NAME
+ls
+cd luma/
+la
+cd payloads
+la
+cd
+unmount /Volumes/3DS
+sudo acd
+cd
+brew uninstall ghostty
+cd Downloads
+ls
+sh ~/dotfiles/.clear.sh
+cd
+cd study/c/student_record
+./main02
+brew update && brew upgrade
+brew update && brew upgrade
+cd
+sh ~/dotfiles/.clear.sh
