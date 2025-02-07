@@ -1,1 +1,1 @@
-hyprctl keyword 'sony-interactive-entertainment-dualsense-wireless-controller-touchpad' 'false'
+hyprctl keyword 'device[sony-interactive-entertainment-dualsense-wireless-controller-touchpad]:enabled' 'false'
