@@ -25,7 +25,6 @@ PS1="\$(parse_git_brach)\$(parse_git_dirty) \w/\n > "
 
 #update
 alias update='sudo pacman -Syu'
-alias aur='sudo pacman -Sau'
 
 # Alias
 alias ls='ls -CF --color=auto'
