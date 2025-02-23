@@ -37,20 +37,21 @@
   (setq file-name-handler-alist nil
     gc-cons-threshold most-positive-fixnum)
   (add-hook 'after-init-hook
-	(lambda ()
-	  (setq file-name-handler-alist file-name-handler-alist-old)
-	  (setq gc-cons-threashold (* 2 1000 1000)))
-	t)
+        (lambda ()
+          (setq file-name-handler-alist file-name-handler-alist-old)
+          (setq gc-cons-threashold (* 2 1000 1000)))
+        t)
   (dolist (mode ' (org-mode-hook
-	   term-mode-hook
-	   shell-mode-hook
-	   eshell-mode-hook
-	   vterm-mode-hook))
+           term-mode-hook
+           shell-mode-hook
+           eshell-mode-hook
+           vterm-mode-hook))
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
   (setq browse-url-browser-function 'browse-url-default-windows-browser)
   (when (fboundp 'electric-pair-mode)
     (electric-pair-mode t))
   (add-to-list 'default-frame-alist '(font . "Victor Mono-14"))
+  (setq browse-url-browser-function 'browse-url-default-browser)
   (setq vc-make-backup-files t)
   (setq
    backup-by-copying t
@@ -118,8 +119,6 @@
 
   (require 'elfeed-org)
   (elfeed-org)
-  ;; below is default if nothing set
-  ;;(setq rmh-elfeed-org-files (list "~/.emacs.d/elfeed.org")
 
   (use-package magit)
 
@@ -161,23 +160,28 @@
 #+end_src
 
 ** package_configs
+*** elfeed-org
 #+begin_src org :tangle ~/.emacs.d/elfeed.org
-  ,* Imported Feeds            :elfeed:
-  ,** live
+  ,* Imported Feeds                                                     :elfeed:
+  ,** live                                                                :live:
   ,*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCIfAvpeIWGHb0duCkMkmm2Q][Nimi Nightmare]]
   ,*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCSE_JyJeiJQvg3RCnSD272Q][SmugAlana]]
   ,*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC3K7pmiHsNSx1y0tdx2bbCw][Tenma Ch. マエミ 天満 【Phase Connect】]]
   ,*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCjXJYPsKxoJyc-1RPB6dSyw][Uruka Ch. 藤倉ウルカ 【Phase Connect】]]
   ,*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCJ46YTYBQVXsfsp8-HryoUA][Pipkin Pippa Ch.【Phase Connect】]]
-  ,** video
+  ,** video                                                              :video:
   ,*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCJ46YTYBQVXsfsp8-HryoUA][Pipkin Pippa Ch.【Phase Connect】]]
   ,*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC7j2nATL5qX-CfzdFvNfPtA][juzcook]]
-
+  ,*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCQtEIMnABKkglAlrASZ4p9w][Leaflit & Asari]]
+  ,** blog                                                                :blog:
+  ,*** [[http://xahlee.info/emacs/emacs/blog.xml][Xah Emacs Blog]]
+  ,*** [[https://ziglang.org/news/index.xml][zig]]
+  ,** forum                                                              :forum:
+  ,*** [[https://users.rust-lang.org/latest.rss][rust lastest]]
 #+end_src
-
 * emacs.local
 ** elfeed-org
-#+begin_src emacs-lisp :tangle ~/.emacs.d/.emacs.local/elfeed-org.el :mkdirp yes
+#+begin_src emacs-lisp :tangle ~/.emacs.d/.emacs.local/elfeed-org.el
   ;;; elfeed-org.el --- Configure elfeed with one or more org-mode files -*- lexical-binding: t; -*-
 
   ;; Copyright (C) 2014  Remy Honig
