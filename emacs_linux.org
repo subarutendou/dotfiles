@@ -173,6 +173,8 @@
   ,*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCJ46YTYBQVXsfsp8-HryoUA][Pipkin Pippa Ch.【Phase Connect】]]
   ,*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC7j2nATL5qX-CfzdFvNfPtA][juzcook]]
   ,*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCQtEIMnABKkglAlrASZ4p9w][Leaflit & Asari]]
+  ,*** [[
+  ][sorted food]]
   ,** blog                                                                :blog:
   ,*** [[http://xahlee.info/emacs/emacs/blog.xml][Xah Emacs Blog]]
   ,*** [[https://ziglang.org/news/index.xml][zig]]
