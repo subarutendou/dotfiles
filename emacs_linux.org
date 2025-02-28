@@ -171,13 +171,20 @@
   ,*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCJ46YTYBQVXsfsp8-HryoUA][Pipkin Pippa Ch.【Phase Connect】]]
   ,** video                                                              :video:
   ,*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCJ46YTYBQVXsfsp8-HryoUA][Pipkin Pippa Ch.【Phase Connect】]]
-  ,*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC7j2nATL5qX-CfzdFvNfPtA][juzcook]]
+  ,*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC7j2nATL5qX-CfzdFvNfPtA][Juzcook]]
   ,*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCQtEIMnABKkglAlrASZ4p9w][Leaflit & Asari]]
   ,*** [[
-  ][sorted food]]
+  ][Sorted food]]
+  ,*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCMiyV_Ib77XLpzHPQH_q0qQ][Veronica Explains]]
+  ,*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCxQKHvKbmSzGMvUrVtJYnUA][Learn Linux TV]]
+  ,*** [[https://christitus.com/categories/youtube/index.xml][Chris Titus Tech]]
+  ,*** [[href="https://www.youtube.com/feeds/videos.xml?channel_id=UCl2mFZoRqjw_ELax4Yisf6w][Louis Rossmann]]
   ,** blog                                                                :blog:
   ,*** [[http://xahlee.info/emacs/emacs/blog.xml][Xah Emacs Blog]]
   ,*** [[https://ziglang.org/news/index.xml][zig]]
+  ,*** [[https://christitus.com/categories/macos/index.xml][MacOS on Chris Titus Tech]]
+  ,*** [[https://christitus.com/categories/linux/index.xml][Linux on Chris Titus Tech]]
+  ,*** [[https://christitus.com/categories/titus/index.xml][Titus on Chris Titus Tech]]
   ,** forum                                                              :forum:
   ,*** [[https://users.rust-lang.org/latest.rss][rust lastest]]
 #+end_src
