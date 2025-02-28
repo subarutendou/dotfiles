@@ -44,6 +44,7 @@ alias cpu='sudo auto-cpufreq --stats'
 alias te='tar -xvzf'
 alias install_grub='sudo grub-install --target=x86_64-efi --efi-directory=uefi --bootloader-id=grub'
 alias vim='nvim'
+alias sudo='sudo -E'
 
 co() {
 gcc "$1" -o ../Debug/"$2"
