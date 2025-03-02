@@ -187,6 +187,10 @@
   ,*** [[https://christitus.com/categories/titus/index.xml][Titus on Chris Titus Tech]]
   ,** forum                                                              :forum:
   ,*** [[https://users.rust-lang.org/latest.rss][rust lastest]]
+  ,** dev                                                                  :dev:
+  ,*** [[https://archlinux.org/feeds/news/][Archlinux News]]
+  ,*** [[https://wiki.archlinux.org/index.php?title=Special:RecentChanges&feed=rss][Arch Wiki Change]]
+  ,*** [[https://ladybird.org/posts.rss][ladybird]]
 #+end_src
 * emacs.local
 ** elfeed-org
