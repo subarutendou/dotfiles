@@ -979,14 +979,33 @@
   color15                 #bdae93
 #+end_src
 
-*** bashrc
-#+begin_src conf :tangle ~/.bashrc
+*** bash_profile
+#+begin_src conf :tangle ~/.bash_profile
+  #
+  # ~/.bash_profile
+  #
+
+  #[[ -f ~/.bashrc ]] && . ~/.bashrc
+
+  bind 'set completion-ignore-case on'
+
+  # Text color variables
+  txtund=$(tput sgr 0 1)          # Underline
+  txtbld=$(tput bold)             # Bold
+  bldred=${txtbld}$(tput setaf 1) #  red
+  bldblu=${txtbld}$(tput setaf 4) #  blue
+  bldwht=${txtbld}$(tput setaf 7) #  white
+  txtrst=$(tput sgr0)             # Reset
+  info=${bldwht}*${txtrst}        # Feedback
+  pass=${bldblu}*${txtrst}
+  warn=${bldred}*${txtrst}
+  ques=${bldblu}?${txtrst}
+
+  . "$HOME/.cargo/env"
+
   export EDITOR=VISUAL
   export VISUAL="emacs"
-  export GTK_THEME=Adwaita:dark
-  export GTK2_RC_FILES=/usr/share/themes/Adwaita-dark/gtk-2.0/gtkrc
-  export QT_STYLE_OVERRIDE=adwaita-dark
-  export PATH=~/dow/swift-5.9.2-RELEASE-ubuntu18.04/usr/bin:"${PATH}"
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 
   function parse_git_dirty {
       STATUS="$(git status 2> /dev/null)"
@@ -1006,10 +1025,8 @@
 
   PS1="\$(parse_git_brach)\$(parse_git_dirty) \w/\n > "
 
-  #update
-  alias update='sudo pacman -Syu'
-
   # Alias
+  alias sudo='sudo -E '
   alias ls='ls -CF --color=auto'
   alias la='ls -A'
   alias ll='ls -alF'
@@ -1024,10 +1041,9 @@
   alias gpgl='gpg --list-secret-keys --keyid-format LONG'
   alias cl='sudo pacman -Rns $(pacman -Qdtq)'
   alias cpu='sudo auto-cpufreq --stats'
-  alias te='tar -xvzf'
+  # alias te='tar -xvzf'
   alias install_grub='sudo grub-install --target=x86_64-efi --efi-directory=uefi --bootloader-id=grub'
   alias vim='nvim'
-  alias sudo='sudo -E'
 
   co() {
   gcc "$1" -o ../Debug/"$2"
@@ -1036,43 +1052,6 @@
   dlweb() {
   wget --recursive --no-clobber --page-requisites --html-extension --convert-links --domains "$1" --no-parent "$2"	 
   }
-#+end_src
-
-*** bash_profile
-#+begin_src conf :tangle ~/.bash_profile
-  #
-  # ~/.bash_profile
-  #
-
-  [[ -f ~/.bashrc ]] && . ~/.bashrc
-
-  PATH=$PATH:~/.local/bin
-
-  # Text color variables
-  txtund=$(tput sgr 0 1)          # Underline
-  txtbld=$(tput bold)             # Bold
-  bldred=${txtbld}$(tput setaf 1) #  red
-  bldblu=${txtbld}$(tput setaf 4) #  blue
-  bldwht=${txtbld}$(tput setaf 7) #  white
-  txtrst=$(tput sgr0)             # Reset
-  info=${bldwht}*${txtrst}        # Feedback
-  pass=${bldblu}*${txtrst}
-  warn=${bldred}*${txtrst}
-  ques=${bldblu}?${txtrst}
-
-  #if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
-  #   exec startx
-  #fi
-
-  if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
-     exec wrappedhl
-  fi
-
-  # opam configuration
-  #test -r /home/tendou/.opam/opam-init/init.sh && . /home/tendou/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
-
-  #eval $(opam env --switch=default)
-
   . "$HOME/.cargo/env"
 #+end_src
 
