@@ -1290,7 +1290,7 @@
   bind = $mainMod, P, exec, $menu
   bind = $mainMod, U, togglesplit, # dwindle
   bind = $mainMod, E, exec, $fileManager
-  bind = $mainMod, B, exec, $browser
+  bind = CTRL, 1, exec, $browser
   bind = CTRL, 3, exec, emacs
 
   # dwm layout move focus
