@@ -1282,16 +1282,16 @@
 
   # See https://wiki.hyprland.org/Configuring/Keywords/
   $mainMod = SUPER
-  $subMod = SUPER CTRL ALT SHIFT
 
   # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-  bind = $mainMod SHIFT, return, exec, $terminal
+  bind = CTRL, 2, exec, $terminal
   bind = $mainMod, Q, killactive,
   bind = $mainMod, V, togglefloating,
-  bind = $mainMod, space, exec, $menu
+  bind = $mainMod, P, exec, $menu
   bind = $mainMod, U, togglesplit, # dwindle
-  bind = $subMod, E, exec, $fileManager
-  bind = $subMod, B, exec, $browser
+  bind = $mainMod, E, exec, $fileManager
+  bind = $mainMod, B, exec, $browser
+  bind = CTRL, 3, exec, emacs
 
   # dwm layout move focus
   bind = $mainMod, j, layoutmsg, cyclenext
